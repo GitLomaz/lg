@@ -1,11 +1,14 @@
 import React, {useEffect} from 'react';
-import { useSelector } from 'react-redux';
-import { RootState } from '../store';
+// import { useSelector } from 'react-redux';
+// import { RootState } from '../store';
 import Slider from 'react-slick';
 import './GameCarousel.css';
+import { useGameState } from '../useGameState';
 
-
+ 
 const GameCarousel: React.FC = () => {
+
+  const { selectedGame } = useGameState()
 
   const settings = {
     dots: true,
@@ -18,7 +21,7 @@ const GameCarousel: React.FC = () => {
     draggable: false,
   };
 
-  const selectedGame = useSelector((state: RootState) => state.selectedGame.game);
+  //const selectedGame = useSelector((state: RootState) => state.selectedGame.game);
 
   useEffect(() => {
     if (selectedGame) {
@@ -32,6 +35,7 @@ const GameCarousel: React.FC = () => {
     <div className='game-carousel-container'>
       <div className='game-carousel'>
         <div className='game-carousel-title'>{selectedGame.translations[0].name}</div>
+        <div className='game-carousel-description'>{selectedGame.translations[0].description}</div>
         <div className='game-carousel-tags'>
           <span className='game-genre'>{selectedGame.genre}</span>
           {selectedGame.tags.map((tag) => (

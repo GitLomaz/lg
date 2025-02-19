@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
-import { AppDispatch, setSelectedGame } from '../store';
 import { Game, GameRow } from '../types';
 import Slider from 'react-slick';
 import './GalleryRow.css';
 import GalleryTile from './GalleryTile';
 import REACT_APP_API_URL from "../config";
 import axios from 'axios';
+import { useGameState } from '../useGameState';
 
 // Define props interface
 interface GalleryRowProps {
@@ -15,7 +14,7 @@ interface GalleryRowProps {
 
 const GalleryRow: React.FC<GalleryRowProps> = ({ genre }) => {
   const [currentGames, setCurrentGames] = useState<Game[]>([]); // State for carousel games
-  const dispatch: AppDispatch = useDispatch()
+  const { setSelectedGame } = useGameState()
 
   const settings = {
     dots: true,
@@ -45,7 +44,7 @@ const GalleryRow: React.FC<GalleryRowProps> = ({ genre }) => {
       console.log(games[0])
       setCurrentGames(games);
       if (genre === 'Popular') {
-        dispatch(setSelectedGame(games[0]));
+        setSelectedGame(games[0])
       }
     } catch (error) {
       console.error('Failed to fetch games:', error);

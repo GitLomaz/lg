@@ -20,6 +20,18 @@
   z-index: 1;
 }
 
+.game-carousel-description {
+  position: absolute;
+  top: 76px;
+  left: 20px;
+  font-size: 16px;
+  color: white;
+  background-color: rgba(0, 0, 0, 0.6);
+  padding: 5px 10px;
+  border-radius: 5px;
+  z-index: 1;
+}
+
 .game-carousel-stats {
   position: absolute;
   bottom: 20px;
@@ -81,7 +93,7 @@
 
 .game-carousel-tags {
   position: absolute;
-  top: 85px;
+  top: 115px;
   left: 20px;
   z-index: 1;
 }

@@ -1,8 +1,6 @@
-import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { AppDispatch, setSelectedGame, RootState } from '../store';
 import './GalleryTile.css';
 import { GameRow } from '../types';
+import { useGameState } from '../useGameState';
 
 // Define props interface
 interface GalleryTileProps {
@@ -10,12 +8,10 @@ interface GalleryTileProps {
 }
 
 const GalleryTile: React.FC<GalleryTileProps> = ({ game }) => {
-  const dispatch: AppDispatch = useDispatch()
-  const selectedGame = useSelector((state: RootState) => state.selectedGame.game);
+  const { selectedGame, setSelectedGame } = useGameState()
 
   function onTileClick(game: GameRow) {
-    dispatch(setSelectedGame(game));
-    console.log(game.key)
+    setSelectedGame(game)
   }
 
   return (
