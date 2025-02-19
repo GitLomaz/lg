@@ -22,8 +22,12 @@ const GalleryRow: React.FC<GalleryRowProps> = ({ genre }) => {
     speed: 200,
     slidesToShow: 1,
     slidesToScroll: 1,
+    swipeToSlide: true,
     autoplay: false,
-    variableWidth: true
+    variableWidth: true,
+    touchThreshold: 100,
+    swipe: true,
+    draggable: true
   };
 
   const loadGames = async () => {

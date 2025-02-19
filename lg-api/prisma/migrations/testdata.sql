@@ -144,6 +144,6 @@ INSERT INTO `lomazGames`.`game_asset` (`game_id`, `type`, `path`) VALUES ('8', '
 INSERT INTO `lomazGames`.`game_asset` (`game_id`, `type`, `path`) VALUES ('8', 'tile', 'gameImages/8/tile.png');
 
 INSERT INTO `lomazGames`.`game_asset` (`game_id`, `type`, `path`) VALUES ('9', 'ss', 'gameImages/9/1.png');
-INSERT INTO `lomazGames`.`game_asset` (`game_id`, `type`, `path`) VALUES ('9', 'ss', 'gameImages/9/2.png');
-INSERT INTO `lomazGames`.`game_asset` (`game_id`, `type`, `path`) VALUES ('9', 'ss', 'gameImages/9/3.png');
+INSERT INTO `lomazGames`.`game_asset` (`game_id`, `type`, `path`) VALUES ('9', 'ss', 'gameImages/9/2.jpeg');
+INSERT INTO `lomazGames`.`game_asset` (`game_id`, `type`, `path`) VALUES ('9', 'ss', 'gameImages/9/3.jpeg');
 INSERT INTO `lomazGames`.`game_asset` (`game_id`, `type`, `path`) VALUES ('9', 'tile', 'gameImages/9/tile.png');
