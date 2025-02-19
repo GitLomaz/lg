@@ -1,0 +1,25 @@
+.gallery-rows {
+  height: calc(100vh - 360px); /* Adjust height to fill remaining space after header */
+  overflow-y: auto; /* Enable vertical scrolling when content exceeds the height */
+  background-color: #282c34;
+  box-sizing: border-box; /* Ensure padding is included in the element's total height/width */
+  margin-left: 230px;
+}
+
+/* Custom scrollbar for WebKit browsers (Chrome, Safari, etc.) */
+.gallery-rows::-webkit-scrollbar {
+  width: 8px; /* Width of the scrollbar */
+}
+
+.gallery-rows::-webkit-scrollbar-track {
+  background: #282c34; /* Track color */
+}
+
+.gallery-rows::-webkit-scrollbar-thumb {
+  background-color: #888; /* Scrollbar color */
+  border-radius: 10px; /* Round edges */
+}
+
+.gallery-rows::-webkit-scrollbar-thumb:hover {
+  background: #555; /* Darker color on hover */
+}

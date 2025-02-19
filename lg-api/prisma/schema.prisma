@@ -1,0 +1,204 @@
+generator client {
+  provider      = "prisma-client-js"
+  binaryTargets = ["native", "debian-openssl-1.1.x"]
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model auth_providers {
+  id               String    @id @default("UUID()") @db.Char(36)
+  user_id          Int
+  provider_name    String    @db.VarChar(255)
+  provider_user_id String    @db.VarChar(255)
+  access_token     String?   @db.Text
+  refresh_token    String?   @db.Text
+  expires_at       DateTime? @db.Timestamp(0)
+  created_at       DateTime? @default(now()) @db.Timestamp(0)
+  user             user      @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "auth_providers_ibfk_1")
+
+  @@unique([provider_name, provider_user_id], map: "auth_providers_index_1")
+  @@index([user_id], map: "user_id")
+}
+
+model game {
+  id               Int                @id @default(autoincrement())
+  game_string      String             @db.VarChar(64)
+  iframe           String             @db.VarChar(1024)
+  width            Int
+  height           Int
+  author_id        Int?
+  author           user?              @relation(fields: [author_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "game_ibfk_1")
+  genre_id         Int
+  genre            genre              @relation(fields: [genre_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "game_ibfk_2")
+  tags             tag[]
+  assets           game_asset[]
+  achievements     achievement[]
+  comments         game_comment[]
+  favorites        game_favorite[]
+  ratings          game_rating[]
+  translations     game_translation[]
+  plays            game_play[]
+
+  @@index([author_id], map: "author_id")
+  @@index([genre_id], map: "genre_id")
+}
+
+model game_asset {
+  id      Int     @id @default(autoincrement())
+  game_id Int
+  type    String  @db.VarChar(45)
+  path    String? @db.VarChar(256)
+  game    game    @relation(fields: [game_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "game_asset_ibfk_1")
+
+  @@index([game_id], map: "game_id")
+}
+
+model game_play {
+  id            Int       @id @default(autoincrement())
+  game_id       Int
+  count         Int       
+  date          DateTime? @default(now()) @db.Timestamp(0)
+  game          game    @relation(fields: [game_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "game_play_ibfk_1")
+  
+}
+
+model achievement {
+  id               Int     @id @default(autoincrement())
+  game_id          Int
+  difficulty       String  @db.VarChar(45)
+  icon_path        String  @db.VarChar(256)
+  game             game    @relation(fields: [game_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "achievement_ibfk_1")
+  translations     achievement_translation[]
+  earned           user[]
+
+  @@index([game_id], map: "game_id")
+}
+
+model achievement_translation {
+  achievement_id      Int
+  language            String         @db.VarChar(255)
+  name                String?        @db.VarChar(255)
+  description         String?        @db.Text
+  achievement         achievement    @relation(fields: [achievement_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "achievement_translation_ibfk_1")
+
+  @@unique([achievement_id, language], map: "achievement_translation_index_0")
+}
+
+
+model game_comment {
+  id                 String              @id @default("UUID()") @db.Char(36)
+  game_id            Int
+  user_id            Int
+  parent             String?             @db.Char(36)
+  value              String?             @db.Text
+  game               game                @relation(fields: [game_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "game_comment_ibfk_1")
+  user               user                @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "game_comment_ibfk_2")
+  game_comment       game_comment?       @relation("game_commentTogame_comment", fields: [parent], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "game_comment_ibfk_3")
+  other_game_comment game_comment[]      @relation("game_commentTogame_comment")
+  game_comment_like  game_comment_like[]
+
+  @@index([game_id], map: "game_id")
+  @@index([parent], map: "parent")
+  @@index([user_id], map: "user_id")
+}
+
+model game_comment_like {
+  game_comment_id String       @db.Char(36)
+  user_id         Int
+  value           Int          @default(1)
+  game_comment    game_comment @relation(fields: [game_comment_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "game_comment_like_ibfk_1")
+  user            user         @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "game_comment_like_ibfk_2")
+
+  @@id([game_comment_id, user_id])
+  @@index([user_id], map: "user_id")
+}
+
+model game_favorite {
+  game_id Int
+  user_id Int
+  game    game @relation(fields: [game_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "game_favorite_ibfk_1")
+  user    user @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "game_favorite_ibfk_2")
+
+  @@id([game_id, user_id])
+  @@index([user_id], map: "user_id")
+}
+
+model game_rating {
+  game_id Int
+  user_id Int
+  value   Int  @default(5)
+  game    game @relation(fields: [game_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "game_rating_ibfk_1")
+  user    user @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "game_rating_ibfk_2")
+
+  @@id([game_id, user_id])
+  @@index([user_id], map: "user_id")
+}
+
+model game_translation {
+  game_id      Int
+  language     String  @db.VarChar(255)
+  name         String? @db.VarChar(255)
+  tagline      String? @db.Text
+  description  String? @db.Text
+  instructions String? @db.Text
+  game         game    @relation(fields: [game_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "game_translation_ibfk_1")
+
+  @@unique([game_id, language], map: "game_translation_index_0")
+}
+
+model passwords {
+  id            String    @id @default("UUID()") @db.Char(36)
+  user_id       Int
+  password_hash String    @db.Text
+  created_at    DateTime? @default(now()) @db.Timestamp(0)
+  user          user      @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "passwords_ibfk_1")
+
+  @@index([user_id], map: "user_id")
+}
+
+model sessions {
+  id            String    @id @default("UUID()") @db.Char(36)
+  user_id       Int
+  session_token String    @unique(map: "session_token") @db.VarChar(256)
+  user_agent    String?   @db.Text
+  ip_address    String?   @db.VarChar(45)
+  expires_at    DateTime? @db.Timestamp(0)
+  created_at    DateTime? @default(now()) @db.Timestamp(0)
+  user          user      @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "sessions_ibfk_1")
+
+  @@index([user_id], map: "user_id")
+}
+
+model tag {
+  id       Int        @id @default(autoincrement())
+  name     String     @db.VarChar(45)
+  game     game[]
+}
+
+model genre {
+  id       Int        @id @default(autoincrement())
+  name     String     @db.VarChar(45)
+  game     game[]
+}
+
+model user {
+  id                Int                 @id @default(autoincrement())
+  username          String              @db.VarChar(45)
+  developer         Boolean?            @default(false)
+  image             String?             @db.Text
+  email             String              @unique(map: "email") @db.VarChar(255)
+  created_at        DateTime?           @default(now()) @db.Timestamp(0)
+  updated_at        DateTime?           @default(now()) @db.Timestamp(0)
+  auth_providers    auth_providers[]
+  games             game[]
+  game_comment      game_comment[]
+  game_comment_like game_comment_like[]
+  game_favorite     game_favorite[]
+  game_rating       game_rating[]
+  passwords         passwords[]
+  sessions          sessions[]
+  achievements      achievement[]
+}

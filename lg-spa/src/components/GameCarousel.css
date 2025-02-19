@@ -1,0 +1,119 @@
+.game-carousel-container {
+  position: relative;
+  height: 300px; /* Carousel height */
+  margin-top: 60px; /* Match this to the header's height */
+  margin-left: 230px;
+  overflow: hidden;
+  background-color: #282c34;
+}
+
+.game-carousel-title {
+  position: absolute;
+  top: 30px;
+  left: 20px;
+  font-size: 32px;
+  font-weight: bold;
+  color: white;
+  background-color: rgba(0, 0, 0, 0.6);
+  padding: 5px 10px;
+  border-radius: 5px;
+  z-index: 1;
+}
+
+.game-carousel-stats {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  font-size: 16px;
+  font-weight: bold;
+  color: white;
+  background-color: rgba(0, 0, 0, 0.6);
+  padding: 5px 10px;
+  border-radius: 5px;
+  z-index: 1;
+}
+
+.game-carousel img {
+  width: 100%;
+  height: 300px;
+  object-fit: cover;
+}
+
+.slick-prev, .slick-next {
+  width: 30px;
+  height: 30px;
+  z-index: 1;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+  border-radius: 50%;
+}
+
+.slick-prev {
+  left: 10px; /* Position the left arrow inside the image */
+}
+
+.slick-next {
+  right: 10px; /* Position the right arrow inside the image */
+}
+
+.game-carousel-play-button {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  padding: 10px 20px;
+  background-color: rgba(0, 0, 0, 0.6); /* Semi-transparent background */
+  color: white; /* Text color */
+  font-size: 18px;
+  font-weight: bold;
+  border-radius: 5px; /* Slightly rounded edges */
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+  transition: background-color 0.3s ease;
+}
+
+.game-carousel-play-button:hover {
+  background-color: rgba(0, 0, 0, 0.8); /* Darken background on hover */
+}
+
+.game-carousel-tags {
+  position: absolute;
+  top: 85px;
+  left: 20px;
+  z-index: 1;
+}
+
+.game-genre {
+  font-size: 16px;
+  font-weight: bold;
+  color: white;
+  background-color: rgba(0, 0, 0, 0.6);
+  padding: 5px 10px;
+  border-radius: 5px;
+  margin: 4px
+
+}
+
+.game-tag {
+  font-size: 14px;
+  color: white;
+  background-color: rgba(0, 0, 0, 0.6);
+  padding: 5px 10px;
+  border-radius: 5px;
+  margin: 4px
+}
+
+.game-carousel .slick-next, .game-carousel .slick-prev {
+  display: none !important;
+}
+
+.game-carousel .slick-dots {
+  bottom: 25px;
+}
+
+.game-carousel .slick-slider {
+  padding-top: 0px;
+}

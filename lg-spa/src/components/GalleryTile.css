@@ -1,0 +1,22 @@
+.gallery-row-image-container {
+  width: 250px; /* Fixed width for each image */
+  height: 200px; /* Fixed height for each image */
+  margin: 8px;
+}
+
+.gallery-row-image {
+  width: 100%; /* Full width of the container */
+  height: 100%; /* Full height of the container */
+  object-fit: scale-down;
+}
+
+.gallery-row-image-container .selected {
+  margin: 6px;
+  border: 2px solid gray
+}
+
+.selected-tile {
+  box-sizing: border-box;
+  border: 2px solid #6e9fd1; /* Example style for selected tile */
+  transition: transform 0.3s, border 0.3s;
+}
