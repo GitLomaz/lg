@@ -4,6 +4,7 @@ import GameCarousel from './GameCarousel';
 import { Game } from '../types';
 import { GameContext } from '../useGameState';
 import GalleryRows from './GalleryRows';
+import './Gallery.css';
 
 
 const Gallery: React.FC = () => {
@@ -18,9 +19,15 @@ const Gallery: React.FC = () => {
 
   return (
     <GameContext.Provider value={{selectedGame, setSelectedGame}} >
-      <LeftMenu tags={gameTags} onTagClick={handleTagClick} />
-      <GameCarousel />
-      <GalleryRows tags={gameTags}/>
+      <div className='galleryContainer'>
+        <div className='leftMenu'>
+          <LeftMenu tags={gameTags} onTagClick={handleTagClick} />
+        </div>
+        <div className='galleryContent'>
+        <GameCarousel />
+        <GalleryRows tags={gameTags}/>
+        </div>
+      </div>
     </GameContext.Provider>
   );
 };

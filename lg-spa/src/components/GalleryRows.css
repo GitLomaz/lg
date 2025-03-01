@@ -3,7 +3,6 @@
   overflow-y: auto; /* Enable vertical scrolling when content exceeds the height */
   background-color: #282c34;
   box-sizing: border-box; /* Ensure padding is included in the element's total height/width */
-  margin-left: 230px;
 }
 
 /* Custom scrollbar for WebKit browsers (Chrome, Safari, etc.) */

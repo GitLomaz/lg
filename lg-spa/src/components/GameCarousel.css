@@ -1,8 +1,6 @@
 .game-carousel-container {
   position: relative;
   height: 300px; /* Carousel height */
-  margin-top: 60px; /* Match this to the header's height */
-  margin-left: 230px;
   overflow: hidden;
   background-color: #282c34;
 }

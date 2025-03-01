@@ -1,0 +1,15 @@
+.galleryContainer {
+  display: flex;
+}
+
+.leftMenu {
+  width: 230px;
+  background-color: #282c34;
+  color: white;
+}
+
+.galleryContent {
+  flex: 1; /* Takes up the remaining space */
+  background: #f4f4f4;
+  overflow: auto; /* Prevents content from overflowing */
+}
