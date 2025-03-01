@@ -30,6 +30,40 @@ export class GamesService {
   }
   */
 
+  findByAuthorAndId(author: string, gameString: string) {
+    const game = this.databaseService.game.findFirst({
+      where: {
+        game_string: gameString,
+        author: {
+          username: author
+        }
+      },
+      select: {
+        game_string: true,
+        author: true,
+        tags: true,
+        genre: true,
+        ratings: true,
+        plays: true,
+        favorites: true,
+        achievements: true,
+        assets: {
+          select: {
+            type: true,
+            path: true
+          }
+        },
+        translations: {
+          select: {
+            name: true,
+            description: true
+          }
+        }
+      }
+    })
+    return game
+  }
+
   async findAll() {
     const games = await this.databaseService.game.findMany({   
       select: {

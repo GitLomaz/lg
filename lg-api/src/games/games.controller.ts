@@ -26,6 +26,11 @@ export class GamesController {
     return this.gamesService.findOne(+id);
   }
 
+  @Get(':author/:gameString')
+  findByAuthorAndId(@Param('author') author: string, @Param('gameString') gameString: string) {
+    return this.gamesService.findByAuthorAndId(author, gameString);
+  }
+
   /*
   @Post()
   create(@Body() createGameDto: Prisma.gameCreateInput) {

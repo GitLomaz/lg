@@ -2,7 +2,7 @@ import './App.css';
 import Header from './components/Header';
 import Gallery from './components/Gallery';
 import { Route, Routes } from 'react-router-dom';
-import Game from './components/Game';
+import GamePage from './components/GamePage';
 
 function App() {
   return (
@@ -13,7 +13,7 @@ function App() {
       <div className="content">
       <Routes>
         <Route path="/" element={<Gallery />} />
-        <Route path="/game" element={<Game />} />
+        <Route path="/game/:author/:gameString" element={<GamePage />} />
       </Routes>
       </div>
     </div>
