@@ -1,6 +1,4 @@
 import React, {useEffect} from 'react';
-// import { useSelector } from 'react-redux';
-// import { RootState } from '../store';
 import Slider from 'react-slick';
 import './GameCarousel.css';
 import { useGameState } from '../useGameState';

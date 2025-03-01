@@ -1,0 +1,7 @@
+.game-container {
+  position: relative;
+  height: calc(100% - 60px); /* Carousel height */
+  margin-top: 60px; /* Match this to the header's height */
+  overflow: hidden;
+  background-color: #282c34;
+}
