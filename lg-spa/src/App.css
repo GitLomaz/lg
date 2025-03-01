@@ -21,8 +21,10 @@
 
 .content {
   flex: 1; /* Takes up the remaining space */
-  background: #f4f4f4;
   overflow: auto; /* Prevents content from overflowing */
+  background-color: #282c34; /* Dark background color */
+  color: white; /* White text */
+  padding: 10px;
 }
 
 .App-logo {

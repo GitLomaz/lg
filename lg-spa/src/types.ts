@@ -1,6 +1,7 @@
 export interface Game {
   game_string: string;
   author: string;
+  iframe: string,
   tags: string[];
   genre: string;
   ratings: {
