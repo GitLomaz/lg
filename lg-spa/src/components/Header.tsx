@@ -4,7 +4,9 @@ import './Header.css';
 const Header: React.FC = () => {
   return (
     <div className='app-header'>
-      <h1>Lomaz Games</h1>
+      <a href='/'>
+        <h1>Lomaz Games</h1>
+      </a>
     </div>
   );
 };

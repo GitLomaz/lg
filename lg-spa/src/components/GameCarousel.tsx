@@ -44,7 +44,7 @@ const GameCarousel: React.FC = () => {
           {selectedGame.plays} Play{selectedGame.plays === 1 ? '' : 's'}, &nbsp;
           {selectedGame.favorites} Favorite{selectedGame.favorites === 1 ? '' : 's'}
         </div>
-        <div className="game-carousel-play-button">Play Now &nbsp;&nbsp;<span className="icon">▶️</span></div>
+        <a href={`game/${selectedGame.author}/${selectedGame.game_string}`}><div className="game-carousel-play-button">Play Now &nbsp;&nbsp;<span className="icon">▶️</span></div></a>
         <Slider {...settings}>
           {selectedGame.screenshots.map((image, index) => (
             <div key={index}>
