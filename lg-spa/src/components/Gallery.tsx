@@ -19,7 +19,7 @@ const Gallery: React.FC = () => {
 
   return (
     <GameContext.Provider value={{selectedGame, setSelectedGame}} >
-      <div className='galleryContainer'>
+      <div className='flex-row'>
         <div className='leftMenu'>
           <LeftMenu tags={gameTags} onTagClick={handleTagClick} />
         </div>

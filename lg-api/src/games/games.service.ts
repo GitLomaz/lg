@@ -41,6 +41,9 @@ export class GamesService {
       select: {
         game_string: true,
         author: true,
+        iframe: true,
+        width: true,
+        height: true,
         tags: true,
         genre: true,
         ratings: true,

@@ -1,7 +1,9 @@
 export interface Game {
-  game_string: string;
-  author: string;
+  game_string: string,
+  author: string,
   iframe: string,
+  width: number,
+  height: number,
   tags: string[];
   genre: string;
   ratings: {

@@ -6,7 +6,7 @@ import GamePage from './components/GamePage';
 
 function App() {
   return (
-    <div className="app">
+    <div className="app flex-column">
       <div className="header">
         <Header />
       </div>
