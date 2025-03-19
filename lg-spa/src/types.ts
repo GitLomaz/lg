@@ -33,3 +33,9 @@ export interface Translation {
   name: string;
   description: string;
 }
+
+export interface User {
+  username: string;
+  avatarUrl?: string;
+  token: string;
+};
