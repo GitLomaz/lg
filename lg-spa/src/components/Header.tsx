@@ -1,7 +1,11 @@
 import React from 'react';
 import './Header.css';
+import { useUserState } from '../contexts/useUserState';
 
 const Header: React.FC = () => {
+  const { user, setUser } = useUserState()
+
+
   return (
     <div className='app-header'>
       <a href='/'>
