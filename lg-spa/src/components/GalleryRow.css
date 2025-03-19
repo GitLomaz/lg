@@ -18,6 +18,6 @@
   font-size: 18px;
 }
 
-.slick-slider {
-  padding-top: 25px;
+.gallery-row .slick-slider {
+  display: inline-grid;
 }

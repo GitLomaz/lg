@@ -1,7 +1,7 @@
 import React, {useEffect} from 'react';
 import Slider from 'react-slick';
 import './GameCarousel.css';
-import { useGameState } from '../useGameState';
+import { useGameState } from '../contexts/useGameState';
 
  
 const GameCarousel: React.FC = () => {

@@ -31,7 +31,6 @@
   overflow: auto; /* Prevents content from overflowing */
   background-color: #282c34; /* Dark background color */
   color: white; /* White text */
-  padding: 10px;
 }
 
 .App-logo {

@@ -1,6 +1,6 @@
 import './GalleryTile.css';
 import { GameRow } from '../types';
-import { useGameState } from '../useGameState';
+import { useGameState } from '../contexts/useGameState';
 
 // Define props interface
 interface GalleryTileProps {

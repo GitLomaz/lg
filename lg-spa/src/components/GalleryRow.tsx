@@ -5,7 +5,7 @@ import './GalleryRow.css';
 import GalleryTile from './GalleryTile';
 import REACT_APP_API_URL from "../config";
 import axios from 'axios';
-import { useGameState } from '../useGameState';
+import { useGameState } from '../contexts/useGameState';
 
 // Define props interface
 interface GalleryRowProps {

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import LeftMenu from './LeftMenu';
 import GameCarousel from './GameCarousel';
 import { Game } from '../types';
-import { GameContext } from '../useGameState';
+import { GameContext } from '../contexts/useGameState';
 import GalleryRows from './GalleryRows';
 import './Gallery.css';
 
