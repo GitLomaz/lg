@@ -18,8 +18,8 @@ const GalleryTile: React.FC<GalleryTileProps> = ({ game }) => {
     <div
       key={game.game_string} 
       className={`gallery-row-image-container ${selectedGame?.key === game.key ? 'selected-tile' : ''}`} 
-      onClick={() => onTileClick(game)
-    }>
+      onClick={() => onTileClick(game)}
+    >
       <img src={game.tile} alt={game.game_string} className='gallery-row-image' />
     </div>
   )
