@@ -3,6 +3,13 @@
   padding: 0;
 }
 
+#logo {
+  width: 40px;
+  height: 40px;
+  background-image: url('../public/logo.png');
+  background-size: contain;
+}
+
 .app {
   height: 100vh; /* Ensures it takes the full viewport height */
 }
@@ -14,6 +21,10 @@
 
 .flex-row {
   display: flex;
+}
+
+.flex-item-1 {
+  flex-grow: 1
 }
 
 .header {
