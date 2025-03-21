@@ -45,7 +45,6 @@ const GalleryRow: React.FC<GalleryRowProps> = ({ genre }) => {
           key: game.game_string + '_' + genre.toLowerCase()
         }
       })
-      console.log(games[0])
       setCurrentGames(games);
       if (genre === 'Popular') {
         setSelectedGame(games[0])
@@ -66,7 +65,7 @@ const GalleryRow: React.FC<GalleryRowProps> = ({ genre }) => {
       <div className='gallery-row-view-all'>View All</div>
       {<Slider {...settings}>
         {currentGames.map((game) => (
-          <GalleryTile game={game} />
+          <GalleryTile key={game.game_string} game={game} />
         ))}
       </Slider> }
     </div>

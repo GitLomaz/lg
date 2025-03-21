@@ -16,7 +16,6 @@ const GalleryTile: React.FC<GalleryTileProps> = ({ game }) => {
 
   return (
     <div
-      key={game.game_string} 
       className={`gallery-row-image-container ${selectedGame?.key === game.key ? 'selected-tile' : ''}`} 
       onClick={() => onTileClick(game)}
     >

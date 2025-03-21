@@ -21,13 +21,13 @@ const GameCarousel: React.FC = () => {
 
   //const selectedGame = useSelector((state: RootState) => state.selectedGame.game);
 
-  useEffect(() => {
-    if (selectedGame) {
-      console.log("Selected Game has changed:", selectedGame);
-    } else {
-      console.log("No game selected");
-    }
-  }, [selectedGame]); // The effect will run when selectedGame changes
+  // useEffect(() => {
+  //   if (selectedGame) {
+  //     console.log("Selected Game has changed:", selectedGame);
+  //   } else {
+  //     console.log("No game selected");
+  //   }
+  // }, [selectedGame]); // The effect will run when selectedGame changes
 
   return selectedGame ? (
     <div className='game-carousel-container'>
@@ -36,8 +36,8 @@ const GameCarousel: React.FC = () => {
         <div className='game-carousel-description'>{selectedGame.translations[0].description}</div>
         <div className='game-carousel-tags'>
           <span className='game-genre'>{selectedGame.genre}</span>
-          {selectedGame.tags.map((tag) => (
-            <span className='game-tag'>{tag}</span>
+          {selectedGame.tags.map((tag: string) => (
+            <span key={tag} className='game-tag'>{tag}</span>
           ))}
         </div>
         <div className='game-carousel-stats'>
@@ -46,7 +46,7 @@ const GameCarousel: React.FC = () => {
         </div>
         <a href={`game/${selectedGame.author}/${selectedGame.game_string}`}><div className="game-carousel-play-button">Play Now &nbsp;&nbsp;<span className="icon">▶️</span></div></a>
         <Slider {...settings}>
-          {selectedGame.screenshots.map((image, index) => (
+          {selectedGame.screenshots.map((image: string, index: number) => (
             <div key={index}>
               <img src={image} alt={`Game ${index + 1}`} />
             </div>

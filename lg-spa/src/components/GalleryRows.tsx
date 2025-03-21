@@ -10,7 +10,7 @@ const GalleryRows: React.FC<GalleryRowsProps> = ({ tags }) => {
   return (
     <div className='gallery-rows'>
       {tags.map((tag) => (
-        <GalleryRow genre={tag} />
+        <GalleryRow key={tag} genre={tag} />
       ))}
     </div>
   );
