@@ -1,10 +1,18 @@
 import React, { useState } from 'react';
+import { Formik, Form, Field, ErrorMessage } from 'formik';
+import * as Yup from 'yup';
 import './LoginModal.css';
 
 interface ModalProps {
   isOpen: boolean;
   onClose: () => void;
 }
+
+const loginSchema = Yup.object().shape({
+  username: Yup.string().required('Email or Username is required'),
+  password: Yup.string().required('Password is required'),
+});
+
 
 const LoginModal: React.FC<ModalProps> = ( { isOpen, onClose } ) => {
   const [modalMode, setModalMode] = useState<string>('login')
@@ -22,15 +30,39 @@ const LoginModal: React.FC<ModalProps> = ( { isOpen, onClose } ) => {
           <>
           <div className="modal-header">Log In</div>
           <div className="modal-form">
-            <label htmlFor="username">Username or Email Address</label>
-            <input type="text" id="username" name="username" required />
-            <label htmlFor="password">Password</label>
-            <input type="password" id="password" name="password" required />
-            <div className="remember-container">
-              <input type="checkbox" id="remember" />
-              <label htmlFor="remember">Remember on this device</label>
-            </div>
-            <button type="submit">Login</button>
+            <Formik
+              initialValues={{ username: '', password: '' }}
+              validationSchema={loginSchema}
+              validateOnChange={false}
+              validateOnBlur={false}
+              onSubmit={(values) => {
+                console.log(values);
+              }}
+            >
+              {({ errors, touched }) => (
+                <Form>
+                  <div>
+                    <label>Username or Email Address</label>
+                    <Field name="username" type="text" />
+                    <div className="error-message-container">
+                      <ErrorMessage name="username" component="div" className="error-message" />
+                    </div>
+                  </div>
+                  <div>
+                    <label>Password</label>
+                    <Field name="password" type="password" />
+                    <div className="error-message-container">
+                      <ErrorMessage name="password" component="div" className="error-message" />
+                    </div>
+                  </div>
+                  <div className="remember-container">
+                    <input type="checkbox" id="remember" />
+                    <label htmlFor="remember">Remember on this device</label>
+                  </div>
+                  <button type="submit">Login</button>
+                </Form>
+              )}
+            </Formik>
             <div>Don't have an account? <span onClick={() => setModalMode('register')} className='register-click'>click here</span> to register</div>
           </div>
         </>:<>
