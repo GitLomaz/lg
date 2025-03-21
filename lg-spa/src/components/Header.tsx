@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import './Header.css';
-import Modal from './modals/LoginModal'
+import LoginModal from './modals/LoginModal'
 import { useUserState } from '../contexts/useUserState';
 
 const Header: React.FC = () => {
@@ -23,7 +23,7 @@ const Header: React.FC = () => {
         </a>
       </div>
       <div id='auth' className='flex-item-1' onClick={() => promptLogin()}>Log In</div>
-      <Modal isOpen={isOpen} onClose={() => setIsOpen(false)}></Modal>
+      <LoginModal isOpen={isOpen} onClose={() => setIsOpen(false)}></LoginModal>
     </div>
   );
 };
