@@ -9,10 +9,33 @@ interface ModalProps {
 }
 
 const loginSchema = Yup.object().shape({
-  username: Yup.string().required('Email or Username is required'),
-  password: Yup.string().required('Password is required'),
+  loginUsername: Yup.string().required('Email or Username is required'),
+  loginPassword: Yup.string().required('Password is required'),
 });
 
+const registerSchema = Yup.object().shape({
+  username: Yup.string()
+    .required("Username is required")
+    .min(3, "Username must be at least 3 characters")
+    .max(20, "Username must not exceed 20 characters")
+    .matches(/^[a-zA-Z0-9]+$/, "Username can only contain letters and numbers"),
+
+  email: Yup.string()
+    .required("Email is required")
+    .email("Invalid email address"),
+
+  password: Yup.string()
+    .required("Password is required")
+    .min(8, "Password must be at least 8 characters")
+    .matches(/[A-Z]/, "Password must contain at least one uppercase letter")
+    .matches(/[a-z]/, "Password must contain at least one lowercase letter")
+    .matches(/[0-9]/, "Password must contain at least one number")
+    .matches(/[@$!%*?&]/, "Password must contain at least one special character"),
+
+  confirmPassword: Yup.string()
+    .required("Please confirm your password")
+    .oneOf([Yup.ref("password")], "Passwords must match"),
+});
 
 const LoginModal: React.FC<ModalProps> = ( { isOpen, onClose } ) => {
   const [modalMode, setModalMode] = useState<string>('login')
@@ -20,6 +43,10 @@ const LoginModal: React.FC<ModalProps> = ( { isOpen, onClose } ) => {
     setModalMode('login')
     onClose()
   }
+
+  // function resetAndSetModalMode(mode: string) {
+  //   setModalMode(mode)
+  // }
 
   if (!isOpen) return <></>
   return (
@@ -31,7 +58,9 @@ const LoginModal: React.FC<ModalProps> = ( { isOpen, onClose } ) => {
           <div className="modal-header">Log In</div>
           <div className="modal-form">
             <Formik
-              initialValues={{ username: '', password: '' }}
+              key={'login'}
+              enableReinitialize
+              initialValues={{ loginUsername: '', loginPassword: '' }}
               validationSchema={loginSchema}
               validateOnChange={false}
               validateOnBlur={false}
@@ -39,20 +68,20 @@ const LoginModal: React.FC<ModalProps> = ( { isOpen, onClose } ) => {
                 console.log(values);
               }}
             >
-              {({ errors, touched }) => (
+              {() => (
                 <Form>
                   <div>
                     <label>Username or Email Address</label>
-                    <Field name="username" type="text" />
-                    <div className="error-message-container">
-                      <ErrorMessage name="username" component="div" className="error-message" />
+                    <Field name="loginUsername" type="text" />
+                    <div id="loginUsernameError" className="error-message-container">
+                      <ErrorMessage name="loginUsername" component="div" className="error-message" />
                     </div>
                   </div>
                   <div>
                     <label>Password</label>
-                    <Field name="password" type="password" />
+                    <Field name="loginPassword" type="password" />
                     <div className="error-message-container">
-                      <ErrorMessage name="password" component="div" className="error-message" />
+                      <ErrorMessage name="loginPassword" component="div" className="error-message" />
                     </div>
                   </div>
                   <div className="remember-container">
@@ -63,20 +92,56 @@ const LoginModal: React.FC<ModalProps> = ( { isOpen, onClose } ) => {
                 </Form>
               )}
             </Formik>
-            <div>Don't have an account? <span onClick={() => setModalMode('register')} className='register-click'>click here</span> to register</div>
+            <div>Don't have an account? <span onClick={() =>  setModalMode('register')} className='register-click'>click here</span> to register</div>
           </div>
         </>:<>
           <div className="modal-header">Create Account</div>
           <div className="modal-form">
-            <label htmlFor="username">Username</label>
-            <input type="text" id="username" name="username" required />            
-            <label htmlFor="emailAddress">Email Address</label>
-            <input type="text" id="emailAddress" name="emailAddress" required />
-            <label htmlFor="password">Password</label>
-            <input type="password" id="password" name="password" required />
-            <label htmlFor="retypePassword">Retype Password</label>
-            <input type="password" id="retypePassword" name="retypePassword" required />
-            <button type="submit">Register</button>
+          <Formik
+              key={'register'}
+              enableReinitialize
+              initialValues={{ username: '', email: '', password: '', confirmPassword: '' }}
+              validationSchema={registerSchema}
+              validateOnChange={false}
+              validateOnBlur={false}
+              onSubmit={(values) => {
+                console.log(values);
+              }}
+          >
+              {() => (
+                <Form>
+                  <div>
+                    <label>Username</label>
+                    <Field name="username" type="text" />
+                    <div id="usernameError" className="error-message-container">
+                      <ErrorMessage name="username" component="div" className="error-message" />
+                    </div>
+                  </div>
+                  <div>
+                    <label>Email Address</label>
+                    <Field name="email" type="text" />
+                    <div className="error-message-container">
+                      <ErrorMessage name="email" component="div" className="error-message" />
+                    </div>
+                  </div>
+                  <div>
+                    <label>Password</label>
+                    <Field name="password" type="password" />
+                    <div className="error-message-container">
+                      <ErrorMessage name="password" component="div" className="error-message" />
+                    </div>
+                  </div>
+                  <div>
+                    <label>Confirm Password</label>
+                    <Field name="confirmPassword" type="password" />
+                    <div className="error-message-container">
+                      <ErrorMessage name="confirmPassword" component="div" className="error-message" />
+                    </div>
+                  </div>
+                  <button type="submit">Register</button>
+                </Form>
+              )}
+            </Formik>
             <div>Already have an account? <span onClick={() => setModalMode('login')} className='register-click'>click here</span></div>
           </div>
         </>
