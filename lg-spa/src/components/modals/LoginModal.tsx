@@ -37,16 +37,16 @@ const registerSchema = Yup.object().shape({
     .oneOf([Yup.ref("password")], "Passwords must match"),
 });
 
+const registerUser = (values: any) => {
+  console.log('registering', values)
+}
+
 const LoginModal: React.FC<ModalProps> = ( { isOpen, onClose } ) => {
   const [modalMode, setModalMode] = useState<string>('login')
   function resetAndClose() {
     setModalMode('login')
     onClose()
   }
-
-  // function resetAndSetModalMode(mode: string) {
-  //   setModalMode(mode)
-  // }
 
   if (!isOpen) return <></>
   return (
@@ -104,9 +104,7 @@ const LoginModal: React.FC<ModalProps> = ( { isOpen, onClose } ) => {
               validationSchema={registerSchema}
               validateOnChange={false}
               validateOnBlur={false}
-              onSubmit={(values) => {
-                console.log(values);
-              }}
+              onSubmit={(values) => registerUser(values)}
           >
               {() => (
                 <Form>
