@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
+import REACT_APP_API_URL from "../../config";
 import * as Yup from 'yup';
 import './LoginModal.css';
+import axios from 'axios';
 
 interface ModalProps {
   isOpen: boolean;
@@ -37,12 +39,25 @@ const registerSchema = Yup.object().shape({
     .oneOf([Yup.ref("password")], "Passwords must match"),
 });
 
-const registerUser = (values: any) => {
-  console.log('registering', values)
-}
-
 const LoginModal: React.FC<ModalProps> = ( { isOpen, onClose } ) => {
   const [modalMode, setModalMode] = useState<string>('login')
+  const [isLoading, setIsLoading] = useState<boolean>(false)
+
+  const registerUser = async (values: any) => {
+    console.log('registering')
+    setIsLoading(true)
+    let URL = `${REACT_APP_API_URL}/auth/register`
+    try {
+      const response = await axios.post(URL, values);
+      console.log(response)
+    } catch (error: any) {
+      const errorMessage = error.response.data.message
+      console.error('Failed to create user:', errorMessage);
+    } finally {
+      setIsLoading(false)
+    }
+  }
+
   function resetAndClose() {
     setModalMode('login')
     onClose()
@@ -92,7 +107,7 @@ const LoginModal: React.FC<ModalProps> = ( { isOpen, onClose } ) => {
                 </Form>
               )}
             </Formik>
-            <div>Don't have an account? <span onClick={() =>  setModalMode('register')} className='register-click'>click here</span> to register</div>
+            <div>Don't have an account? <span onClick={() => {if (!isLoading) {setModalMode('register')}}} className='register-click'>click here</span> to register</div>
           </div>
         </>:<>
           <div className="modal-header">Create Account</div>
@@ -140,7 +155,7 @@ const LoginModal: React.FC<ModalProps> = ( { isOpen, onClose } ) => {
                 </Form>
               )}
             </Formik>
-            <div>Already have an account? <span onClick={() => setModalMode('login')} className='register-click'>click here</span></div>
+            <div>Already have an account? <span onClick={() => {if (!isLoading) {setModalMode('login')}}} className='register-click'>click here</span></div>
           </div>
         </>
         }
