@@ -44,7 +44,6 @@ const LoginModal: React.FC<ModalProps> = ( { isOpen, onClose } ) => {
   const [isLoading, setIsLoading] = useState<boolean>(false)
 
   const registerUser = async (values: any) => {
-    console.log('registering')
     setIsLoading(true)
     let URL = `${REACT_APP_API_URL}/auth/register`
     try {
