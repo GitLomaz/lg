@@ -7,7 +7,7 @@ const RESPONSE_CODES = {
   INVALID_TOKEN: { code: 'INVALID_TOKEN', message: 'Invalid or Expired Token', success: false },
 
   ACCOUNT_REGISTERED: { code: 'ACCOUNT_REGISTERED', message: 'Account Created', success: true },
-  ACCOUNT_VERIFIED: { code: 'ACCOUNT_VERIFIED', message: 'Account Verified', success: true }
+  ACCOUNT_VERIFIED: { code: 'ACCOUNT_VERIFIED', message: 'Account Verified, You can now log in!', success: true }
 }
 
 export interface APIResponse {

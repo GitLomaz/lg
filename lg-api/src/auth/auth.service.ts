@@ -1,4 +1,5 @@
 import { Injectable, BadRequestException } from '@nestjs/common';
+import { generateServerResponse } from 'src/common/responseCodes';
 import { DatabaseService } from 'src/database/database.service';
 
 @Injectable()
@@ -9,7 +10,7 @@ export class AuthService {
 
   async verifyEmail(token: string) {
     const user = await this.databaseService.user.findUnique({ where: { verification_token: token } });
-    if (!user) throw new BadRequestException('Invalid or expired token');
+    if (!user) return generateServerResponse('INVALID_TOKEN');
 
     await this.databaseService.user.update({
       where: { id: user.id },
@@ -18,7 +19,6 @@ export class AuthService {
         verification_token: null,
       },
     });
-
-    return { message: 'Email verified successfully' };
+    return generateServerResponse('ACCOUNT_VERIFIED');
   }
 }
