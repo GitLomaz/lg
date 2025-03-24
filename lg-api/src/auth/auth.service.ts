@@ -4,6 +4,7 @@ import { MailService } from 'src/mail/mail.service';
 import * as bcrypt from 'bcryptjs';
 import { Request, Response } from 'express';
 import { randomUUID } from 'crypto';
+import { generateAuthResponse } from '../common/responseCodes';
 import { user } from '@prisma/client';
 
 @Injectable()
@@ -83,10 +84,14 @@ export class AuthService {
 
   async register(username: string, email: string, password: string) {
     const existingEmail = await this.databaseService.user.findUnique({ where: { email } });
-    if (existingEmail) throw new BadRequestException('Email already in use');
+    if (existingEmail) {
+      return generateAuthResponse('EMAIL_TAKEN');
+    }
 
     const existingUser = await this.databaseService.user.findUnique({ where: { username } });
-    if (existingUser) throw new BadRequestException('Username is taken');
+    if (existingUser) {
+      return generateAuthResponse('USERNAME_TAKEN');
+    }
 
     const hashedPassword = await bcrypt.hash(password, 10);
     const verificationToken = randomUUID();
@@ -99,6 +104,9 @@ export class AuthService {
       },
     });
 
+    console.log('===user===')
+    console.log(user)
+
     await this.databaseService.passwords.create({
       data: {
         user_id: user.id,
@@ -107,7 +115,7 @@ export class AuthService {
     });
 
     await this.mailService.sendVerificationEmail(email, verificationToken);
-    return { message: 'Verification email sent' };
+    return generateAuthResponse('ACCOUNT_REGISTERED', {email: email});
   }
 
   async verifyEmail(token: string) {

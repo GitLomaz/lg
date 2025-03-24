@@ -9,7 +9,7 @@ datasource db {
 }
 
 model auth_providers {
-  id               String    @id @default("UUID()") @db.Char(36)
+  id               String    @id @default(uuid()) @db.Char(36)
   user_id          Int
   provider_name    String    @db.VarChar(255)
   provider_user_id String    @db.VarChar(255)
@@ -89,7 +89,7 @@ model achievement_translation {
 
 
 model game_comment {
-  id                 String              @id @default("UUID()") @db.Char(36)
+  id                 String              @id @default(uuid()) @db.Char(36)
   game_id            Int
   user_id            Int
   parent             String?             @db.Char(36)
@@ -150,7 +150,7 @@ model game_translation {
 }
 
 model passwords {
-  id            String    @id @default("UUID()") @db.Char(36)
+  id            String    @id @default(uuid()) @db.Char(36)
   user_id       Int
   password_hash String    @db.Text
   created_at    DateTime? @default(now()) @db.Timestamp(0)

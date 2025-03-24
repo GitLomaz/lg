@@ -112,3 +112,8 @@
   color: red;
   font-size: 12px;
 }
+
+.disabled {
+  cursor: default;
+  background-color: #586379;
+}

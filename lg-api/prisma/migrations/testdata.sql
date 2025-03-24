@@ -1,5 +1,5 @@
-INSERT INTO `lomazGames`.`user` (`id`, `username`, `developer`, `email`) VALUES ('1', 'Lomaz', '1', 'ianlomas0@gmail.com');
-INSERT INTO `lomazGames`.`user` (`id`, `username`, `developer`, `email`) VALUES ('2', 'NotLomaz', '0', 'ianlomas1@gmail.com');
+INSERT INTO `lomazGames`.`user` (`id`, `username`, `developer`, `email`, `is_verified`) VALUES ('1', 'Lomaz', '1', 'ianlomas1@gmail.com', '1');
+INSERT INTO `lomazGames`.`passwords` (`user_id`, `password_hash`) VALUES ('1', '$2b$10$Tt9r5bZv8JjJCcwD3Ko.9.MFbmC1wI2sUXBr.lZWFdVb6K3ZHn6ui');
 
 INSERT INTO `lomazGames`.`tag` (`id`, `name`) VALUES ('1', 'Short');
 INSERT INTO `lomazGames`.`tag` (`id`, `name`) VALUES ('2', 'Single Player');
