@@ -1,36 +1,21 @@
-import { Controller, Post, Req, Res, UseGuards, Body, Query, Get } from '@nestjs/common';
+import { Controller, Post, Body, Query, Get } from '@nestjs/common';
 import { AuthService } from './auth.service';
-import { Request, Response } from 'express';
-import { CsrfGuard } from '../middlewares/csrf.guard';
-import * as passport from 'passport';
+import { UserService } from '../user/user.service'
 
 @Controller('auth')
 export class AuthController {
-  constructor(private readonly authService: AuthService) {}
-
-  @Post('login')
-  login(@Req() req: Request, @Res() res: Response) {
-
-  }
-
-  @Post('logout')
-  async logout(@Req() req: Request, @Res() res: Response) {
-    return this.authService.logout(req, res);
-  }
+  constructor(
+    private readonly authService: AuthService,
+    private readonly userService: UserService
+  ) {}
 
   @Post('register')
   async register(@Body() body) {
-    return this.authService.register(body.username, body.email, body.password);
+    return this.userService.register(body.username, body.email, body.password);
   }
 
   @Get('verify')
   async verifyEmail(@Query('token') token: string) {
     return this.authService.verifyEmail(token);
-  }
-
-  @Post('protected')
-  @UseGuards(CsrfGuard)
-  async protectedEndpoint() {
-    return { message: 'You accessed a protected route' };
   }
 }
