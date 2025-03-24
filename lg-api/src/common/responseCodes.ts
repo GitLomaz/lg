@@ -13,7 +13,7 @@ export interface APIResponse {
   success: boolean;
 }
 
-export function generateAuthResponse(code: string, data?: any): APIResponse {
+export function generateServerResponse(code: string, data?: any): APIResponse {
   if (!RESPONSE_CODES[code]) {
     throw new HttpException('Invalid response code', HttpStatus.INTERNAL_SERVER_ERROR);
   }
