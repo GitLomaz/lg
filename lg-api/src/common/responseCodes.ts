@@ -3,6 +3,7 @@ import { HttpException, HttpStatus } from '@nestjs/common';
 const RESPONSE_CODES = {
   USERNAME_TAKEN: { code: 'USERNAME_TAKEN', message: 'Username is taken', success: false },
   EMAIL_TAKEN: { code: 'EMAIL_TAKEN', message: 'Email Address is in use already', success: false },
+  LOGIN_FAILED: { code: 'LOGIN_FAILED', message: 'Login or Password incorrect', success: false },
 
   ACCOUNT_REGISTERED: { code: 'ACCOUNT_REGISTERED', message: 'Account Created', success: true }
 }

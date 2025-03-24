@@ -44,7 +44,6 @@ const registerSchema = Yup.object().shape({
 const LoginModal: React.FC<ModalProps> = ( { isOpen, onClose } ) => {
   const [modalMode, setModalMode] = useState<string>('login')
   const [isLoading, setIsLoading] = useState<boolean>(false)
-  const [registerEmail, setRegisterEmail] = useState<string>('')
 
   const registerUser = async (values: any, setFieldError: any) => {
     setIsLoading(true)
@@ -64,7 +63,36 @@ const LoginModal: React.FC<ModalProps> = ( { isOpen, onClose } ) => {
           break;
         case 'ACCOUNT_REGISTERED':
           setModalMode('registered')
-          setRegisterEmail(response.data.data)
+          break;
+        default:
+          setFieldError("email", GENERIC_ERROR);
+          break;
+      }
+    } catch (error: any) {
+      setFieldError("email", GENERIC_ERROR);
+    } finally {
+      setIsLoading(false)
+    }
+  }
+
+  const loginUser = async (values: any, setFieldError: any) => {
+    setIsLoading(true)
+    let URL = `${REACT_APP_API_URL}/auth/register`
+    try {
+      const response = await axios.post(URL, values);
+      if (!response?.data?.data) {
+        setFieldError("email", GENERIC_ERROR);
+        return
+      }
+      switch (response.data.code) {
+        case 'USERNAME_TAKEN':
+          setFieldError("username", response.data.data);
+          break;
+        case 'EMAIL_TAKEN':
+          setFieldError("email", response.data.data);
+          break;
+        case 'ACCOUNT_REGISTERED':
+          setModalMode('registered')
           break;
         default:
           setFieldError("email", GENERIC_ERROR);
@@ -100,8 +128,8 @@ const LoginModal: React.FC<ModalProps> = ( { isOpen, onClose } ) => {
                 validationSchema={loginSchema}
                 validateOnChange={false}
                 validateOnBlur={false}
-                onSubmit={(values) => { {if (!isLoading) {console.log(values)}};
-                }}
+                onSubmit={(values, { setFieldError }) => { {if (!isLoading) {loginUser(values, setFieldError)}};
+              }}
               >
                 {() => (
                   <Form>
@@ -135,13 +163,14 @@ const LoginModal: React.FC<ModalProps> = ( { isOpen, onClose } ) => {
             <div className="modal-header">Create Account</div>
             <div className="modal-form">
             <Formik
-                key={'register'}
-                enableReinitialize
-                initialValues={{ username: '', email: '', password: '', confirmPassword: '' }}
-                validationSchema={registerSchema}
-                validateOnChange={false}
-                validateOnBlur={false}
-                onSubmit={(values, { setFieldError }) => {if (!isLoading) {registerUser(values, setFieldError)}}}
+              key={'register'}
+              enableReinitialize
+              initialValues={{ username: '', email: '', password: '', confirmPassword: '' }}
+              validationSchema={registerSchema}
+              validateOnChange={false}
+              validateOnBlur={false}
+              onSubmit={(values, { setFieldError }) => {if (!isLoading) {registerUser(values, setFieldError)}
+            }}
             >
                 {() => (
                   <Form>

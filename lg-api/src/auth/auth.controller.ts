@@ -10,18 +10,7 @@ export class AuthController {
 
   @Post('login')
   login(@Req() req: Request, @Res() res: Response) {
-    passport.authenticate('local', (err, user) => {
-      if (err || !user) {
-        return res.status(401).json({ message: 'Invalid credentials' });
-      }
 
-      req.login(user, (loginErr) => {
-        if (loginErr) {
-          return res.status(500).json({ message: 'Login failed' });
-        }
-        return res.json({ message: 'Login successful', user });
-      });
-    })(req, res); // Trigger passport's middleware for local strategy
   }
 
   @Post('logout')
