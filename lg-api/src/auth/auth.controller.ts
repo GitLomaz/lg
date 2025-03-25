@@ -3,6 +3,7 @@ import { Request } from 'express';
 import { AuthService } from './auth.service';
 import { UserService } from '../user/user.service'
 import { AuthenticatedGuard, LocalAuthGuard } from './LocalGuard';
+import { APIResponse, generateServerResponse } from 'src/common/responseCodes';
 
 @Controller('auth')
 export class AuthController {
@@ -21,19 +22,17 @@ export class AuthController {
     return this.authService.verifyEmail(token);
   }
 
-  @UseGuards(LocalAuthGuard)
+  // @UseGuards(LocalAuthGuard)
   @Post('login')
   async getUserByEmailOrUsername(@Body() body) {
     let user = await this.authService.validateUser(body.username, body.password)
-    return user
+    if ((user as APIResponse).code) {
+      return user;
+    }
+    return this.userService.sanitizeUser(user);
   }
 
-  @Get('')
-  async getAuthSession(@Session() session: Record<string, any>) {
-    session.authenticated = true
-    return session
-  }
-
+  // Example for AuthenticatedGuard
   @UseGuards(AuthenticatedGuard)
   @Get('status')
   async getAuthStatus(@Req() req: Request) {
