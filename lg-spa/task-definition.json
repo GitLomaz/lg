@@ -1,0 +1,23 @@
+{
+  "family": "lg-spa-task",
+  "networkMode": "awsvpc",
+  "executionRoleArn": "arn:aws:iam::613574669982:role/ecsTaskExecutionRole",
+  "containerDefinitions": [
+    {
+      "name": "react-container",
+      "image": "613574669982.dkr.ecr.us-east-2.amazonaws.com/lg-spa:latest",
+      "memory": 512,
+      "cpu": 256,
+      "essential": true,
+      "portMappings": [
+        {
+          "containerPort": 80,
+          "hostPort": 80
+        }
+      ]
+    }
+  ],
+  "requiresCompatibilities": ["FARGATE"],
+  "cpu": "256",
+  "memory": "512"
+}

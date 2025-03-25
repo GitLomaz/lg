@@ -1,25 +1,13 @@
-# Step 1: Build the React App
-FROM node:18 AS build
+FROM node:18
+
 WORKDIR /app
-COPY package.json package-lock.json ./
+
+COPY package.json .
+
 RUN npm install
+
 COPY . .
 
-# Set up the API URL for React (can be overridden via docker-compose or runtime)
-ARG REACT_APP_API_URL
-ENV REACT_APP_API_URL=${REACT_APP_API_URL}
-RUN npm run build
+EXPOSE 3000
 
-# Step 2: Serve with Nginx
-FROM nginx:alpine
-
-WORKDIR /usr/share/nginx/html
-
-# Copy the built React app from the build stage
-COPY --from=build /app/build .
-
-# Copy Nginx template configuration
-COPY nginx.conf.template /etc/nginx/conf.d/default.conf.template
-
-# Use envsubst to replace environment variables and generate the final nginx.conf
-CMD envsubst '$REACT_APP_API_URL' < /etc/nginx/conf.d/default.conf.template > /etc/nginx/conf.d/default.conf && nginx -g 'daemon off;'
+CMD ["npm", "start"]
