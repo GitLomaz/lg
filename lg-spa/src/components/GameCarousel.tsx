@@ -2,6 +2,7 @@ import React, {useEffect} from 'react';
 import Slider from 'react-slick';
 import './GameCarousel.css';
 import { useGameState } from '../contexts/useGameState';
+import { Link } from 'react-router-dom';
 
  
 const GameCarousel: React.FC = () => {
@@ -44,7 +45,11 @@ const GameCarousel: React.FC = () => {
           {selectedGame.plays} Play{selectedGame.plays === 1 ? '' : 's'}, &nbsp;
           {selectedGame.favorites} Favorite{selectedGame.favorites === 1 ? '' : 's'}
         </div>
-        <a href={`game/${selectedGame.author}/${selectedGame.game_string}`}><div className="game-carousel-play-button">Play Now &nbsp;&nbsp;<span className="icon">▶️</span></div></a>
+        <Link to={`game/${selectedGame.author}/${selectedGame.game_string}`}>
+          <div className="game-carousel-play-button">
+            Play Now &nbsp;&nbsp;<span className="icon">▶️</span>
+          </div>
+        </Link>
         <Slider {...settings}>
           {selectedGame.screenshots.map((image: string, index: number) => (
             <div key={index}>

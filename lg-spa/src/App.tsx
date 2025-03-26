@@ -1,36 +1,42 @@
 import './App.css';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import Header from './components/Header';
 import Gallery from './components/Gallery';
-import { Route, Routes, useSearchParams } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import GamePage from './components/GamePage';
 import { UserContext } from './contexts/useUserState';
 import { User } from './types';
 import VerificationModal from './components/modals/VerificationModal';
 
 function App() {
-  const [user, setUser] = useState<User | null>(null)
-  const [searchParams] = useSearchParams();
+  const [user, setUser] = useState<User | null>(() => {
+    const storedUser = localStorage.getItem("user");
+    return storedUser ? JSON.parse(storedUser) : null;
+  });
+
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  useEffect(() => {
-    if (searchParams.has("verify")) {
-      setIsModalOpen(true);
+  const updateUser = (newUser: User | null) => {
+    setUser(newUser);
+    if (newUser) {
+      localStorage.setItem("user", JSON.stringify(newUser));
+    } else {
+      localStorage.removeItem("user");
     }
-  }, [searchParams]);
+  };
 
   return (
-    <UserContext.Provider value={{user, setUser}} >
+    <UserContext.Provider value={{ user, setUser: updateUser }}>
       <VerificationModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
       <div className="app flex-column">
         <div className="header">
           <Header />
         </div>
         <div className="content">
-        <Routes>
-          <Route path="/" element={<Gallery />} />
-          <Route path="/game/:author/:gameString" element={<GamePage />} />
-        </Routes>
+          <Routes>
+            <Route path="/" element={<Gallery />} />
+            <Route path="/game/:author/:gameString" element={<GamePage />} />
+          </Routes>
         </div>
       </div>
     </UserContext.Provider>
