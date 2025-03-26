@@ -82,4 +82,16 @@ export class UserService {
       }
     });
   }
+
+  sanitizeUser(user) {
+    delete user.id
+    delete user.developer
+    delete user.email
+    delete user.is_verified
+    delete user.verification_token
+    delete user.created_at
+    delete user.updated_at
+    delete user.passwords
+    return user
+  }
 }

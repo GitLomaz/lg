@@ -1,5 +1,7 @@
 import { Injectable, BadRequestException } from '@nestjs/common';
-import { generateServerResponse } from 'src/common/responseCodes';
+import { user } from '@prisma/client';
+import * as bcrypt from 'bcryptjs';
+import { APIResponse, generateServerResponse } from 'src/common/responseCodes';
 import { DatabaseService } from 'src/database/database.service';
 
 @Injectable()
@@ -20,5 +22,39 @@ export class AuthService {
       },
     });
     return generateServerResponse('ACCOUNT_VERIFIED');
+  }
+
+  async validateUser(username: string, password: string): Promise<APIResponse | user> {
+    const user = await this.getUserByEmailOrUsername(username)
+    if (!user) {
+      return generateServerResponse('LOGIN_FAILED');
+    }
+    const passwordHash = user.passwords[0].password_hash
+    const isMatch = await bcrypt.compare(password, passwordHash);
+    if (!isMatch) {
+      return generateServerResponse('LOGIN_FAILED');
+    }
+    if (!user.is_verified) {
+      return generateServerResponse('ACCOUNT_UNVERIFIED');
+    }
+    return user
+  }
+
+  async getUserByEmailOrUsername(username: string) {
+    if (!username) return null;
+    return this.databaseService.user.findFirst({
+      where: {
+        OR: [
+          { username: username },
+          { email: username }
+        ],
+      },
+      include: {
+        passwords: {
+          orderBy: { created_at: 'desc' },
+          take: 1,
+        },
+      },
+    });
   }
 }
