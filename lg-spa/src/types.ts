@@ -37,5 +37,4 @@ export interface Translation {
 export interface User {
   username: string;
   avatarUrl?: string;
-  token: string;
 };

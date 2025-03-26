@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
+import { useUserState } from '../../contexts/useUserState';
 import REACT_APP_API_URL from "../../config";
 import * as Yup from 'yup';
 import './LoginModal.css';
@@ -44,6 +45,7 @@ const registerSchema = Yup.object().shape({
 const LoginModal: React.FC<ModalProps> = ( { isOpen, onClose } ) => {
   const [modalMode, setModalMode] = useState<string>('login')
   const [isLoading, setIsLoading] = useState<boolean>(false)
+  const { user, setUser } = useUserState()
 
   const registerUser = async (values: any, setFieldError: any) => {
     setIsLoading(true)
@@ -76,30 +78,38 @@ const LoginModal: React.FC<ModalProps> = ( { isOpen, onClose } ) => {
   }
 
   const loginUser = async (values: any, setFieldError: any) => {
+    const payload = {
+      username: values.loginUsername,
+      password: values.loginPassword
+    }
     setIsLoading(true)
-    let URL = `${REACT_APP_API_URL}/auth/register`
+    let URL = `${REACT_APP_API_URL}/auth/login`
     try {
-      const response = await axios.post(URL, values);
+      const response = await axios.post(URL, payload);
       if (!response?.data?.data) {
-        setFieldError("email", GENERIC_ERROR);
+        setFieldError("loginUsername", GENERIC_ERROR);
         return
       }
       switch (response.data.code) {
-        case 'USERNAME_TAKEN':
-          setFieldError("username", response.data.data);
+        case 'LOGIN_FAILED':
+          setFieldError("loginUsername", response.data.data);
           break;
-        case 'EMAIL_TAKEN':
-          setFieldError("email", response.data.data);
+        case 'ACCOUNT_UNVERIFIED':
+          setModalMode('unverified')
           break;
-        case 'ACCOUNT_REGISTERED':
-          setModalMode('registered')
+        case 'LOGIN_SUCCESSFUL':
+          setModalMode('loggedin')
+          setUser({
+            username: response.data.data.username,
+            avatarUrl: response.data.data.image
+          })
           break;
         default:
-          setFieldError("email", GENERIC_ERROR);
+          setFieldError("loginUsername", GENERIC_ERROR);
           break;
       }
     } catch (error: any) {
-      setFieldError("email", GENERIC_ERROR);
+      setFieldError("loginUsername", GENERIC_ERROR);
     } finally {
       setIsLoading(false)
     }
@@ -214,6 +224,11 @@ const LoginModal: React.FC<ModalProps> = ( { isOpen, onClose } ) => {
             To complete your account setup, please check your inbox for a verification email and click the link to validate your email address. 
             If you don't see the email within a few minutes, be sure to check your spam or junk folder.<br/><br/>
             Need help? Feel free to contact our support team.</div>
+          case "loggedin":
+           return <div><div className="modal-header">Login Successful</div></div>
+          case "unverified":
+           return <div><div className="modal-header">Verification Required</div><br/>
+            Your email has not been verified yet. Please check your inbox for a verification link before logging in.</div>
           default:
             return <div></div>;
         }

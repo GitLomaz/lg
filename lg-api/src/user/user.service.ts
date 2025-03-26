@@ -14,6 +14,8 @@ export class UserService {
 
   // Check if user exists by username or email
   async checkIfUserExists(username: string, email: string) {
+    console.log(username, 'username')
+    console.log(email, 'email')
     const existingEmail = await this.databaseService.user.findUnique({ where: { email } });
     if (existingEmail) return generateServerResponse('EMAIL_TAKEN');
 
