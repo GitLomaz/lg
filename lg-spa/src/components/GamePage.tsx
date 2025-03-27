@@ -3,8 +3,9 @@ import { useParams } from "react-router-dom";
 import { Game } from '../types';
 import REACT_APP_API_URL from '../config';
 import './GamePage.css';
-import axios from 'axios';
+import axios from '../axiosConfig'
 import GameContainer from './GameContainer';
+import FavoriteButton from './FavoriteButton';
 
 
 const GamePage: React.FC = () => {
@@ -16,6 +17,7 @@ const GamePage: React.FC = () => {
     try {
       const response = await axios.get(URL);
       setGameData(response.data)
+      console.log(response.data)
     } catch (error) {
       console.error('Failed to fetch games:', error);
     }
@@ -29,6 +31,7 @@ const GamePage: React.FC = () => {
     <Fragment>
       <div className='game-container'>{game?.game_string}</div>
       <GameContainer game={game}/>
+      <FavoriteButton gameId={game?.id}/>
     </Fragment>
   );
 };

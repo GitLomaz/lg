@@ -4,7 +4,7 @@ import { useUserState } from '../../contexts/useUserState';
 import REACT_APP_API_URL from "../../config";
 import * as Yup from 'yup';
 import './LoginModal.css';
-import axios from 'axios';
+import axios from '../../axiosConfig'
 
 interface ModalProps {
   isOpen: boolean;

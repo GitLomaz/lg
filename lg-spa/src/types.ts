@@ -1,4 +1,5 @@
 export interface Game {
+  id: number,
   game_string: string,
   author: string,
   iframe: string,

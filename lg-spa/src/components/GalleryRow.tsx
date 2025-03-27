@@ -4,7 +4,7 @@ import Slider from 'react-slick';
 import './GalleryRow.css';
 import GalleryTile from './GalleryTile';
 import REACT_APP_API_URL from "../config";
-import axios from 'axios';
+import axios from '../axiosConfig'
 import { useGameState } from '../contexts/useGameState';
 
 // Define props interface
