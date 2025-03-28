@@ -3,14 +3,20 @@ import { AppModule } from './app.module';
 import * as cookieParser from 'cookie-parser';
 import * as session from "express-session";
 import * as passport from "passport";
+import * as fs from 'fs';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  const httpsOptions = {
+    key: fs.readFileSync('/etc/letsencrypt/live/lomazgames.com/privkey.pem'),
+    cert: fs.readFileSync('/etc/letsencrypt/live/lomazgames.com/fullchain.pem'),
+  };
+
+  const app = await NestFactory.create(AppModule, {httpsOptions});
 
   app.use(cookieParser());
 
   app.enableCors({
-    origin: 'http://localhost:3001',
+    origin: '*',
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     credentials: true,
   });
