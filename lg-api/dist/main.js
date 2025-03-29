@@ -25,7 +25,7 @@ async function bootstrap() {
     });
     app.use(session({
         name: 'LG_SESSION',
-        secret: "THIS_NEEDS_TO_GO_INTO_ENV",
+        secret: process.env.API_SESSION_SECRET,
         resave: false,
         saveUninitialized: false,
         cookie: { secure: process.env.API_LOCAL !== 'true', maxAge: 1000 * 60 * 60 },
