@@ -3,7 +3,7 @@ import { Game, GameRow } from '../types';
 import Slider from 'react-slick';
 import './GalleryRow.css';
 import GalleryTile from './GalleryTile';
-import REACT_APP_API_URL from "../config";
+import SPA_REACT_APP_API_URL from "../config";
 import axios from '../axiosConfig'
 import { useGameState } from '../contexts/useGameState';
 
@@ -32,9 +32,9 @@ const GalleryRow: React.FC<GalleryRowProps> = ({ genre }) => {
 
   const loadGames = async () => {
     // Fetch games based on selected tag
-    let URL = `${REACT_APP_API_URL}/games/genre/${genre}`
+    let URL = `${SPA_REACT_APP_API_URL}/games/genre/${genre}`
     if (genre === 'Popular') {
-      URL = `${REACT_APP_API_URL}/games/popular`
+      URL = `${SPA_REACT_APP_API_URL}/games/popular`
     }
     let games: GameRow[] = []
     try {
@@ -63,11 +63,20 @@ const GalleryRow: React.FC<GalleryRowProps> = ({ genre }) => {
     <div className='gallery-row'>
       <div className='gallery-row-title'>{genre}</div>
       <div className='gallery-row-view-all'>View All</div>
-      {<Slider {...settings}>
-        {currentGames.map((game) => (
-          <GalleryTile key={game.game_string} game={game} />
-        ))}
-      </Slider> }
+      {currentGames.length !== 0 ? (
+        <Slider {...settings}>
+          {currentGames.map((game) => (
+            <GalleryTile key={game.game_string} game={game} />
+          ))}
+        </Slider> 
+      ) : (
+        <Slider {...settings}>
+          {Array.from({ length: 8 }).map((_, i) => (
+            <div className='shimmer tile-placeholder'></div>
+          ))}
+        </Slider> 
+      )}
+      {}
     </div>
   );
 };

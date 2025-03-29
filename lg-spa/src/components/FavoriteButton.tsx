@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import './FavoriteButton.css';
 import { Heart } from 'lucide-react';
-import REACT_APP_API_URL from '../config';
+import SPA_REACT_APP_API_URL from '../config';
 import axios from '../axiosConfig'
 import { useUserState } from '../contexts/useUserState';
 
@@ -18,7 +18,7 @@ const FavoriteButton: React.FC<FavoriteButtonProps> = ({ gameId }) => {
     if (user) {
       const newState = !favorite
       setfavorite(newState)
-      let URL = `${REACT_APP_API_URL}/games/favorite/${gameId}`
+      let URL = `${SPA_REACT_APP_API_URL}/games/favorite/${gameId}`
       try {
         const response = await axios.post(URL, {favorite: newState});
         console.log(response.data.data)
@@ -32,7 +32,7 @@ const FavoriteButton: React.FC<FavoriteButtonProps> = ({ gameId }) => {
 
   const loadState = async () => {
     if (gameId && user) {
-      let URL = `${REACT_APP_API_URL}/games/favorite/${gameId}`
+      let URL = `${SPA_REACT_APP_API_URL}/games/favorite/${gameId}`
       try {
         const response = await axios.get(URL);
         console.log(response.data.data)

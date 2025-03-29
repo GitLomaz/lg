@@ -16,7 +16,7 @@ const { MailtrapTransport } = require("mailtrap");
 let MailService = class MailService {
     constructor() { }
     async sendVerificationEmail(email, token) {
-        const verificationUrl = `${process.env.APP_URL}?verify=${token}`;
+        const verificationUrl = `${process.env.API_APP_URL}?verify=${token}`;
         this.transporter = nodemailer.createTransport(MailtrapTransport({
             token: process.env.SMTP_TOKEN,
         }));

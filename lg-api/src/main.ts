@@ -6,17 +6,22 @@ import * as passport from "passport";
 import * as fs from 'fs';
 
 async function bootstrap() {
-  const httpsOptions = {
-    key: fs.readFileSync('/etc/letsencrypt/live/lomazgames.com/privkey.pem'),
-    cert: fs.readFileSync('/etc/letsencrypt/live/lomazgames.com/fullchain.pem'),
-  };
+  let httpsOptions = null
+  let origin = 'http://localhost:3001';
+  if (process.env.API_LOCAL !== 'true') {
+    origin = 'https://lomazgames.com';
+    httpsOptions = {
+      key: fs.readFileSync('/etc/letsencrypt/live/lomazgames.com/privkey.pem'),
+      cert: fs.readFileSync('/etc/letsencrypt/live/lomazgames.com/fullchain.pem'),
+    };
+  }
 
   const app = await NestFactory.create(AppModule, {httpsOptions});
 
   app.use(cookieParser());
 
   app.enableCors({
-    origin: '*',
+    origin: origin,
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     credentials: true,
   });
@@ -24,10 +29,10 @@ async function bootstrap() {
   app.use(
     session({
       name: 'LG_SESSION',
-      secret: "THIS_NEEDS_TO_GO_INTO_ENV",
+      secret: process.env.API_SESSION_SECRET,
       resave: false,
       saveUninitialized: false,
-      cookie: { secure: false, maxAge: 1000 * 60 * 60 },
+      cookie: { secure: process.env.API_LOCAL !== 'true', maxAge: 1000 * 60 * 60 },
     })
   );
 

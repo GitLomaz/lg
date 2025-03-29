@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import './VerificationModal.css';
 import { useSearchParams, useNavigate } from 'react-router-dom';
-import REACT_APP_API_URL from '../../config';
+import SPA_REACT_APP_API_URL from '../../config';
 import axios from '../../axiosConfig'
 
 interface ModalProps {
@@ -18,7 +18,7 @@ const Verification: React.FC<ModalProps> = ({ isOpen, onClose }) => {
 
   useEffect(() => {
     const runVerification = async (token: string) => {
-      let URL = `${REACT_APP_API_URL}/auth/verify?token=${token}`
+      let URL = `${SPA_REACT_APP_API_URL}/auth/verify?token=${token}`
       try {
         const response = await axios.get(URL);
         if (!response?.data?.data) {

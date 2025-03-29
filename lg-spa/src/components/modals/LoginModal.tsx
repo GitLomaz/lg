@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import { useUserState } from '../../contexts/useUserState';
-import REACT_APP_API_URL from "../../config";
+import SPA_REACT_APP_API_URL from "../../config";
 import * as Yup from 'yup';
 import './LoginModal.css';
 import axios from '../../axiosConfig'
@@ -49,7 +49,7 @@ const LoginModal: React.FC<ModalProps> = ( { isOpen, onClose } ) => {
 
   const registerUser = async (values: any, setFieldError: any) => {
     setIsLoading(true)
-    let URL = `${REACT_APP_API_URL}/auth/register`
+    let URL = `${SPA_REACT_APP_API_URL}/auth/register`
     try {
       const response = await axios.post(URL, values);
       if (!response?.data?.data) {
@@ -83,7 +83,7 @@ const LoginModal: React.FC<ModalProps> = ( { isOpen, onClose } ) => {
       password: values.loginPassword
     }
     setIsLoading(true)
-    let URL = `${REACT_APP_API_URL}/auth/login`
+    let URL = `${SPA_REACT_APP_API_URL}/auth/login`
     try {
       const response = await axios.post(URL, payload);
       if (!response?.data?.data) {

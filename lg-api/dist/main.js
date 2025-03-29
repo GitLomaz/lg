@@ -5,11 +5,21 @@ const app_module_1 = require("./app.module");
 const cookieParser = require("cookie-parser");
 const session = require("express-session");
 const passport = require("passport");
+const fs = require("fs");
 async function bootstrap() {
-    const app = await core_1.NestFactory.create(app_module_1.AppModule);
+    let httpsOptions = null;
+    let origin = 'http://localhost:3001';
+    if (process.env.API_LOCAL !== 'true') {
+        origin = 'https://lomazgames.com';
+        httpsOptions = {
+            key: fs.readFileSync('/etc/letsencrypt/live/lomazgames.com/privkey.pem'),
+            cert: fs.readFileSync('/etc/letsencrypt/live/lomazgames.com/fullchain.pem'),
+        };
+    }
+    const app = await core_1.NestFactory.create(app_module_1.AppModule, { httpsOptions });
     app.use(cookieParser());
     app.enableCors({
-        origin: 'http://localhost:3001',
+        origin: origin,
         methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
         credentials: true,
     });
@@ -18,7 +28,7 @@ async function bootstrap() {
         secret: "THIS_NEEDS_TO_GO_INTO_ENV",
         resave: false,
         saveUninitialized: false,
-        cookie: { secure: false, maxAge: 1000 * 60 * 60 },
+        cookie: { secure: process.env.API_LOCAL !== 'true', maxAge: 1000 * 60 * 60 },
     }));
     app.use(passport.initialize());
     app.use(passport.session());

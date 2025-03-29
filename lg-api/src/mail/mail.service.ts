@@ -8,8 +8,8 @@ export class MailService {
 
   constructor() {}
   async sendVerificationEmail(email: string, token: string) {
-    // const verificationUrl = `${process.env.APP_URL}/auth/verify?token=${token}`;
-    const verificationUrl = `${process.env.APP_URL}?verify=${token}`;
+    // const verificationUrl = `${process.env.API_APP_URL}/auth/verify?token=${token}`;
+    const verificationUrl = `${process.env.API_APP_URL}?verify=${token}`;
 
     this.transporter = nodemailer.createTransport(
       MailtrapTransport({

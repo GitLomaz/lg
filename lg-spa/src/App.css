@@ -48,3 +48,29 @@
   height: 40vmin;
   pointer-events: none;
 }
+
+.shimmer {
+  border-radius: 4px; /* optional, for slightly rounded corners */
+  background: linear-gradient(90deg, #282c34 25%, #484e59 50%, #282c34 75%);
+  background-size: 200% 100%;
+  animation: shimmer 4.5s infinite;
+}
+
+.tile-placeholder {
+  width: 250px !important;
+  height: 200px;
+  margin: 8px;
+}
+
+.carousel-placeholder {
+  height: 300px;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}

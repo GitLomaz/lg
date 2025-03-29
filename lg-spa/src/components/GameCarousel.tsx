@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import Slider from 'react-slick';
 import './GameCarousel.css';
 import { useGameState } from '../contexts/useGameState';
@@ -19,16 +19,6 @@ const GameCarousel: React.FC = () => {
     autoplaySpeed: 3000,
     draggable: false,
   };
-
-  //const selectedGame = useSelector((state: RootState) => state.selectedGame.game);
-
-  // useEffect(() => {
-  //   if (selectedGame) {
-  //     console.log("Selected Game has changed:", selectedGame);
-  //   } else {
-  //     console.log("No game selected");
-  //   }
-  // }, [selectedGame]); // The effect will run when selectedGame changes
 
   return selectedGame ? (
     <div className='game-carousel-container'>
@@ -59,7 +49,15 @@ const GameCarousel: React.FC = () => {
         </Slider>
       </div>
     </div>
-  ) : null;
+  ) : (
+    <div className='game-carousel-container'>
+    <div className='game-carousel'>
+      <Slider {...settings}>
+        <div className='shimmer carousel-placeholder'></div>
+      </Slider>
+    </div>
+  </div>
+  );
 };
 
 export default GameCarousel;
