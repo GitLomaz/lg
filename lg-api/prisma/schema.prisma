@@ -134,6 +134,7 @@ model game_rating {
   user    user @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "game_rating_ibfk_2")
 
   @@id([game_id, user_id])
+  @@unique([game_id, user_id])
   @@index([user_id], map: "user_id")
 }
 

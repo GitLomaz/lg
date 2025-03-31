@@ -1,4 +1,4 @@
-import { Injectable, BadRequestException } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { user } from '@prisma/client';
 import * as bcrypt from 'bcryptjs';
 import { APIResponse, generateServerResponse } from 'src/common/responseCodes';

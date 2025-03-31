@@ -9,6 +9,7 @@ const RESPONSE_CODES = {
     ACCOUNT_UNVERIFIED: { code: 'ACCOUNT_UNVERIFIED', message: 'Please check your email to verify your account', success: false },
     INVALID_TOKEN: { code: 'INVALID_TOKEN', message: 'Invalid or Expired Token', success: false },
     ACCESS_FORBIDDEN: { code: 'ACCESS_FORBIDDEN', message: 'You must be logged in to do this', success: false },
+    INVALID_REQUEST: { code: 'INVALID_REQUEST', message: 'Request is not valid', success: false },
     SUCCESS: { code: 'SUCCESS', success: true },
     LOGIN_SUCCESSFUL: { code: 'LOGIN_SUCCESSFUL', message: 'Login Successful', success: true },
     ACCOUNT_REGISTERED: { code: 'ACCOUNT_REGISTERED', message: 'Account Created', success: true },

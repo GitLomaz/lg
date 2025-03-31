@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common';
+import { game_favorite } from '@prisma/client';
 import { generateServerResponse } from 'src/common/responseCodes';
 import { DatabaseService } from 'src/database/database.service';
 // import { Prisma } from '@prisma/client';
@@ -30,18 +31,6 @@ export class GamesService {
     })
   }
   */
-
-  async setFavoriteByGame(gameId: number, userId: number, favorite: boolean) {
-    // const favorite = await this.databaseService.game_favorite.findUnique({
-    //   where: {
-    //     game_id_user_id: {
-    //       game_id: gameId,
-    //       user_id: userId,
-    //     },
-    //   },
-    // });
-    // return generateServerResponse('SUCCESS', favorite !== null);
-  }
 
   findByAuthorAndId(author: string, gameString: string) {
     const game = this.databaseService.game.findFirst({

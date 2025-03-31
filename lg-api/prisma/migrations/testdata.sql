@@ -1,5 +1,5 @@
-INSERT INTO `lomazGames`.`user` (`id`, `username`, `developer`, `email`, `is_verified`) VALUES ('1', 'Lomaz', '1', 'ianlomas1@gmail.com', '1');
-INSERT INTO `lomazGames`.`passwords` (`user_id`, `password_hash`) VALUES ('1', '$2b$10$Tt9r5bZv8JjJCcwD3Ko.9.MFbmC1wI2sUXBr.lZWFdVb6K3ZHn6ui');
+INSERT INTO `lomazGames`.`user` (`id`, `username`, `developer`, `email`, `is_verified`) VALUES ('1', 'Lomaz', '1', 'ianlomas0@gmail.com', '1');
+INSERT INTO `lomazGames`.`passwords` (`user_id`, `password_hash`) VALUES ('1', '$2b$10$dhE/nbKIT3YVmeJFriKrX.27ltjLLrZVkBIKo72zg1Aky4vwKNoeO'); -- !p...R2
 
 INSERT INTO `lomazGames`.`tag` (`id`, `name`) VALUES ('1', 'Short');
 INSERT INTO `lomazGames`.`tag` (`id`, `name`) VALUES ('2', 'Single Player');
@@ -57,20 +57,10 @@ INSERT INTO `lomazGames`.`_gameTotag` (`A`, `B`) VALUES ('9', '12');
 INSERT INTO `lomazGames`.`_gameTotag` (`A`, `B`) VALUES ('9', '6');
 
 INSERT INTO `lomazGames`.`game_rating` (`game_id`, `user_id`, `value`) VALUES ('1', '1', '3');
-INSERT INTO `lomazGames`.`game_rating` (`game_id`, `user_id`, `value`) VALUES ('1', '2', '5');
 INSERT INTO `lomazGames`.`game_rating` (`game_id`, `user_id`, `value`) VALUES ('2', '1', '5');
-INSERT INTO `lomazGames`.`game_rating` (`game_id`, `user_id`, `value`) VALUES ('3', '1', '5');
-INSERT INTO `lomazGames`.`game_rating` (`game_id`, `user_id`, `value`) VALUES ('4', '1', '5');
-INSERT INTO `lomazGames`.`game_rating` (`game_id`, `user_id`, `value`) VALUES ('5', '1', '5');
-INSERT INTO `lomazGames`.`game_rating` (`game_id`, `user_id`, `value`) VALUES ('6', '1', '5');
-INSERT INTO `lomazGames`.`game_rating` (`game_id`, `user_id`, `value`) VALUES ('7', '1', '5');
-INSERT INTO `lomazGames`.`game_rating` (`game_id`, `user_id`, `value`) VALUES ('8', '1', '5');
-INSERT INTO `lomazGames`.`game_rating` (`game_id`, `user_id`, `value`) VALUES ('9', '1', '5');
 
-INSERT INTO `lomazGames`.`game_favorite` (`game_id`, `user_id`) VALUES ('1', '2');
-INSERT INTO `lomazGames`.`game_favorite` (`game_id`, `user_id`) VALUES ('5', '2');
 INSERT INTO `lomazGames`.`game_favorite` (`game_id`, `user_id`) VALUES ('1', '1');
-INSERT INTO `lomazGames`.`game_favorite` (`game_id`, `user_id`) VALUES ('2', '2');
+INSERT INTO `lomazGames`.`game_favorite` (`game_id`, `user_id`) VALUES ('2', '1');
 
 INSERT INTO `lomazGames`.`game_translation` (`game_id`, `language`, `name`, `description`, `instructions`) VALUES ('1', 'en', 'Harvest Horizons', 'A farming game like no other!', 'Plant crops, harvest, click around!');
 INSERT INTO `lomazGames`.`game_translation` (`game_id`, `language`, `name`, `description`, `instructions`) VALUES ('2', 'en', 'Corruption II', 'A back and forth battle of will', 'Click on a node to rotate, take over the world');

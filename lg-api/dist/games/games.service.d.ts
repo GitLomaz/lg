@@ -2,7 +2,6 @@ import { DatabaseService } from 'src/database/database.service';
 export declare class GamesService {
     private readonly databaseService;
     constructor(databaseService: DatabaseService);
-    setFavoriteByGame(gameId: number, userId: number, favorite: boolean): Promise<void>;
     findByAuthorAndId(author: string, gameString: string): import(".prisma/client").Prisma.Prisma__gameClient<{
         genre: {
             id: number;

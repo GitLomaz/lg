@@ -1,8 +1,5 @@
-import { Controller, Get, Post, Body, Patch, Param, Request, UseGuards } from '@nestjs/common';
-
+import { Controller, Get, Param } from '@nestjs/common';
 import { GamesService } from './games.service';
-import { Prisma } from '@prisma/client';
-import { AuthenticatedGuard } from 'src/auth/LocalGuard';
 
 @Controller('games')
 export class GamesController {
@@ -27,20 +24,6 @@ export class GamesController {
   findOne(@Param('id') id: string) {
     return this.gamesService.findOne(+id);
   }
-
-  // @UseGuards(AuthenticatedGuard)
-  // @Get('favorite/:id')
-  // getFavorite(@Param('id') id: string, @Request() req: any) {
-  //   const userId = req.user.id;
-  //   return this.gamesService.findFavoriteByGame(parseInt(id), userId)
-  // }
-
-  // @UseGuards(AuthenticatedGuard)
-  // @Post('favorite/:id')
-  // setFavorite(@Param('id') id: string, @Request() req: any) {
-  //   const userId = req.user.id;
-  //   return this.gamesService.setFavoriteByGame(parseInt(id), userId)
-  // }
 
   @Get(':author/:gameString')
   findByAuthorAndId(@Param('author') author: string, @Param('gameString') gameString: string) {

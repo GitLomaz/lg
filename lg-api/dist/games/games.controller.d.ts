@@ -1,5 +1,4 @@
 import { GamesService } from './games.service';
-import { Prisma } from '@prisma/client';
 export declare class GamesController {
     private readonly gamesService;
     constructor(gamesService: GamesService);
@@ -177,7 +176,7 @@ export declare class GamesController {
         author_id: number | null;
         genre_id: number;
     }>;
-    findByAuthorAndId(author: string, gameString: string): Prisma.Prisma__gameClient<{
+    findByAuthorAndId(author: string, gameString: string): import(".prisma/client").Prisma.Prisma__gameClient<{
         genre: {
             id: number;
             name: string;
@@ -231,5 +230,5 @@ export declare class GamesController {
             count: number;
             date: Date | null;
         }[];
-    }, null, import("@prisma/client/runtime/library").DefaultArgs, Prisma.PrismaClientOptions>;
+    }, null, import("@prisma/client/runtime/library").DefaultArgs, import(".prisma/client").Prisma.PrismaClientOptions>;
 }

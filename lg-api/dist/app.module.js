@@ -15,12 +15,14 @@ const games_module_1 = require("./games/games.module");
 const auth_module_1 = require("./auth/auth.module");
 const mail_module_1 = require("./mail/mail.module");
 const passport_1 = require("@nestjs/passport");
+const favorites_module_1 = require("./favorites/favorites.module");
+const ratings_module_1 = require("./ratings/ratings.module");
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
 exports.AppModule = AppModule = __decorate([
     (0, common_1.Module)({
-        imports: [database_module_1.DatabaseModule, games_module_1.GamesModule, auth_module_1.AuthModule, mail_module_1.MailModule, passport_1.PassportModule.register({ session: true })],
+        imports: [database_module_1.DatabaseModule, games_module_1.GamesModule, auth_module_1.AuthModule, mail_module_1.MailModule, passport_1.PassportModule.register({ session: true }), favorites_module_1.FavoritesModule, ratings_module_1.RatingsModule],
         controllers: [app_controller_1.AppController],
         providers: [app_service_1.AppService],
     })

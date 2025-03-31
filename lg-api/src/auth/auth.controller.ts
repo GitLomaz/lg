@@ -1,8 +1,7 @@
-import { Controller, Post, Body, Query, Get, UseGuards, Session, Req } from '@nestjs/common';
-import { Request } from 'express';
+import { Controller, Post, Body, Query, Get, UseGuards } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { UserService } from '../user/user.service'
-import { AuthenticatedGuard, LocalAuthGuard } from './LocalGuard';
+import { LocalAuthGuard } from './LocalGuard';
 import { APIResponse, generateServerResponse } from 'src/common/responseCodes';
 
 @Controller('auth')
@@ -31,11 +30,4 @@ export class AuthController {
     }
     return generateServerResponse('LOGIN_SUCCESSFUL', this.userService.sanitizeUser(user));
   }
-
-  // Example for AuthenticatedGuard
-  // @UseGuards(AuthenticatedGuard)
-  // @Get('status')
-  // async getAuthStatus(@Req() req: Request) {
-  //   return req.user
-  // }
 }

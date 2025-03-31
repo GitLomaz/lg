@@ -14,6 +14,7 @@ exports.LocalAuthGuard = LocalAuthGuard;
 class AuthenticatedGuard {
     async canActivate(context) {
         const req = context.switchToHttp().getRequest();
+        console.log(req.isAuthenticated());
         return req.isAuthenticated();
     }
 }

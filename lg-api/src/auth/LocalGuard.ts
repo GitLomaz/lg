@@ -1,7 +1,6 @@
 import { CanActivate, ExecutionContext } from "@nestjs/common";
 import { AuthGuard } from "@nestjs/passport";
 import { Request } from 'express';
-import { Observable } from "rxjs";
 
 export class LocalAuthGuard extends AuthGuard('local') {
   async canActivate(context: ExecutionContext) {
@@ -15,6 +14,7 @@ export class LocalAuthGuard extends AuthGuard('local') {
 export class AuthenticatedGuard implements CanActivate {
   async canActivate(context: ExecutionContext): Promise<boolean>  {
     const req = context.switchToHttp().getRequest<Request>();
+    console.log(req.isAuthenticated())
     return req.isAuthenticated();
   }
 }

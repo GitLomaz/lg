@@ -16,8 +16,6 @@ let GamesService = class GamesService {
     constructor(databaseService) {
         this.databaseService = databaseService;
     }
-    async setFavoriteByGame(gameId, userId, favorite) {
-    }
     findByAuthorAndId(author, gameString) {
         const game = this.databaseService.game.findFirst({
             where: {

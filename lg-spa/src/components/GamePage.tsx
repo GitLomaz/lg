@@ -25,14 +25,14 @@ const GamePage: React.FC = () => {
 
   useEffect(() => {
     loadGame();
-  }, []); // Empty dependency array ensures this runs only once on mount
+  }, []);
     
   return (
-    <Fragment>
+    <>
       <div className='game-container'>{game?.game_string}</div>
       <GameContainer game={game}/>
       <FavoriteButton gameId={game?.id}/>
-    </Fragment>
+    </>
   );
 };
 
