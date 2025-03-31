@@ -17,7 +17,6 @@ const GamePage: React.FC = () => {
     try {
       const response = await axios.get(URL);
       setGameData(response.data)
-      console.log(response.data)
     } catch (error) {
       console.error('Failed to fetch games:', error);
     }

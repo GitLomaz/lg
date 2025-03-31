@@ -22,7 +22,6 @@ let FavoritesController = class FavoritesController {
         this.favoritesService = favoritesService;
     }
     async getFavorite(id, req) {
-        console.log('here?!?!?');
         const userId = req.user.id;
         const favorite = await this.favoritesService.findFavoriteByGameAndUser(parseInt(id), userId);
         return (0, responseCodes_1.generateServerResponse)('SUCCESS', favorite !== null);

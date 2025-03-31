@@ -21,7 +21,6 @@ const FavoriteButton: React.FC<FavoriteButtonProps> = ({ gameId }) => {
       let URL = `${SPA_REACT_APP_API_URL}/games/favorite/${gameId}`
       try {
         const response = await axios.post(URL, {favorite: newState});
-        console.log(response.data.data)
       } catch (error) {
         setfavorite(!newState)
       }
@@ -35,7 +34,6 @@ const FavoriteButton: React.FC<FavoriteButtonProps> = ({ gameId }) => {
       let URL = `${SPA_REACT_APP_API_URL}/games/favorite/${gameId}`
       try {
         const response = await axios.get(URL);
-        console.log(response.data.data)
         setfavorite(response.data.data)
       } catch (error) {
         setfavorite(false)

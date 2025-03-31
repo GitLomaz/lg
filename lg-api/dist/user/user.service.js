@@ -22,8 +22,6 @@ let UserService = class UserService {
         this.mailService = mailService;
     }
     async checkIfUserExists(username, email) {
-        console.log(username, 'username');
-        console.log(email, 'email');
         const existingEmail = await this.databaseService.user.findUnique({ where: { email } });
         if (existingEmail)
             return (0, responseCodes_1.generateServerResponse)('EMAIL_TAKEN');

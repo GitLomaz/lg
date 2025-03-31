@@ -10,7 +10,6 @@ export class FavoritesController {
   @UseGuards(AuthenticatedGuard)
   @Get(':id')
   async getFavorite(@Param('id') id: string, @Request() req: any) {
-    console.log('here?!?!?')
     const userId = req.user.id;
     const favorite = await this.favoritesService.findFavoriteByGameAndUser(parseInt(id), userId);
     return generateServerResponse('SUCCESS', favorite !== null);

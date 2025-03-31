@@ -14,7 +14,6 @@ const Gallery: React.FC = () => {
 
   const handleTagClick = (tag: string) => {
     setSelectedTag(tag);
-    console.log(`Selected tag: ${tag}`);
   };
 
   return (
