@@ -32,8 +32,8 @@ export class GamesService {
   }
   */
 
-  findByAuthorAndId(author: string, gameString: string) {
-    const game = this.databaseService.game.findFirst({
+  async findByAuthorAndId(author: string, gameString: string) {
+    const game = await this.databaseService.game.findFirst({
       where: {
         game_string: gameString,
         author: {
@@ -67,7 +67,7 @@ export class GamesService {
         }
       }
     })
-    return game
+    return this.transpose(game)
   }
 
   async findAll() {

@@ -6,6 +6,7 @@ import './GamePage.css';
 import axios from '../axiosConfig'
 import GameContainer from './GameContainer';
 import FavoriteButton from './FavoriteButton';
+import RatingButton from './RatingButton';
 
 
 const GamePage: React.FC = () => {
@@ -28,9 +29,10 @@ const GamePage: React.FC = () => {
     
   return (
     <>
-      <div className='game-container'>{game?.game_string}</div>
+      <div className='game-container'>{game?.translations[0].name}</div>
       <GameContainer game={game}/>
       <FavoriteButton gameId={game?.id}/>
+      <RatingButton gameId={game?.id} rating={game?.ratings.average}/>
     </>
   );
 };

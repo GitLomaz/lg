@@ -16,8 +16,8 @@ let GamesService = class GamesService {
     constructor(databaseService) {
         this.databaseService = databaseService;
     }
-    findByAuthorAndId(author, gameString) {
-        const game = this.databaseService.game.findFirst({
+    async findByAuthorAndId(author, gameString) {
+        const game = await this.databaseService.game.findFirst({
             where: {
                 game_string: gameString,
                 author: {
@@ -51,7 +51,7 @@ let GamesService = class GamesService {
                 }
             }
         });
-        return game;
+        return this.transpose(game);
     }
     async findAll() {
         const games = await this.databaseService.game.findMany({
