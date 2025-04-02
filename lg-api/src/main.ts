@@ -7,11 +7,7 @@ import * as passport from "passport";
 import * as fs from 'fs';
 
 config();
-console.log('Database URL:', process.env.API_DATABASE_URL);
-
 async function bootstrap() {
-  console.log('RUNNING!')
-  console.log(process.env.API_DATABASE_URL)
   let httpsOptions = null
   let origin = 'http://localhost:3001';
   if (process.env.API_LOCAL !== 'true') {
