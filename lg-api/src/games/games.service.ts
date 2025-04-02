@@ -224,7 +224,13 @@ export class GamesService {
     game.plays = game.plays.reduce(function(sum, day) {
       return sum + day.count
     }, 0)
-    game.ratings = {
+    game.ratings = this.reduceRatings(game)
+    game.favorites = game.favorites.length
+    return game
+  }
+
+  reduceRatings(game) {
+    return {
       1: game.ratings.reduce(function(sum, rating) {
         return sum + (rating.value === 1 ? 1 : 0)
       }, 0), 
@@ -244,11 +250,21 @@ export class GamesService {
         return sum + rating.value
       }, 0) / game.ratings.length,
     }
-    game.favorites = game.favorites.length
-    return game
   }
 
   transposeAll(games: any[]) {
     return games.map(this.transpose.bind(this));
+  }
+
+  async getGameRating(gameId: number) {
+    const game = await this.databaseService.game.findUnique({
+      where: {
+        id: gameId
+      },
+      select: {
+        ratings: true
+      }
+    })
+    return this.reduceRatings(game)
   }
 }

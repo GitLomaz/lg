@@ -1,0 +1,16 @@
+.rating-border {
+  border: 2px solid #31353d;
+  border-radius: 2px;
+  padding: 8px;
+  width: 225px;
+}
+
+.rating-score {
+  border-left: 2px solid #31353d;
+  margin-left: 10px;
+  padding-left: 10px;
+}
+
+.star {
+  cursor: pointer;
+}

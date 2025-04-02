@@ -1,11 +1,15 @@
 import { Controller, Get, Post, Body, Param, Request, UseGuards } from '@nestjs/common';
 import { AuthenticatedGuard } from '../auth/LocalGuard';
 import { RatingsService } from './ratings.service';
+import { GamesService } from '../games/games.service';
 import { generateServerResponse } from '../common/responseCodes';
 
 @Controller('ratings')
 export class RatingsController {
-  constructor(private readonly ratingsService: RatingsService) {}
+  constructor(
+    private readonly ratingsService: RatingsService,
+    private readonly gamesService: GamesService
+  ) {}
 
   @UseGuards(AuthenticatedGuard)
   @Get(':id')
@@ -23,6 +27,7 @@ export class RatingsController {
     }
     const userId = req.user.id;
     const rating = await this.ratingsService.setRatingForGameAndUser(gameId, userId, value);
-    return generateServerResponse('SUCCESS', rating.value);
+    const aveRating = await this.gamesService.getGameRating(gameId)
+    return generateServerResponse('SUCCESS', {rating: rating.value, ave: aveRating.average});
   }
 }

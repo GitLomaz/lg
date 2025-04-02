@@ -1,4 +1,5 @@
 # Logs
+keys
 logs
 *.log
 npm-debug.log*
@@ -131,3 +132,4 @@ out
 .yarn/build-state.yml
 .yarn/install-state.gz
 .pnp.*
+.deploy.sh
