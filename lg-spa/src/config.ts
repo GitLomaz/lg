@@ -1,3 +1,1 @@
-const SPA_REACT_APP_API_URL = process.env.SPA_REACT_APP_API_URL || "https://lomazgames.com:3000";
-
-export default SPA_REACT_APP_API_URL;
+const REACT_APP_API_URL = process.env.REACT_APP_API_URL || "https://localhost:3000"; export default REACT_APP_API_URL;
