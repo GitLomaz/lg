@@ -21,15 +21,15 @@ INSERT INTO `lomazGames`.`genre` (`id`, `name`) VALUES ('3', 'Idle');
 INSERT INTO `lomazGames`.`genre` (`id`, `name`) VALUES ('4', 'Puzzle');
 INSERT INTO `lomazGames`.`genre` (`id`, `name`) VALUES ('5', 'Clicker');
 
-INSERT INTO `lomazGames`.`game` (`id`, `iframe`, `width`, `height`, `author_id`, `genre_id`, `game_string`) VALUES ('1', 'https://us-dev.nightscapes.io/farmer/', '1180', '720', '1', '3', 'ceres');
-INSERT INTO `lomazGames`.`game` (`id`, `iframe`, `width`, `height`, `author_id`, `genre_id`, `game_string`) VALUES ('2', 'https://us-dev.nightscapes.io/farmer/', '1080', '720', '1', '4', 'corruption2');
-INSERT INTO `lomazGames`.`game` (`id`, `iframe`, `width`, `height`, `author_id`, `genre_id`, `game_string`) VALUES ('3', 'https://us-dev.nightscapes.io/farmer/', '1180', '720', '1', '3', 'plinko');
-INSERT INTO `lomazGames`.`game` (`id`, `iframe`, `width`, `height`, `author_id`, `genre_id`, `game_string`) VALUES ('4', 'https://us-dev.nightscapes.io/farmer/', '1180', '720', '1', '2', 'snowball');
-INSERT INTO `lomazGames`.`game` (`id`, `iframe`, `width`, `height`, `author_id`, `genre_id`, `game_string`) VALUES ('5', 'https://us-dev.nightscapes.io/farmer/', '1180', '720', '1', '2', 'infinitybreak');
-INSERT INTO `lomazGames`.`game` (`id`, `iframe`, `width`, `height`, `author_id`, `genre_id`, `game_string`) VALUES ('6', 'https://us-dev.nightscapes.io/farmer/', '1180', '720', '1', '2', 'nightscapes');
-INSERT INTO `lomazGames`.`game` (`id`, `iframe`, `width`, `height`, `author_id`, `genre_id`, `game_string`) VALUES ('7', 'https://us-dev.nightscapes.io/farmer/', '1180', '720', '1', '4', 'spaced');
-INSERT INTO `lomazGames`.`game` (`id`, `iframe`, `width`, `height`, `author_id`, `genre_id`, `game_string`) VALUES ('8', 'https://us-dev.nightscapes.io/farmer/', '1180', '720', '1', '2', 'slashArena');
-INSERT INTO `lomazGames`.`game` (`id`, `iframe`, `width`, `height`, `author_id`, `genre_id`, `game_string`) VALUES ('9', 'https://us-dev.nightscapes.io/farmer/', '1180', '720', '1', '5', 'stacked');
+INSERT INTO `lomazGames`.`game` (`id`, `game_string`, `iframe`, `width`, `height`, `author_id`, `genre_id`) VALUES ('1', 'ceres', 'https://gitlomaz.github.io/ceres/', '1128', '615', '1', '3');
+INSERT INTO `lomazGames`.`game` (`id`, `game_string`, `iframe`, `width`, `height`, `author_id`, `genre_id`) VALUES ('2', 'corruption2', 'https://gitlomaz.github.io/corruption2/', '700', '590', '1', '4');
+INSERT INTO `lomazGames`.`game` (`id`, `game_string`, `iframe`, `width`, `height`, `author_id`, `genre_id`) VALUES ('3', 'plinko', 'https://gitlomaz.github.io/plinko/', '1108', '595', '1', '3');
+INSERT INTO `lomazGames`.`game` (`id`, `game_string`, `iframe`, `width`, `height`, `author_id`, `genre_id`) VALUES ('4', 'snowball', 'https://gitlomaz.github.io/snowball/', '800', '600', '1', '2');
+INSERT INTO `lomazGames`.`game` (`id`, `game_string`, `iframe`, `width`, `height`, `author_id`, `genre_id`) VALUES ('5', 'infinitybreak', 'https://gitlomaz.github.io/infinitybreak/', '1280', '720', '1', '2');
+INSERT INTO `lomazGames`.`game` (`id`, `game_string`, `iframe`, `width`, `height`, `author_id`, `genre_id`) VALUES ('6', 'nightscapes', 'https://us-dev.nightscapes.io/farmer/', '1180', '720', '1', '2');
+INSERT INTO `lomazGames`.`game` (`id`, `game_string`, `iframe`, `width`, `height`, `author_id`, `genre_id`) VALUES ('7', 'spaced', 'https://gitlomaz.github.io/spaced/', '1108', '595', '1', '4');
+INSERT INTO `lomazGames`.`game` (`id`, `game_string`, `iframe`, `width`, `height`, `author_id`, `genre_id`) VALUES ('8', 'slashArena', 'https://gitlomaz.github.io/slash/', '1280', '720', '1', '2');
+INSERT INTO `lomazGames`.`game` (`id`, `game_string`, `iframe`, `width`, `height`, `author_id`, `genre_id`) VALUES ('9', 'stacked', 'https://gitlomaz.github.io/stacked/', '1128', '615', '1', '5');
 
 INSERT INTO `lomazGames`.`_gameTotag` (`A`, `B`) VALUES ('1', '2');
 INSERT INTO `lomazGames`.`_gameTotag` (`A`, `B`) VALUES ('1', '3');

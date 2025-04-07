@@ -65,3 +65,14 @@ a {
 .menu-item:hover {
   background-color: #6e9fd1; /* New background color on hover */
 }
+
+#profile-container {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  cursor: pointer;
+}
+
+#auth-container {
+  cursor: pointer;
+}

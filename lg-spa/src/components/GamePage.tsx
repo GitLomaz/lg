@@ -28,12 +28,15 @@ const GamePage: React.FC = () => {
   }, []);
     
   return (
-    <>
-      <div className='game-container'>{game?.translations[0].name}</div>
-      <GameContainer game={game}/>
+    <div className='game-page'>
+      <div className='game-title'>{game?.translations[0].name}</div>
+      <div className='game-block flex-row'>
+        <GameContainer game={game}/>
+        <div className='game-info'>asdasd</div>
+      </div>
       <FavoriteButton gameId={game?.id}/>
       <RatingButton gameId={game?.id} rating={game?.ratings.average}/>
-    </>
+    </div>
   );
 };
 

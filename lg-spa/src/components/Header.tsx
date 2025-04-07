@@ -41,11 +41,11 @@ const Header: React.FC = () => {
       <div className='flex-item-1 profile-button fixed-width-300'>
       {!user ? (
         <>
-          <span id='auth' onClick={() => promptLogin()}>Log In<span id='user-icon'><User size={24} /></span></span>
+          <span id='auth-container' onClick={() => promptLogin()}>Log In<span id='user-icon'><User size={24} /></span></span>
         </>
       ) : (
         <>
-          <div onClick={() => {toggleMenu()}} style={{ display: "flex", alignItems: "center", justifyContent: "flex-end" }}>
+          <div id="profile-container" onClick={() => {toggleMenu()}}>
             <div>{user.username}</div>
             <div id="profile-icon" style={{ backgroundImage: `url('/logo.png')` }}/>
           </div >
