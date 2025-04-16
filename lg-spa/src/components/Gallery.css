@@ -1,6 +1,6 @@
 .leftMenu {
   width: 230px;
-  background-color: #282c34;
+  background-color: var(--background);
   color: white;
   padding: 10px;
 }

@@ -4,6 +4,7 @@ import { MailService } from 'src/mail/mail.service';
 import * as bcrypt from 'bcryptjs';
 import { randomUUID } from 'crypto';
 import { generateServerResponse } from '../common/responseCodes';
+import { adjectives, animals } from 'src/common/usernames';
 
 @Injectable()
 export class UserService {
@@ -24,27 +25,40 @@ export class UserService {
   }
 
   // Register a new user
-  async register(username: string, email: string, password: string) {
+  async register(username: string, email: string, password: string, oauth: boolean = false) {
     // Check if the user already exists
     const existingUserCheck = await this.checkIfUserExists(username, email);
     if (existingUserCheck) return existingUserCheck;
-    const hashedPassword = await bcrypt.hash(password, 10);
     const verificationToken = randomUUID();
-    const user = await this.databaseService.user.create({
+    let user = await this.databaseService.user.create({
       data: {
         username,
         email,
         verification_token: verificationToken,
       },
     });
-    await this.databaseService.passwords.create({
-      data: {
-        user_id: user.id,
-        password_hash: hashedPassword,
-      },
-    });
-    await this.mailService.sendVerificationEmail(email, verificationToken);
-    return generateServerResponse('ACCOUNT_REGISTERED', { email: email });
+    if (!oauth) {
+      const hashedPassword = await bcrypt.hash(password, 10);
+      await this.databaseService.passwords.create({
+        data: {
+          user_id: user.id,
+          password_hash: hashedPassword,
+        },
+      });
+      await this.mailService.sendVerificationEmail(email, verificationToken);
+      return generateServerResponse('ACCOUNT_REGISTERED', { email: email });
+    } else {
+      await this.databaseService.user.update({
+        where: {
+          email: user.email
+        },
+        data: {
+          is_verified: true,
+          verification_token: null
+        }
+      })
+      return user
+    }
   }
 
   // Verify email using the token
@@ -93,5 +107,12 @@ export class UserService {
     delete user.updated_at
     delete user.passwords
     return user
+  }
+
+  generateUsername() {
+    const number = Math.floor(Math.random() * 1000);
+    const adj = adjectives[Math.floor(Math.random() * adjectives.length)];
+    const animal = animals[Math.floor(Math.random() * animals.length)];
+    return `${adj}${animal}${number}`;
   }
 }

@@ -3,10 +3,12 @@ import { user } from '@prisma/client';
 import * as bcrypt from 'bcryptjs';
 import { APIResponse, generateServerResponse } from 'src/common/responseCodes';
 import { DatabaseService } from 'src/database/database.service';
+import { UserService } from 'src/user/user.service';
 
 @Injectable()
 export class AuthService {
   constructor(
+    private readonly userService: UserService,
     private readonly databaseService: DatabaseService,
   ) {}
 
@@ -56,5 +58,26 @@ export class AuthService {
         },
       },
     });
+  }
+
+  async findOrCreateOauthUser(
+    email: string,
+    name: string,
+    picture: string,
+    provider: string
+  ) {
+    let user = await this.getUserByEmailOrUsername(email)
+    if (!user) {
+      const username = this.userService.generateUsername()
+      await this.userService.register(username, email, null, true)
+      user = await this.getUserByEmailOrUsername(email)
+    }
+    return user
+    // let user = await this.userRepo.findOneBy({ email: profile.email });
+    // if (!user) {
+    //   user = this.userRepo.create(profile);
+    //   await this.userRepo.save(user);
+    // }
+    // return user;
   }
 }

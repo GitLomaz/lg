@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import { useUserState } from '../../contexts/useUserState';
 import SPA_REACT_APP_API_URL from "../../config";
+import GoogleLoginButton from "../GoogleLoginButton"
 import * as Yup from 'yup';
 import './LoginModal.css';
 import axios from '../../axiosConfig'
@@ -98,11 +99,7 @@ const LoginModal: React.FC<ModalProps> = ( { isOpen, onClose } ) => {
           setModalMode('unverified')
           break;
         case 'LOGIN_SUCCESSFUL':
-          setModalMode('loggedin')
-          setUser({
-            username: response.data.data.username,
-            avatarUrl: response.data.data.image
-          })
+          completeLogin(response.data.data.username, response.data.data.image)
           break;
         default:
           setFieldError("loginUsername", GENERIC_ERROR);
@@ -115,7 +112,15 @@ const LoginModal: React.FC<ModalProps> = ( { isOpen, onClose } ) => {
     }
   }
 
-  function resetAndClose() {
+  const completeLogin = (username: string, image: string) => {
+    setModalMode('loggedin')
+    setUser({
+      username: username,
+      avatarUrl: image
+    })
+  }
+
+  const resetAndClose = () => {
     setModalMode('login')
     onClose()
   }
@@ -161,10 +166,11 @@ const LoginModal: React.FC<ModalProps> = ( { isOpen, onClose } ) => {
                       <input type="checkbox" id="remember" />
                       <label htmlFor="remember">Remember on this device</label>
                     </div>
-                    <button className={isLoading ? "disabled" : ""} type="submit">Login</button>
+                    <button className={isLoading ? "disabled" : ""} type="submit">Sign In</button>
                   </Form>
                 )}
               </Formik>
+              <GoogleLoginButton loginFunction={loginUser} ></GoogleLoginButton>
               <div>Don't have an account? <span onClick={() => {if (!isLoading) {setModalMode('register')}}} className='register-click'>click here</span> to register</div>
             </div>
           </>

@@ -12,7 +12,7 @@
 }
 
 .modal-container {
-  background-color: #282c34;
+  background-color: var(--background);
   color: white;
   padding: 12px;
   border-radius: 8px;

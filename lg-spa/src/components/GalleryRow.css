@@ -2,7 +2,7 @@
   position: relative;
   height: 224px; /* Fixed height for the row */
   overflow: hidden; /* Hide overflow to keep it clean */
-  background-color: #282c34; /* Background color */
+  background-color: var(--background); /* Background color */
   color: white; /* Text color */
   padding: 10px; /* Padding for aesthetics */
 }

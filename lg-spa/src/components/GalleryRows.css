@@ -1,7 +1,7 @@
 .gallery-rows {
   height: calc(100vh - 360px); /* Adjust height to fill remaining space after header */
   overflow-y: auto; /* Enable vertical scrolling when content exceeds the height */
-  background-color: #282c34;
+  background-color: var(--background);
   box-sizing: border-box; /* Ensure padding is included in the element's total height/width */
 }
 
@@ -11,7 +11,7 @@
 }
 
 .gallery-rows::-webkit-scrollbar-track {
-  background: #282c34; /* Track color */
+  background: var(--background); /* Track color */
 }
 
 .gallery-rows::-webkit-scrollbar-thumb {

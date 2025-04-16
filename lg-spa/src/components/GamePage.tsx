@@ -7,6 +7,7 @@ import axios from '../axiosConfig'
 import GameContainer from './GameContainer';
 import FavoriteButton from './FavoriteButton';
 import RatingButton from './RatingButton';
+import GameDetails from './GameDetails';
 
 
 const GamePage: React.FC = () => {
@@ -18,6 +19,7 @@ const GamePage: React.FC = () => {
     try {
       const response = await axios.get(URL);
       setGameData(response.data)
+      console.log(response.data)
     } catch (error) {
       console.error('Failed to fetch games:', error);
     }
@@ -30,11 +32,11 @@ const GamePage: React.FC = () => {
   return (
     <div className='game-page'>
       <div className='game-title'>{game?.translations[0].name}</div>
-      <div className='flex-row'>
+      <div className='flex-row game-box'>
         <div className='flex-column'>
           <div className='game-block flex-row'>
             <GameContainer game={game}/>
-            <div className='game-info'>asdasd</div>
+            <GameDetails game={game}/>
           </div>
           <div className='flex-row'>
             <FavoriteButton gameId={game?.id}/>

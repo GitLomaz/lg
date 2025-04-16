@@ -30,7 +30,7 @@ a {
 
 #menu {
   position: absolute;
-  background-color: #282c34;
+  background-color: var(--container-bg);
   color: white;
   top: 50px;
   right: 5px;
