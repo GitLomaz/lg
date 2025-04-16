@@ -170,7 +170,7 @@ const LoginModal: React.FC<ModalProps> = ( { isOpen, onClose } ) => {
                   </Form>
                 )}
               </Formik>
-              <GoogleLoginButton loginFunction={loginUser} ></GoogleLoginButton>
+              <GoogleLoginButton loginFunction={completeLogin} ></GoogleLoginButton>
               <div>Don't have an account? <span onClick={() => {if (!isLoading) {setModalMode('register')}}} className='register-click'>click here</span> to register</div>
             </div>
           </>
