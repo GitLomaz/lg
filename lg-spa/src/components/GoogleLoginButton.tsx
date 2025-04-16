@@ -1,3 +1,4 @@
+import REACT_APP_API_URL from '../config';
 import './GoogleLoginButton.css';
 
 interface GoogleLoginButtonProps {
@@ -6,7 +7,7 @@ interface GoogleLoginButtonProps {
 
 const GoogleLoginButton: React.FC<GoogleLoginButtonProps> = ({ loginFunction }) => {
   const handleGoogleLogin = () => {
-    const googleAuthURL = 'http://localhost:3000/auth/google';
+    const googleAuthURL = REACT_APP_API_URL + '/auth/google';
     const width = 500;
     const height = 600;
     const left = window.screen.width / 2 - width / 2;
@@ -19,7 +20,7 @@ const GoogleLoginButton: React.FC<GoogleLoginButtonProps> = ({ loginFunction }) 
     );
 
     const messageListener = (event: MessageEvent) => {
-      if (event.origin !== 'http://localhost:3000') return;
+      if (event.origin !== REACT_APP_API_URL) return;
 
       if (event.data.type === 'google-auth-success') {
         loginFunction(event.data.username, event.data.image)
