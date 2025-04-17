@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import './Header.css';
 import LoginModal from './modals/LoginModal'
+import LogoutModal from './modals/LogoutModal'
 import { useUserState } from '../contexts/useUserState';
 import { User } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
@@ -9,6 +10,7 @@ const Header: React.FC = () => {
   const { user, setUser } = useUserState()
   const [menuOpen, setMenuOpen] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
+  const [isLogoutOpen, setIsLogoutOpen] = useState(false);
   const navigate = useNavigate();
 
   const toggleMenu = () => {
@@ -24,6 +26,7 @@ const Header: React.FC = () => {
   }
 
   function handleLogout() {
+    setIsLogoutOpen(true)
     setUser(null)
   }
 
@@ -38,6 +41,7 @@ const Header: React.FC = () => {
         </Link>
       </div>
       <LoginModal isOpen={isOpen} onClose={() => setIsOpen(false)}></LoginModal>
+      <LogoutModal isOpen={isLogoutOpen} onClose={() => setIsLogoutOpen(false)}></LogoutModal>
       <div className='flex-item-1 profile-button fixed-width-300'>
       {!user ? (
         <>
