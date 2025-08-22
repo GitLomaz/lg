@@ -5,6 +5,7 @@ import { UserService } from '../user/user.service'
 import { LocalAuthGuard } from './LocalGuard';
 import { APIResponse, generateServerResponse } from 'src/common/responseCodes';
 import { AuthGuard } from '@nestjs/passport';
+import { promisify } from 'util';
 
 @Controller('auth')
 export class AuthController {
@@ -21,6 +22,23 @@ export class AuthController {
   @Get('verify')
   async verifyEmail(@Query('token') token: string) {
     return this.authService.verifyEmail(token);
+  }
+
+  @Post('logout')
+  async logout(@Req() req: Request, @Res({ passthrough: true }) res: Response) {
+    const logoutAsync = promisify(req.logout.bind(req));
+    const destroyAsync = req.session ? promisify(req.session.destroy.bind(req.session)) : null;
+    try {
+      await logoutAsync();
+      if (destroyAsync) {
+        await destroyAsync();
+      }
+      res.clearCookie('LG_SESSION');
+    } catch (err) {
+      console.error('Logout error:', err);
+      return generateServerResponse('LOGOUT_FAILED');
+    }
+    return generateServerResponse('LOGOUT_SUCCESSFUL');
   }
 
   @UseGuards(LocalAuthGuard)

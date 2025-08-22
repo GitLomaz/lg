@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react';
 import './FavoriteButton.css';
-import { Heart } from 'lucide-react';
+import { Heart, SettingsIcon } from 'lucide-react';
 import SPA_REACT_APP_API_URL from '../config';
 import axios from '../axiosConfig'
 import { useUserState } from '../contexts/useUserState';
+import LoginModal from './modals/LoginModal';
 
 // Define props interface
 interface FavoriteButtonProps {
@@ -13,6 +14,7 @@ interface FavoriteButtonProps {
 const FavoriteButton: React.FC<FavoriteButtonProps> = ({ gameId }) => {
   const [favorite, setfavorite] = useState<boolean>(false);
   const [hovering, setHovering] = useState<boolean>(false);
+  const [isOpen, setIsOpen] = useState(false);
   const { user } = useUserState()
 
   const toggleFavorite = async () => {
@@ -35,7 +37,7 @@ const FavoriteButton: React.FC<FavoriteButtonProps> = ({ gameId }) => {
         setfavorite(!newState)
       }
     } else {
-      // prompt login?
+      setIsOpen(true)
     }
   }
 
@@ -61,6 +63,7 @@ const FavoriteButton: React.FC<FavoriteButtonProps> = ({ gameId }) => {
       onMouseOver={() => {setHovering(true)}}
       onMouseLeave={() => {setHovering(false)}}
     >
+      <LoginModal isOpen={isOpen} onClose={() => setIsOpen(false)}></LoginModal>
       <Heart 
       className='flex-item-1' 
       fill={hovering ? "gray" : (favorite ? "currentColor" : "")}

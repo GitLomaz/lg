@@ -31,7 +31,6 @@ const GalleryRow: React.FC<GalleryRowProps> = ({ genre }) => {
   };
 
   const loadGames = async () => {
-    // Fetch games based on selected tag
     let URL = `${SPA_REACT_APP_API_URL}/games/genre/${genre}`
     if (genre === 'Popular') {
       URL = `${SPA_REACT_APP_API_URL}/games/popular`
@@ -72,7 +71,7 @@ const GalleryRow: React.FC<GalleryRowProps> = ({ genre }) => {
       ) : (
         <Slider {...settings}>
           {Array.from({ length: 8 }).map((_, i) => (
-            <div className='shimmer tile-placeholder'></div>
+            <div key={i} className='shimmer tile-placeholder'></div>
           ))}
         </Slider> 
       )}

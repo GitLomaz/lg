@@ -4,6 +4,7 @@ import { Star } from 'lucide-react';
 import SPA_REACT_APP_API_URL from '../config';
 import axios from '../axiosConfig'
 import { useUserState } from '../contexts/useUserState';
+import LoginModal from './modals/LoginModal';
 
 interface RatingButtonProps {
   gameId: number | undefined,
@@ -14,6 +15,7 @@ const RatingButton: React.FC<RatingButtonProps> = ({ gameId, rating }) => {
   const [gameRating, setGameRating] = useState<number>(0);
   const [playerRating, setPlayerRating] = useState<number>(0);
   const [playerHovering, setPlayerHovering] = useState<number>(0);
+  const [isOpen, setIsOpen] = useState(false);
   const { user } = useUserState()
 
   const loadState = async () => {
@@ -52,7 +54,7 @@ const RatingButton: React.FC<RatingButtonProps> = ({ gameId, rating }) => {
         setPlayerRating(oldState)
       }
     } else {
-      // prompt login?
+      setIsOpen(true)
     }
   }
 
@@ -82,6 +84,7 @@ const RatingButton: React.FC<RatingButtonProps> = ({ gameId, rating }) => {
           onMouseOver={() => {highlightStarRating(index + 1)}}
           onMouseLeave={unHighlight}/>
       ))}
+      <LoginModal isOpen={isOpen} onClose={() => setIsOpen(false)}></LoginModal>
       <div className='flex-item-1 rating-score'>Ave. {(Math.round(gameRating * 100) / 100).toFixed(2)}</div>
     </div>
   )
