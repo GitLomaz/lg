@@ -24,23 +24,24 @@ model auth_providers {
 }
 
 model game {
-  id               Int                @id @default(autoincrement())
-  game_string      String             @db.VarChar(64)
-  iframe           String             @db.VarChar(1024)
-  width            Int
-  height           Int
-  author_id        Int?
-  author           user?              @relation(fields: [author_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "game_ibfk_1")
-  genre_id         Int
-  genre            genre              @relation(fields: [genre_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "game_ibfk_2")
-  tags             tag[]
-  assets           game_asset[]
-  achievements     achievement[]
-  comments         game_comment[]
-  favorites        game_favorite[]
-  ratings          game_rating[]
-  translations     game_translation[]
-  plays            game_play[]
+  id           Int                @id @default(autoincrement())
+  game_string  String             @db.VarChar(64)
+  iframe       String             @db.VarChar(1024)
+  width        Int
+  height       Int
+  author_id    Int?
+  genre_id     Int
+  achievements achievement[]
+  author       user?              @relation(fields: [author_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "game_ibfk_1")
+  genre        genre              @relation(fields: [genre_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "game_ibfk_2")
+  created_at   DateTime?          @default(now()) @db.Timestamp(0)
+  assets       game_asset[]
+  comments     game_comment[]
+  favorites    game_favorite[]
+  plays        game_play[]
+  ratings      game_rating[]
+  translations game_translation[]
+  tags         tag[]              @relation("gameTotag")
 
   @@index([author_id], map: "author_id")
   @@index([genre_id], map: "genre_id")
@@ -57,36 +58,36 @@ model game_asset {
 }
 
 model game_play {
-  id            Int       @id @default(autoincrement())
-  game_id       Int
-  count         Int       
-  date          DateTime? @default(now()) @db.Timestamp(0)
-  game          game    @relation(fields: [game_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "game_play_ibfk_1")
-  
+  id      Int       @id @default(autoincrement())
+  game_id Int
+  count   Int
+  date    DateTime? @default(now()) @db.Timestamp(0)
+  game    game      @relation(fields: [game_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "game_play_ibfk_1")
+
+  @@index([game_id], map: "game_play_ibfk_1")
 }
 
 model achievement {
-  id               Int     @id @default(autoincrement())
-  game_id          Int
-  difficulty       String  @db.VarChar(45)
-  icon_path        String  @db.VarChar(256)
-  game             game    @relation(fields: [game_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "achievement_ibfk_1")
-  translations     achievement_translation[]
-  earned           user[]
+  id           Int                       @id @default(autoincrement())
+  game_id      Int
+  difficulty   String                    @db.VarChar(45)
+  icon_path    String                    @db.VarChar(256)
+  game         game                      @relation(fields: [game_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "achievement_ibfk_1")
+  translations achievement_translation[]
+  earned       user[]                    @relation("achievementTouser")
 
   @@index([game_id], map: "game_id")
 }
 
 model achievement_translation {
-  achievement_id      Int
-  language            String         @db.VarChar(255)
-  name                String?        @db.VarChar(255)
-  description         String?        @db.Text
-  achievement         achievement    @relation(fields: [achievement_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "achievement_translation_ibfk_1")
+  achievement_id Int
+  language       String      @db.VarChar(255)
+  name           String?     @db.VarChar(255)
+  description    String?     @db.Text
+  achievement    achievement @relation(fields: [achievement_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "achievement_translation_ibfk_1")
 
   @@unique([achievement_id, language], map: "achievement_translation_index_0")
 }
-
 
 model game_comment {
   id                 String              @id @default(uuid()) @db.Char(36)
@@ -161,47 +162,56 @@ model passwords {
 }
 
 model sessions {
-  id            String    @id @default(uuid()) @db.Char(36)
+  id            String   @id @default(uuid()) @db.Char(36)
   user_id       Int
-  session_token String    @unique @db.VarChar(256) 
-  user_agent    String?   @db.Text
-  ip_address    String?   @db.VarChar(45)
-  expires_at    DateTime  @db.Timestamp(0)
-  created_at    DateTime  @default(now()) @db.Timestamp(0)
-  
-  user          user      @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  session_token String   @unique @db.VarChar(256)
+  user_agent    String?  @db.Text
+  ip_address    String?  @db.VarChar(45)
+  expires_at    DateTime @db.Timestamp(0)
+  created_at    DateTime @default(now()) @db.Timestamp(0)
+  user          user     @relation(fields: [user_id], references: [id], onDelete: Cascade)
+
   @@index([user_id])
 }
 
 model tag {
-  id       Int        @id @default(autoincrement())
-  name     String     @db.VarChar(45)
-  game     game[]
+  id   Int    @id @default(autoincrement())
+  name String @db.VarChar(45)
+  game game[] @relation("gameTotag")
 }
 
 model genre {
-  id       Int        @id @default(autoincrement())
-  name     String     @db.VarChar(45)
-  game     game[]
+  id   Int    @id @default(autoincrement())
+  name String @db.VarChar(45)
+  game game[]
 }
 
 model user {
-  id                Int                 @id @default(autoincrement())
-  username          String              @unique(map: "username") @db.VarChar(45)
-  developer         Boolean?            @default(false)
-  image             String?             @db.Text
-  email             String              @unique(map: "email") @db.VarChar(255)
-  is_verified         Boolean   @default(false)
-  verification_token  String?   @unique
-  created_at        DateTime?           @default(now()) @db.Timestamp(0)
-  updated_at        DateTime?           @default(now()) @db.Timestamp(0)
-  auth_providers    auth_providers[]
-  games             game[]
-  game_comment      game_comment[]
-  game_comment_like game_comment_like[]
-  game_favorite     game_favorite[]
-  game_rating       game_rating[]
-  passwords         passwords[]
-  sessions          sessions[]
-  achievements      achievement[]
+  id                 Int                 @id @default(autoincrement())
+  username           String              @unique(map: "username") @db.VarChar(45)
+  developer          Boolean?            @default(false)
+  image              String?             @db.Text
+  email              String              @unique(map: "email") @db.VarChar(255)
+  is_verified        Boolean             @default(false)
+  verification_token String?             @unique
+  created_at         DateTime?           @default(now()) @db.Timestamp(0)
+  updated_at         DateTime?           @default(now()) @db.Timestamp(0)
+  auth_providers     auth_providers[]
+  games              game[]
+  game_comment       game_comment[]
+  game_comment_like  game_comment_like[]
+  game_favorite      game_favorite[]
+  game_rating        game_rating[]
+  passwords          passwords[]
+  sessions           sessions[]
+  achievements       achievement[]       @relation("achievementTouser")
+}
+
+model score {
+  id        Int       @id @unique(map: "id_UNIQUE") @default(autoincrement())
+  name      String    @db.VarChar(45)
+  score     BigInt?
+  timestamp DateTime? @default(now()) @db.Timestamp(0)
+  game      String?   @default("0") @db.VarChar(64)
+  level     Int?      @default(0)
 }

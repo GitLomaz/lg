@@ -8,13 +8,14 @@ interface GameDetailsProps {
 
 
 const GameDetails: React.FC<GameDetailsProps> = ({ game }) => {
+  console.log(game)
   return (
     <div id="game-details">
-      <span className='bold'>Author: </span>Lomaz<br/>
-      <span className='bold'>Date Published: </span>10/12/2024<br/>
-      <span className='bold'>Total Plays: </span>123<br/>
-      <span className='bold'>Total Favorites: </span>2<br/>
-      <span className='bold'>Average Rating: </span>3.63<br/>
+      <span className='bold'>Author: </span>{game?.author}<br />
+      <span className='bold'>Date Published: </span>{game?.plays}<br />
+      <span className='bold'>Total Plays: </span>{game?.plays}<br />
+      <span className='bold'>Total Favorites: </span>2<br />
+      <span className='bold'>Average Rating: </span>3.63<br />
     </div>
   );
 };
