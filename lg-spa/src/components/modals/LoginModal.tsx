@@ -6,6 +6,7 @@ import GoogleLoginButton from "../GoogleLoginButton"
 import * as Yup from 'yup';
 import './LoginModal.css';
 import axios from '../../axiosConfig'
+import posthog from 'posthog-js';
 
 interface ModalProps {
   isOpen: boolean;
@@ -99,6 +100,7 @@ const LoginModal: React.FC<ModalProps> = ( { isOpen, onClose } ) => {
           setModalMode('unverified')
           break;
         case 'LOGIN_SUCCESSFUL':
+          posthog.identify()
           completeLogin(response.data.data.username, response.data.data.image)
           break;
         default:

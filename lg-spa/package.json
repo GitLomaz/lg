@@ -13,6 +13,7 @@
     "dotenv": "^16.4.7",
     "formik": "^2.4.6",
     "lucide-react": "^0.484.0",
+    "posthog-js": "^1.318.2",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-hook-form": "^7.54.2",
