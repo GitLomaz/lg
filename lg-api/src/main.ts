@@ -9,7 +9,7 @@ import * as fs from 'fs';
 config();
 async function bootstrap() {
   let httpsOptions = null
-  let origin = 'http://localhost:3001';
+  let origin = 'http://localhost:3210';
   if (process.env.API_LOCAL !== 'true') {
     origin = 'https://lomazgames.com';
     httpsOptions = {
