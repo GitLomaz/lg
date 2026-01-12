@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
+import { useFeatureFlagEnabled } from 'posthog-js/react'
 import { useUserState } from '../../contexts/useUserState';
 import SPA_REACT_APP_API_URL from "../../config";
 import GoogleLoginButton from "../GoogleLoginButton"
@@ -48,6 +49,7 @@ const LoginModal: React.FC<ModalProps> = ( { isOpen, onClose } ) => {
   const [modalMode, setModalMode] = useState<string>('login')
   const [isLoading, setIsLoading] = useState<boolean>(false)
   const { user, setUser } = useUserState()
+  const flagEnabled = useFeatureFlagEnabled('alternitive-login-text')
 
   const registerUser = async (values: any, setFieldError: any) => {
     setIsLoading(true)
@@ -136,7 +138,7 @@ const LoginModal: React.FC<ModalProps> = ( { isOpen, onClose } ) => {
         switch (modalMode) {
           case "login":
             return <>
-            <div className="modal-header">Log In</div>
+            <div className="modal-header">{flagEnabled ? "Log In" : "Sign In"}</div>
             <div className="modal-form">
               <Formik
                 key={'login'}
