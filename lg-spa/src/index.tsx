@@ -8,12 +8,16 @@ import { PostHogProvider } from 'posthog-js/react';
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
+
+const posthogKey = process.env.REACT_APP_POSTHOG_KEY || '';
+const posthogHost = process.env.REACT_APP_POSTHOG_HOST || '';
+
 root.render(
   <BrowserRouter>
     <PostHogProvider
-      apiKey={process.env.REACT_APP_POSTHOG_KEY}
+      apiKey={posthogKey}
       options={{
-        api_host: process.env.REACT_APP_POSTHOG_HOST,
+        api_host: posthogHost,
         defaults: '2025-05-24',
         capture_exceptions: true, // This enables capturing exceptions using Error Tracking, set to false if you don't want this
         debug: process.env.NODE_ENV === 'development',
