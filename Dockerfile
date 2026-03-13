@@ -43,21 +43,21 @@ RUN apt-get update -y && \
     apt-get install -y nginx openssl && \
     rm -rf /var/lib/apt/lists/*
 
-# API
+# Set up API
 WORKDIR /app/api
 COPY --from=api-build /app/api/dist ./dist
 COPY --from=api-build /app/api/package.json /app/api/package-lock.json ./
 COPY --from=api-build /app/api/node_modules ./node_modules
 COPY --from=api-build /app/api/prisma ./prisma
 
-# SPA
-COPY --from=spa-build /app/spa/dist /usr/share/nginx/html
+# Set up SPA static files
+COPY --from=spa-build /app/spa/build /usr/share/nginx/html
 
-# nginx
+# Configure nginx
 RUN rm /etc/nginx/sites-enabled/default
 COPY nginx.conf /etc/nginx/sites-enabled/app.conf
 
-# startup
+# Copy and configure startup script
 COPY start.sh /app/start.sh
 RUN chmod +x /app/start.sh
 
