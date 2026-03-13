@@ -61,6 +61,6 @@ COPY nginx.conf /etc/nginx/sites-enabled/app.conf
 COPY start.sh /app/start.sh
 RUN chmod +x /app/start.sh
 
-EXPOSE 80
+EXPOSE 8080
 
 CMD ["/app/start.sh"]
