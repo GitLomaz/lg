@@ -4,21 +4,15 @@ import { config } from 'dotenv';
 import * as cookieParser from 'cookie-parser';
 import * as session from "express-session";
 import * as passport from "passport";
-import * as fs from 'fs';
 
 config();
 async function bootstrap() {
-  let httpsOptions = null
   let origin = 'http://localhost:3210';
   if (process.env.API_LOCAL !== 'true') {
     origin = 'https://lomazgames.com';
-    httpsOptions = {
-      key: fs.readFileSync('/etc/letsencrypt/live/lomazgames.com/privkey.pem'),
-      cert: fs.readFileSync('/etc/letsencrypt/live/lomazgames.com/fullchain.pem'),
-    };
   }
 
-  const app = await NestFactory.create(AppModule, {httpsOptions});
+  const app = await NestFactory.create(AppModule);
 
   app.use(cookieParser());
 
