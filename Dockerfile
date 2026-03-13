@@ -6,14 +6,19 @@ WORKDIR /app/api
 
 RUN apt-get update -y && apt-get install -y openssl
 
-# Copy API package files and install dependencies
+# Copy package files
 COPY lg-api/package.json lg-api/package-lock.json ./
+
+# Copy prisma schema before install so postinstall works
+COPY lg-api/prisma ./prisma
+
+# Install dependencies
 RUN npm install
 
-# Copy API source files
+# Copy rest of API source
 COPY lg-api/ ./
 
-# Generate Prisma Client and build
+# Build API
 RUN npx prisma generate
 RUN npm run build
 
@@ -23,11 +28,9 @@ RUN npm run build
 FROM node:18 AS spa-build
 WORKDIR /app/spa
 
-# Copy SPA package files and install dependencies
 COPY lg-spa/package.json lg-spa/package-lock.json ./
 RUN npm install
 
-# Copy SPA source files and build
 COPY lg-spa/ ./
 RUN npm run build
 
@@ -36,29 +39,28 @@ RUN npm run build
 # ============================================
 FROM node:18-slim
 
-# Install nginx and openssl
 RUN apt-get update -y && \
     apt-get install -y nginx openssl && \
     rm -rf /var/lib/apt/lists/*
 
-# Set up API
+# API
 WORKDIR /app/api
 COPY --from=api-build /app/api/dist ./dist
 COPY --from=api-build /app/api/package.json /app/api/package-lock.json ./
 COPY --from=api-build /app/api/node_modules ./node_modules
+COPY --from=api-build /app/api/prisma ./prisma
 
-# Set up SPA static files
-COPY --from=spa-build /app/spa/build /usr/share/nginx/html
+# SPA
+COPY --from=spa-build /app/spa/dist /usr/share/nginx/html
 
-# Configure nginx
+# nginx
 RUN rm /etc/nginx/sites-enabled/default
 COPY nginx.conf /etc/nginx/sites-enabled/app.conf
 
-# Copy and configure startup script
+# startup
 COPY start.sh /app/start.sh
 RUN chmod +x /app/start.sh
 
-# Expose port 80 for nginx
 EXPOSE 80
 
 CMD ["/app/start.sh"]
