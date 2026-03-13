@@ -13,7 +13,7 @@ COPY lg-api/package.json lg-api/package-lock.json ./
 COPY lg-api/prisma ./prisma
 
 # Install dependencies
-RUN npm install
+RUN npm ci
 
 # Copy rest of API source
 COPY lg-api/ ./
@@ -29,7 +29,7 @@ FROM node:18 AS spa-build
 WORKDIR /app/spa
 
 COPY lg-spa/package.json lg-spa/package-lock.json ./
-RUN npm install
+RUN npm ci
 
 COPY lg-spa/ ./
 RUN npm run build
