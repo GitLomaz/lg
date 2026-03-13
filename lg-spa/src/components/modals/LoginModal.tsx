@@ -50,8 +50,6 @@ const LoginModal: React.FC<ModalProps> = ( { isOpen, onClose } ) => {
   const [isLoading, setIsLoading] = useState<boolean>(false)
   const { user, setUser } = useUserState()
   const flagEnabled = useFeatureFlagEnabled('alternitive-login-text')
-  console.log(flagEnabled)
-  console.log(flagEnabled ? "yes" : "no")
 
   const registerUser = async (values: any, setFieldError: any) => {
     setIsLoading(true)
