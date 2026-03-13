@@ -5,7 +5,7 @@ generator client {
 
 datasource db {
   provider = "mysql"
-  url      = "mysql://${env(DB_USER)}:${env(DB_PASS)}@${env(DB_HOST)}:3306/${env(DB_NAME)}?schema=public"
+  url      = env("API_DATABASE_URL")
 }
 
 model auth_providers {
