@@ -15,7 +15,7 @@ const GalleryTile: React.FC<GalleryTileProps> = ({ game }) => {
 
   return (
     <div
-      className={`w-[250px] h-[200px] m-2 ${
+      className={`w-[150px] sm:w-[200px] md:w-[250px] h-[120px] sm:h-[160px] md:h-[200px] m-1 sm:m-2 ${
         selectedGame?.key === game.key ? 'box-border border-2 border-border transition-all duration-300' : ''
       }`} 
       onClick={() => onTileClick(game)}

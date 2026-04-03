@@ -131,15 +131,15 @@ const LoginModal: React.FC<ModalProps> = ( { isOpen, onClose } ) => {
 
   if (!isOpen) return <></>
   return (
-    <div className="fixed top-0 left-0 w-full h-full bg-black/50 flex justify-center items-center z-[1000]" onClick={resetAndClose}>
-      <div className="bg-background text-white p-3 rounded-lg border-2 border-border shadow-lg w-[90%] max-w-[500px] text-center relative" onClick={(e) => e.stopPropagation()}>
-        <button className="absolute top-2.5 right-4 bg-transparent border-none text-lg cursor-pointer text-white hover:text-red-600" onClick={resetAndClose}>&times;</button>
+    <div className="fixed top-0 left-0 w-full h-full bg-black/50 flex justify-center items-center z-[1000] p-4" onClick={resetAndClose}>
+      <div className="bg-background text-white p-3 sm:p-5 rounded-lg border-2 border-border shadow-lg w-full max-w-[500px] text-center relative max-h-[90vh] overflow-y-auto" onClick={(e) => e.stopPropagation()}>
+        <button className="absolute top-2 sm:top-2.5 right-3 sm:right-4 bg-transparent border-none text-xl sm:text-2xl cursor-pointer text-white hover:text-red-600 z-10" onClick={resetAndClose}>&times;</button>
         {(() => {
         switch (modalMode) {
           case "login":
             return <>
-            <div className="text-2xl">{flagEnabled ? "Log In" : "Sign In"}</div>
-            <div className="modal-form w-80 p-5 mx-auto">
+            <div className="text-xl sm:text-2xl">{flagEnabled ? "Log In" : "Sign In"}</div>
+            <div className="modal-form w-full sm:w-80 p-3 sm:p-5 mx-auto">
               <Formik
                 key={'login'}
                 enableReinitialize
@@ -180,8 +180,8 @@ const LoginModal: React.FC<ModalProps> = ( { isOpen, onClose } ) => {
           </>
           case "register":
             return <>
-            <div className="text-2xl">Create Account</div>
-            <div className="modal-form w-80 p-5 mx-auto">
+            <div className="text-xl sm:text-2xl">Create Account</div>
+            <div className="modal-form w-full sm:w-80 p-3 sm:p-5 mx-auto">
             <Formik
               key={'register'}
               enableReinitialize

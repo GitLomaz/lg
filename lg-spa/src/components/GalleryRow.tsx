@@ -58,9 +58,9 @@ const GalleryRow: React.FC<GalleryRowProps> = ({ genre }) => {
   }, []); // Empty dependency array ensures this runs only once on mount
 
   return (
-    <div className='relative h-56 overflow-hidden bg-background text-white p-2.5'>
-      <div className='uppercase float-left text-xl'>{genre}</div>
-      <div className='float-right text-lg'>View All</div>
+    <div className='relative h-40 sm:h-48 md:h-56 overflow-hidden bg-background text-white p-1.5 sm:p-2 md:p-2.5'>
+      <div className='uppercase float-left text-base sm:text-lg md:text-xl'>{genre}</div>
+      <div className='float-right text-sm sm:text-base md:text-lg'>View All</div>
       {currentGames.length !== 0 ? (
         <Slider {...settings} className="inline-grid clear-both">
           {currentGames.map((game) => (
@@ -70,7 +70,7 @@ const GalleryRow: React.FC<GalleryRowProps> = ({ genre }) => {
       ) : (
         <Slider {...settings} className="inline-grid clear-both">
           {Array.from({ length: 8 }).map((_, i) => (
-            <div key={i} className='shimmer w-[250px] h-[200px] m-2'></div>
+            <div key={i} className='shimmer w-[150px] sm:w-[200px] md:w-[250px] h-[120px] sm:h-[160px] md:h-[200px] m-1 sm:m-2'></div>
           ))}
         </Slider> 
       )}

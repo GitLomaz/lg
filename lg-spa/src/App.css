@@ -23,3 +23,28 @@
   background-image: url('../public/logo.png');
   background-size: contain;
 }
+
+/* Mobile-specific optimizations */
+@media (max-width: 768px) {
+  /* Prevent horizontal scrolling on mobile */
+  body {
+    overflow-x: hidden;
+  }
+
+  /* Ensure touch-friendly tap targets */
+  button, a, [role="button"] {
+    min-height: 44px;
+    min-width: 44px;
+  }
+
+  /* Optimize carousel for touch */
+  .slick-slider {
+    touch-action: pan-x;
+  }
+}
+
+/* Improve iframe responsiveness */
+iframe {
+  max-width: 100%;
+  height: auto;
+}

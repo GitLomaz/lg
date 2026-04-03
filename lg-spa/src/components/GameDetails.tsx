@@ -9,7 +9,7 @@ interface GameDetailsProps {
 const GameDetails: React.FC<GameDetailsProps> = ({ game }) => {
   console.log(game)
   return (
-    <div className="border-4 border-l-0 border-[#31353d] p-2.5 w-[300px] text-left text-sm">
+    <div className="border-4 md:border-l-0 border-[#31353d] p-2.5 w-full md:w-[300px] text-left text-xs sm:text-sm">
       <span className='font-bold'>Author: </span>{game?.author}<br />
       <span className='font-bold'>Date Published: </span>{game?.plays}<br />
       <span className='font-bold'>Total Plays: </span>{game?.plays}<br />

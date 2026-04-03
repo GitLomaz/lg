@@ -31,15 +31,15 @@ const GamePage: React.FC = () => {
   }, []);
     
   return (
-    <div className='px-5 mx-5 text-center'>
-      <div className='text-center p-2.5 text-[40px] font-bold'>{game?.translations[0].name}</div>
-      <div className='flex flex-row justify-center'>
-        <div className='flex flex-col'>
-          <div className='w-max flex flex-row'>
+    <div className='px-2 md:px-5 mx-0 md:mx-5 text-center'>
+      <div className='text-center p-2.5 text-2xl md:text-[40px] font-bold'>{game?.translations[0].name}</div>
+      <div className='flex flex-col md:flex-row justify-center items-center'>
+        <div className='flex flex-col w-full md:w-auto'>
+          <div className='w-full md:w-max flex flex-col md:flex-row'>
             <GameContainer game={game}/>
             <GameDetails game={game}/>
           </div>
-          <div className='flex flex-row'>
+          <div className='flex flex-col sm:flex-row gap-2 mt-2'>
             <FavoriteButton gameId={game?.id}/>
             <RatingButton gameId={game?.id} rating={game?.ratings.average}/>
           </div>

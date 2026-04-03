@@ -71,20 +71,20 @@ const RatingButton: React.FC<RatingButtonProps> = ({ gameId, rating }) => {
   }, [gameId]);
 
   return (
-    <div className="border-2 border-[#31353d] rounded-sm p-2 w-[225px] flex flex-row">
+    <div className="border-2 border-[#31353d] rounded-sm p-2 w-full sm:w-[225px] flex flex-row items-center">
       {Array.from({ length: 5 }).map((_, index) => (
         <Star 
           fill={playerHovering >= index + 1 ? "gray" : (playerRating >= index + 1 ? "currentColor" : "")}
           key={'star-' + (index + 1)} 
           id={'star-' + (index + 1)} 
-          className='flex-1 cursor-pointer' 
-          size={24} 
+          className='flex-1 cursor-pointer min-w-[20px]' 
+          size={20} 
           onClick={() => {setStarRating(index + 1)}} 
           onMouseOver={() => {highlightStarRating(index + 1)}}
           onMouseLeave={unHighlight}/>
       ))}
       <LoginModal isOpen={isOpen} onClose={() => setIsOpen(false)}></LoginModal>
-      <div className='flex-1 border-l-2 border-[#31353d] ml-2.5 pl-2.5'>Ave. {(Math.round(gameRating * 100) / 100).toFixed(2)}</div>
+      <div className='flex-shrink-0 border-l-2 border-[#31353d] ml-2 pl-2 text-sm md:text-base'>Ave. {(Math.round(gameRating * 100) / 100).toFixed(2)}</div>
     </div>
   )
 };

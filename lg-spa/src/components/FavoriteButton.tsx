@@ -57,17 +57,17 @@ const FavoriteButton: React.FC<FavoriteButtonProps> = ({ gameId }) => {
   }, [gameId]);
 
   return (
-    <div className="border-2 border-[#31353d] rounded-sm cursor-pointer p-2 w-[125px] flex flex-row" 
+    <div className="border-2 border-[#31353d] rounded-sm cursor-pointer p-2 w-full sm:w-[125px] flex flex-row items-center justify-center gap-1" 
       onClick={toggleFavorite}
       onMouseOver={() => {setHovering(true)}}
       onMouseLeave={() => {setHovering(false)}}
     >
       <LoginModal isOpen={isOpen} onClose={() => setIsOpen(false)}></LoginModal>
       <Heart 
-      className='flex-1' 
+      className='flex-shrink-0' 
       fill={hovering ? "gray" : (favorite ? "currentColor" : "")}
-      size={24}/>
-      <div className='flex-1'>Favorite</div>
+      size={20}/>
+      <div className='text-sm md:text-base'>Favorite</div>
     </div>
   )
 };

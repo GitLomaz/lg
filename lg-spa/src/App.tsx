@@ -29,7 +29,7 @@ function App() {
     <UserContext.Provider value={{ user, setUser: updateUser }}>
       <VerificationModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
       <div className="h-screen flex flex-col">
-        <div className="bg-container-bg text-white p-2.5 text-center h-9 flex-shrink-0 border-b-4 border-[#31353d]">
+        <div className="bg-container-bg text-white p-2 md:p-2.5 text-center h-12 md:h-9 flex-shrink-0 border-b-4 border-[#31353d]">
           <Header />
         </div>
         <div className="flex-1 overflow-auto bg-background text-white">
