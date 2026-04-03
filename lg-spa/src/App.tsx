@@ -28,11 +28,11 @@ function App() {
   return (
     <UserContext.Provider value={{ user, setUser: updateUser }}>
       <VerificationModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
-      <div className="app flex-column">
-        <div className="header">
+      <div className="h-screen flex flex-col">
+        <div className="bg-container-bg text-white p-2.5 text-center h-9 flex-shrink-0 border-b-4 border-[#31353d]">
           <Header />
         </div>
-        <div className="content">
+        <div className="flex-1 overflow-auto bg-background text-white">
           <Routes>
             <Route path="/" element={<Gallery />} />
             <Route path="/game/:author/:gameString" element={<GamePage />} />

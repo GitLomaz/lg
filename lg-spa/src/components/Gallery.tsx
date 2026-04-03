@@ -4,7 +4,6 @@ import GameCarousel from './GameCarousel';
 import { Game } from '../types';
 import { GameContext } from '../contexts/useGameState';
 import GalleryRows from './GalleryRows';
-import './Gallery.css';
 
 
 const Gallery: React.FC = () => {
@@ -18,13 +17,13 @@ const Gallery: React.FC = () => {
 
   return (
     <GameContext.Provider value={{selectedGame, setSelectedGame}} >
-      <div className='flex-row'>
-        <div className='leftMenu'>
+      <div className='flex flex-row'>
+        <div className='w-[230px] bg-background text-white p-2.5'>
           <LeftMenu tags={gameTags} onTagClick={handleTagClick} />
         </div>
-        <div className='galleryContent'>
-        <GameCarousel />
-        <GalleryRows tags={gameTags}/>
+        <div className='flex-1 bg-[#f4f4f4] overflow-auto'>
+          <GameCarousel />
+          <GalleryRows tags={gameTags}/>
         </div>
       </div>
     </GameContext.Provider>

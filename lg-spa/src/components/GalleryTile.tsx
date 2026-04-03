@@ -1,4 +1,3 @@
-import './GalleryTile.css';
 import { GameRow } from '../types';
 import { useGameState } from '../contexts/useGameState';
 
@@ -16,10 +15,12 @@ const GalleryTile: React.FC<GalleryTileProps> = ({ game }) => {
 
   return (
     <div
-      className={`gallery-row-image-container ${selectedGame?.key === game.key ? 'selected-tile' : ''}`} 
+      className={`w-[250px] h-[200px] m-2 ${
+        selectedGame?.key === game.key ? 'box-border border-2 border-border transition-all duration-300' : ''
+      }`} 
       onClick={() => onTileClick(game)}
     >
-      <img src={game.tile} alt={game.game_string} className='gallery-row-image' />
+      <img src={game.tile} alt={game.game_string} className='w-full h-full object-scale-down' />
     </div>
   )
 };

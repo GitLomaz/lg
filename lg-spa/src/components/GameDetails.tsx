@@ -1,5 +1,4 @@
 import React from 'react';
-import './GameDetails.css';
 import { Game } from '../types';
 
 interface GameDetailsProps {
@@ -10,12 +9,12 @@ interface GameDetailsProps {
 const GameDetails: React.FC<GameDetailsProps> = ({ game }) => {
   console.log(game)
   return (
-    <div id="game-details">
-      <span className='bold'>Author: </span>{game?.author}<br />
-      <span className='bold'>Date Published: </span>{game?.plays}<br />
-      <span className='bold'>Total Plays: </span>{game?.plays}<br />
-      <span className='bold'>Total Favorites: </span>2<br />
-      <span className='bold'>Average Rating: </span>3.63<br />
+    <div className="border-4 border-l-0 border-[#31353d] p-2.5 w-[300px] text-left text-sm">
+      <span className='font-bold'>Author: </span>{game?.author}<br />
+      <span className='font-bold'>Date Published: </span>{game?.plays}<br />
+      <span className='font-bold'>Total Plays: </span>{game?.plays}<br />
+      <span className='font-bold'>Total Favorites: </span>2<br />
+      <span className='font-bold'>Average Rating: </span>3.63<br />
     </div>
   );
 };

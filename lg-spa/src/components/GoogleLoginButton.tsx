@@ -1,5 +1,4 @@
 import REACT_APP_API_URL from '../config';
-import './GoogleLoginButton.css';
 
 interface GoogleLoginButtonProps {
   loginFunction: Function;
@@ -34,9 +33,9 @@ const GoogleLoginButton: React.FC<GoogleLoginButtonProps> = ({ loginFunction }) 
   };
 
   return (
-    <div onClick={handleGoogleLogin}  className='google-btn flex-row'>
-      <div className='google-logo'></div>
-      <div className='google-text'>Sign In with Google</div>
+    <div onClick={handleGoogleLogin}  className='bg-button-bg border border-border rounded-md p-2 w-60 my-2.5 mx-auto cursor-pointer flex flex-row justify-center'>
+      <div className='bg-[url("../../public/google-icon.svg")] bg-contain bg-no-repeat w-[22px] h-[22px] mr-2.5'></div>
+      <div>Sign In with Google</div>
     </div>
   );
 };

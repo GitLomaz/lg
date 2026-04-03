@@ -1,5 +1,4 @@
 import React from 'react';
-import './GalleryRows.css';
 import GalleryRow from './GalleryRow';
 
 interface GalleryRowsProps {
@@ -8,7 +7,7 @@ interface GalleryRowsProps {
 
 const GalleryRows: React.FC<GalleryRowsProps> = ({ tags }) => {
   return (
-    <div className='gallery-rows'>
+    <div>
       {tags.map((tag) => (
         <GalleryRow key={tag} genre={tag} />
       ))}

@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Game, GameRow } from '../types';
 import Slider from 'react-slick';
-import './GalleryRow.css';
 import GalleryTile from './GalleryTile';
 import SPA_REACT_APP_API_URL from "../config";
-import axios from '../axiosConfig'
+import http from '../fetchConfig'
 import { useGameState } from '../contexts/useGameState';
 
 // Define props interface
@@ -37,8 +36,8 @@ const GalleryRow: React.FC<GalleryRowProps> = ({ genre }) => {
     }
     let games: GameRow[] = []
     try {
-      const response = await axios.get(URL);
-      games = response.data.map(function(game: Game) {
+      const data = await http.get(URL);
+      games = data.map(function(game: Game) {
         return {
           ...game,
           key: game.game_string + '_' + genre.toLowerCase()
@@ -59,23 +58,22 @@ const GalleryRow: React.FC<GalleryRowProps> = ({ genre }) => {
   }, []); // Empty dependency array ensures this runs only once on mount
 
   return (
-    <div className='gallery-row'>
-      <div className='gallery-row-title'>{genre}</div>
-      <div className='gallery-row-view-all'>View All</div>
+    <div className='relative h-56 overflow-hidden bg-background text-white p-2.5'>
+      <div className='uppercase float-left text-xl'>{genre}</div>
+      <div className='float-right text-lg'>View All</div>
       {currentGames.length !== 0 ? (
-        <Slider {...settings}>
+        <Slider {...settings} className="inline-grid clear-both">
           {currentGames.map((game) => (
             <GalleryTile key={game.game_string} game={game} />
           ))}
         </Slider> 
       ) : (
-        <Slider {...settings}>
+        <Slider {...settings} className="inline-grid clear-both">
           {Array.from({ length: 8 }).map((_, i) => (
-            <div key={i} className='shimmer tile-placeholder'></div>
+            <div key={i} className='shimmer w-[250px] h-[200px] m-2'></div>
           ))}
         </Slider> 
       )}
-      {}
     </div>
   );
 };

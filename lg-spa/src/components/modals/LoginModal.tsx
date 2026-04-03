@@ -5,8 +5,8 @@ import { useUserState } from '../../contexts/useUserState';
 import SPA_REACT_APP_API_URL from "../../config";
 import GoogleLoginButton from "../GoogleLoginButton"
 import * as Yup from 'yup';
-import './LoginModal.css';
-import axios from '../../axiosConfig'
+import './Modal.css';
+import http from '../../fetchConfig'
 import posthog from 'posthog-js';
 
 interface ModalProps {
@@ -55,17 +55,17 @@ const LoginModal: React.FC<ModalProps> = ( { isOpen, onClose } ) => {
     setIsLoading(true)
     let URL = `${SPA_REACT_APP_API_URL}/auth/register`
     try {
-      const response = await axios.post(URL, values);
-      if (!response?.data?.data) {
+      const response = await http.post(URL, values);
+      if (!response?.data) {
         setFieldError("email", GENERIC_ERROR);
         return
       }
-      switch (response.data.code) {
+      switch (response.code) {
         case 'USERNAME_TAKEN':
-          setFieldError("username", response.data.data);
+          setFieldError("username", response.data);
           break;
         case 'EMAIL_TAKEN':
-          setFieldError("email", response.data.data);
+          setFieldError("email", response.data);
           break;
         case 'ACCOUNT_REGISTERED':
           setModalMode('registered')
@@ -89,21 +89,21 @@ const LoginModal: React.FC<ModalProps> = ( { isOpen, onClose } ) => {
     setIsLoading(true)
     let URL = `${SPA_REACT_APP_API_URL}/auth/login`
     try {
-      const response = await axios.post(URL, payload);
-      if (!response?.data?.data) {
+      const response = await http.post(URL, payload);
+      if (!response?.data) {
         setFieldError("loginUsername", GENERIC_ERROR);
         return
       }
-      switch (response.data.code) {
+      switch (response.code) {
         case 'LOGIN_FAILED':
-          setFieldError("loginUsername", response.data.data);
+          setFieldError("loginUsername", response.data);
           break;
         case 'ACCOUNT_UNVERIFIED':
           setModalMode('unverified')
           break;
         case 'LOGIN_SUCCESSFUL':
           posthog.identify()
-          completeLogin(response.data.data.username, response.data.data.image)
+          completeLogin(response.data.username, response.data.image)
           break;
         default:
           setFieldError("loginUsername", GENERIC_ERROR);
@@ -131,15 +131,15 @@ const LoginModal: React.FC<ModalProps> = ( { isOpen, onClose } ) => {
 
   if (!isOpen) return <></>
   return (
-    <div className="modal-backdrop" onClick={resetAndClose}>
-      <div className="modal-container" onClick={(e) => e.stopPropagation()}>
-        <button className="modal-close" onClick={resetAndClose}>&times;</button>
+    <div className="fixed top-0 left-0 w-full h-full bg-black/50 flex justify-center items-center z-[1000]" onClick={resetAndClose}>
+      <div className="bg-background text-white p-3 rounded-lg border-2 border-border shadow-lg w-[90%] max-w-[500px] text-center relative" onClick={(e) => e.stopPropagation()}>
+        <button className="absolute top-2.5 right-4 bg-transparent border-none text-lg cursor-pointer text-white hover:text-red-600" onClick={resetAndClose}>&times;</button>
         {(() => {
         switch (modalMode) {
           case "login":
             return <>
-            <div className="modal-header">{flagEnabled ? "Log In" : "Sign In"}</div>
-            <div className="modal-form">
+            <div className="text-2xl">{flagEnabled ? "Log In" : "Sign In"}</div>
+            <div className="modal-form w-80 p-5 mx-auto">
               <Formik
                 key={'login'}
                 enableReinitialize
@@ -153,35 +153,35 @@ const LoginModal: React.FC<ModalProps> = ( { isOpen, onClose } ) => {
                 {() => (
                   <Form>
                     <div>
-                      <label>Username or Email Address</label>
-                      <Field name="loginUsername" type="text" />
-                      <div id="loginUsernameError" className="error-message-container">
-                        <ErrorMessage name="loginUsername" component="div" className="error-message" />
+                      <label className="block text-left my-2.5 mb-1 font-bold">Username or Email Address</label>
+                      <Field name="loginUsername" type="text" className="w-full p-2.5 border border-[#ccc] rounded-md text-base outline-none" />
+                      <div id="loginUsernameError" className="h-6">
+                        <ErrorMessage name="loginUsername" component="div" className="text-red-600 text-xs" />
                       </div>
                     </div>
                     <div>
-                      <label>Password</label>
-                      <Field name="loginPassword" type="password" />
-                      <div className="error-message-container">
-                        <ErrorMessage name="loginPassword" component="div" className="error-message" />
+                      <label className="block text-left my-2.5 mb-1 font-bold">Password</label>
+                      <Field name="loginPassword" type="password" className="w-full p-2.5 border border-[#ccc] rounded-md text-base outline-none" />
+                      <div className="h-6">
+                        <ErrorMessage name="loginPassword" component="div" className="text-red-600 text-xs" />
                       </div>
                     </div>
-                    <div className="remember-container">
-                      <input type="checkbox" id="remember" />
-                      <label htmlFor="remember">Remember on this device</label>
+                    <div className="flex items-center">
+                      <input type="checkbox" id="remember" className="mt-2 mr-1.5" />
+                      <label htmlFor="remember" className="mt-2">Remember on this device</label>
                     </div>
-                    <button className={isLoading ? "disabled" : ""} type="submit">Sign In</button>
+                    <button className={`w-20 m-2 p-2.5 bg-[#007bff] text-white border-none rounded-md text-base cursor-pointer transition-colors duration-300 hover:bg-border ${isLoading ? "cursor-default bg-[#586379]" : ""}`} type="submit">Sign In</button>
                   </Form>
                 )}
               </Formik>
               <GoogleLoginButton loginFunction={completeLogin} ></GoogleLoginButton>
-              <div>Don't have an account? <span onClick={() => {if (!isLoading) {setModalMode('register')}}} className='register-click'>click here</span> to register</div>
+              <div>Don't have an account? <span onClick={() => {if (!isLoading) {setModalMode('register')}}} className='font-bold cursor-pointer'>click here</span> to register</div>
             </div>
           </>
           case "register":
             return <>
-            <div className="modal-header">Create Account</div>
-            <div className="modal-form">
+            <div className="text-2xl">Create Account</div>
+            <div className="modal-form w-80 p-5 mx-auto">
             <Formik
               key={'register'}
               enableReinitialize
@@ -195,49 +195,49 @@ const LoginModal: React.FC<ModalProps> = ( { isOpen, onClose } ) => {
                 {() => (
                   <Form>
                     <div>
-                      <label>Username</label>
-                      <Field name="username" type="text" />
-                      <div id="usernameError" className="error-message-container">
-                        <ErrorMessage name="username" component="div" className="error-message" />
+                      <label className="block text-left my-2.5 mb-1 font-bold">Username</label>
+                      <Field name="username" type="text" className="w-full p-2.5 border border-[#ccc] rounded-md text-base outline-none" />
+                      <div id="usernameError" className="h-6">
+                        <ErrorMessage name="username" component="div" className="text-red-600 text-xs" />
                       </div>
                     </div>
                     <div>
-                      <label>Email Address</label>
-                      <Field name="email" type="text" />
-                      <div className="error-message-container">
-                        <ErrorMessage name="email" component="div" className="error-message" />
+                      <label className="block text-left my-2.5 mb-1 font-bold">Email Address</label>
+                      <Field name="email" type="text" className="w-full p-2.5 border border-[#ccc] rounded-md text-base outline-none" />
+                      <div className="h-6">
+                        <ErrorMessage name="email" component="div" className="text-red-600 text-xs" />
                       </div>
                     </div>
                     <div>
-                      <label>Password</label>
-                      <Field name="password" type="password" />
-                      <div className="error-message-container">
-                        <ErrorMessage name="password" component="div" className="error-message" />
+                      <label className="block text-left my-2.5 mb-1 font-bold">Password</label>
+                      <Field name="password" type="password" className="w-full p-2.5 border border-[#ccc] rounded-md text-base outline-none" />
+                      <div className="h-6">
+                        <ErrorMessage name="password" component="div" className="text-red-600 text-xs" />
                       </div>
                     </div>
                     <div>
-                      <label>Confirm Password</label>
-                      <Field name="confirmPassword" type="password" />
-                      <div className="error-message-container">
-                        <ErrorMessage name="confirmPassword" component="div" className="error-message" />
+                      <label className="block text-left my-2.5 mb-1 font-bold">Confirm Password</label>
+                      <Field name="confirmPassword" type="password" className="w-full p-2.5 border border-[#ccc] rounded-md text-base outline-none" />
+                      <div className="h-6">
+                        <ErrorMessage name="confirmPassword" component="div" className="text-red-600 text-xs" />
                       </div>
                     </div>
-                    <button className={isLoading ? "disabled" : ""} type="submit">Register</button>
+                    <button className={`w-20 m-2 p-2.5 bg-[#007bff] text-white border-none rounded-md text-base cursor-pointer transition-colors duration-300 hover:bg-border ${isLoading ? "cursor-default bg-[#586379]" : ""}`} type="submit">Register</button>
                   </Form>
                 )}
               </Formik>
-              <div>Already have an account? <span onClick={() => {if (!isLoading) {setModalMode('login')}}} className='register-click'>click here</span></div>
+              <div>Already have an account? <span onClick={() => {if (!isLoading) {setModalMode('login')}}} className='font-bold cursor-pointer'>click here</span></div>
             </div>
           </>;
           case "registered":
-           return <div><div className="modal-header">Thank you for registering!</div><br/>
+           return <div><div className="text-2xl">Thank you for registering!</div><br/>
             To complete your account setup, please check your inbox for a verification email and click the link to validate your email address. 
             If you don't see the email within a few minutes, be sure to check your spam or junk folder.<br/><br/>
             Need help? Feel free to contact our support team.</div>
           case "loggedin":
-           return <div><div className="modal-header">Login Successful</div></div>
+           return <div><div className="text-2xl">Login Successful</div></div>
           case "unverified":
-           return <div><div className="modal-header">Verification Required</div><br/>
+           return <div><div className="text-2xl">Verification Required</div><br/>
             Your email has not been verified yet. Please check your inbox for a verification link before logging in.</div>
           default:
             return <div></div>;

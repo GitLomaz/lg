@@ -1,8 +1,7 @@
 import { useEffect, useState } from 'react';
-import './FavoriteButton.css';
 import { Heart, SettingsIcon } from 'lucide-react';
 import SPA_REACT_APP_API_URL from '../config';
-import axios from '../axiosConfig'
+import http from '../fetchConfig'
 import { useUserState } from '../contexts/useUserState';
 import LoginModal from './modals/LoginModal';
 
@@ -24,12 +23,12 @@ const FavoriteButton: React.FC<FavoriteButtonProps> = ({ gameId }) => {
       setHovering(false)
       let URL = `${SPA_REACT_APP_API_URL}/favorites`
       try {
-        const response = await axios.post(URL, {
+        const response = await http.post(URL, {
           favorite: newState,
           gameId: gameId
         });
-        if (response?.data?.success) {
-          setfavorite(response.data.data)
+        if (response?.success) {
+          setfavorite(response.data)
         } else {
           setfavorite(!newState)
         }
@@ -45,8 +44,8 @@ const FavoriteButton: React.FC<FavoriteButtonProps> = ({ gameId }) => {
     if (gameId && user) {
       let URL = `${SPA_REACT_APP_API_URL}/favorites/${gameId}`
       try {
-        const response = await axios.get(URL);
-        setfavorite(response.data.data)
+        const response = await http.get(URL);
+        setfavorite(response.data)
       } catch (error) {
         setfavorite(false)
       }
@@ -58,17 +57,17 @@ const FavoriteButton: React.FC<FavoriteButtonProps> = ({ gameId }) => {
   }, [gameId]);
 
   return (
-    <div className="heart-border flex-row" 
+    <div className="border-2 border-[#31353d] rounded-sm cursor-pointer p-2 w-[125px] flex flex-row" 
       onClick={toggleFavorite}
       onMouseOver={() => {setHovering(true)}}
       onMouseLeave={() => {setHovering(false)}}
     >
       <LoginModal isOpen={isOpen} onClose={() => setIsOpen(false)}></LoginModal>
       <Heart 
-      className='flex-item-1' 
+      className='flex-1' 
       fill={hovering ? "gray" : (favorite ? "currentColor" : "")}
       size={24}/>
-      <div className='flex-item-1'>Favorite</div>
+      <div className='flex-1'>Favorite</div>
     </div>
   )
 };

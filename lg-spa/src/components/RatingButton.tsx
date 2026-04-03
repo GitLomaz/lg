@@ -1,8 +1,7 @@
 import { useEffect, useState } from 'react';
-import './RatingButton.css';
 import { Star } from 'lucide-react';
 import SPA_REACT_APP_API_URL from '../config';
-import axios from '../axiosConfig'
+import http from '../fetchConfig'
 import { useUserState } from '../contexts/useUserState';
 import LoginModal from './modals/LoginModal';
 
@@ -22,8 +21,8 @@ const RatingButton: React.FC<RatingButtonProps> = ({ gameId, rating }) => {
     if (gameId && user) {
       let URL = `${SPA_REACT_APP_API_URL}/ratings/${gameId}`
       try {
-        const response = await axios.get(URL);
-        setPlayerRating(response.data.data)
+        const response = await http.get(URL);
+        setPlayerRating(response.data)
       } catch (error) {
         setPlayerRating(0)
       }
@@ -40,13 +39,13 @@ const RatingButton: React.FC<RatingButtonProps> = ({ gameId, rating }) => {
       }
       let URL = `${SPA_REACT_APP_API_URL}/ratings`
       try {
-        const response = await axios.post(URL, {
+        const response = await http.post(URL, {
           value: rating,
           gameId: gameId
         });
-        if (response?.data?.success) {
-          setPlayerRating(response.data.data.rating)
-          setGameRating(response.data.data.ave)
+        if (response?.success) {
+          setPlayerRating(response.data.rating)
+          setGameRating(response.data.ave)
         } else {
           setPlayerRating(oldState)
         }
@@ -72,20 +71,20 @@ const RatingButton: React.FC<RatingButtonProps> = ({ gameId, rating }) => {
   }, [gameId]);
 
   return (
-    <div className="rating-border flex-row">
+    <div className="border-2 border-[#31353d] rounded-sm p-2 w-[225px] flex flex-row">
       {Array.from({ length: 5 }).map((_, index) => (
         <Star 
           fill={playerHovering >= index + 1 ? "gray" : (playerRating >= index + 1 ? "currentColor" : "")}
           key={'star-' + (index + 1)} 
           id={'star-' + (index + 1)} 
-          className='flex-item-1 star' 
+          className='flex-1 cursor-pointer' 
           size={24} 
           onClick={() => {setStarRating(index + 1)}} 
           onMouseOver={() => {highlightStarRating(index + 1)}}
           onMouseLeave={unHighlight}/>
       ))}
       <LoginModal isOpen={isOpen} onClose={() => setIsOpen(false)}></LoginModal>
-      <div className='flex-item-1 rating-score'>Ave. {(Math.round(gameRating * 100) / 100).toFixed(2)}</div>
+      <div className='flex-1 border-l-2 border-[#31353d] ml-2.5 pl-2.5'>Ave. {(Math.round(gameRating * 100) / 100).toFixed(2)}</div>
     </div>
   )
 };

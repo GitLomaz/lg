@@ -2,8 +2,7 @@ import React, { Fragment, useEffect, useState } from 'react';
 import { useParams } from "react-router-dom";
 import { Game } from '../types';
 import SPA_REACT_APP_API_URL from '../config';
-import './GamePage.css';
-import axios from '../axiosConfig'
+import http from '../fetchConfig'
 import GameContainer from './GameContainer';
 import FavoriteButton from './FavoriteButton';
 import RatingButton from './RatingButton';
@@ -17,8 +16,8 @@ const GamePage: React.FC = () => {
   const loadGame = async () => {
     let URL = `${SPA_REACT_APP_API_URL}/games/${author}/${gameString}`
     try {
-      const response = await axios.get(URL);
-      setGameData(response.data)
+      const data = await http.get(URL);
+      setGameData(data)
       setTimeout(() => {
         console.log('DING?!')
       }, 30000)
@@ -32,15 +31,15 @@ const GamePage: React.FC = () => {
   }, []);
     
   return (
-    <div className='game-page'>
-      <div className='game-title'>{game?.translations[0].name}</div>
-      <div className='flex-row game-box'>
-        <div className='flex-column'>
-          <div className='game-block flex-row'>
+    <div className='px-5 mx-5 text-center'>
+      <div className='text-center p-2.5 text-[40px] font-bold'>{game?.translations[0].name}</div>
+      <div className='flex flex-row justify-center'>
+        <div className='flex flex-col'>
+          <div className='w-max flex flex-row'>
             <GameContainer game={game}/>
             <GameDetails game={game}/>
           </div>
-          <div className='flex-row'>
+          <div className='flex flex-row'>
             <FavoriteButton gameId={game?.id}/>
             <RatingButton gameId={game?.id} rating={game?.ratings.average}/>
           </div>

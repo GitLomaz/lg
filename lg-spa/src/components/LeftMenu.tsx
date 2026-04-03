@@ -1,5 +1,4 @@
 import React from 'react';
-import './LeftMenu.css';
 
 interface LeftMenuProps {
   tags: string[];
@@ -8,11 +7,15 @@ interface LeftMenuProps {
 
 const LeftMenu: React.FC<LeftMenuProps> = ({ tags, onTagClick }) => {
   return (
-    <aside className="left-menu">
-      <h3 className="menu-title">Game Tags</h3>
-      <ul className="tag-list">
+    <aside>
+      <h3 className="text-2xl mb-2.5">Game Tags</h3>
+      <ul className="list-none p-0">
         {tags.map((tag) => (
-          <li key={tag} className="tag-item" onClick={() => onTagClick(tag)}>
+          <li 
+            key={tag} 
+            className="p-2.5 cursor-pointer transition-colors duration-300 hover:bg-[#34495e]" 
+            onClick={() => onTagClick(tag)}
+          >
             {tag}
           </li>
         ))}

@@ -1,13 +1,20 @@
-:root {
-  --background: #282c34;
-  --container-bg: #2f323a;
-  --button-bg: #35373c;
-  --border: #6e9fd1;
-}
+/* Custom animations and styles that can't be replaced by Tailwind */
+@layer utilities {
+  .shimmer {
+    border-radius: 4px;
+    background: linear-gradient(90deg, #282c34 25%, #484e59 50%, #282c34 75%);
+    background-size: 200% 100%;
+    animation: shimmer 4.5s infinite;
+  }
 
-* {
-  margin: 0;
-  padding: 0;
+  @keyframes shimmer {
+    0% {
+      background-position: 200% 0;
+    }
+    100% {
+      background-position: -200% 0;
+    }
+  }
 }
 
 #logo {
@@ -15,73 +22,4 @@
   height: 40px;
   background-image: url('../public/logo.png');
   background-size: contain;
-}
-
-.app {
-  height: 100vh; /* Ensures it takes the full viewport height */
-}
-
-.flex-column {
-  display: flex;
-  flex-direction: column;
-}
-
-.flex-row {
-  display: flex;
-}
-
-.flex-item-1 {
-  flex-grow: 1
-}
-
-.bold {
-  font-weight: bold;
-}
-
-.header {
-  background-color: var(--container-bg);
-  color: white; /* White text */
-  padding: 10px;
-  text-align: center;
-  height: 36px; /* Set an explicit height */
-  flex-shrink: 0; /* Prevents it from shrinking */
-  border-bottom: 4px solid #31353d; /* Bottom border for depth */
-}
-
-.content {
-  flex: 1;
-  overflow: auto; /* Prevents content from overflowing */
-  background-color: var(--background); /* Dark background color */
-  color: white; /* White text */
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-.shimmer {
-  border-radius: 4px; /* optional, for slightly rounded corners */
-  background: linear-gradient(90deg, var(--background) 25%, #484e59 50%, var(--background) 75%);
-  background-size: 200% 100%;
-  animation: shimmer 4.5s infinite;
-}
-
-.tile-placeholder {
-  width: 250px !important;
-  height: 200px;
-  margin: 8px;
-}
-
-.carousel-placeholder {
-  height: 300px;
-}
-
-@keyframes shimmer {
-  0% {
-    background-position: 200% 0;
-  }
-  100% {
-    background-position: -200% 0;
-  }
 }
