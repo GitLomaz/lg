@@ -12,8 +12,12 @@ COPY lg-api/package*.json ./
 # Copy prisma schema before install so postinstall works
 COPY lg-api/prisma ./prisma
 
-# Install dependencies
-RUN npm ci
+# Install dependencies (use `npm ci` when a lockfile exists, otherwise fall back to `npm install`)
+RUN if [ -f package-lock.json ] || [ -f npm-shrinkwrap.json ]; then \
+            npm ci; \
+        else \
+            npm install; \
+        fi
 
 # Copy rest of API source
 COPY lg-api/ ./
@@ -29,7 +33,12 @@ FROM node:18 AS spa-build
 WORKDIR /app/spa
 
 COPY lg-spa/package*.json ./
-RUN npm ci
+# Install dependencies for SPA (prefer `npm ci` when lockfile exists)
+RUN if [ -f package-lock.json ] || [ -f npm-shrinkwrap.json ]; then \
+            npm ci; \
+        else \
+            npm install; \
+        fi
 
 COPY lg-spa/ ./
 RUN npm run build
