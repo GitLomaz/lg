@@ -6,8 +6,8 @@ WORKDIR /app/api
 
 RUN apt-get update -y && apt-get install -y openssl
 
-# Copy package files
-COPY lg-api/package.json lg-api/package-lock.json ./
+# Copy package files (allow missing package-lock.json)
+COPY lg-api/package*.json ./
 
 # Copy prisma schema before install so postinstall works
 COPY lg-api/prisma ./prisma
@@ -28,7 +28,7 @@ RUN npm run build
 FROM node:18 AS spa-build
 WORKDIR /app/spa
 
-COPY lg-spa/package.json lg-spa/package-lock.json ./
+COPY lg-spa/package*.json ./
 RUN npm ci
 
 COPY lg-spa/ ./
@@ -46,7 +46,7 @@ RUN apt-get update -y && \
 # Set up API
 WORKDIR /app/api
 COPY --from=api-build /app/api/dist ./dist
-COPY --from=api-build /app/api/package.json /app/api/package-lock.json ./
+COPY --from=api-build /app/api/package*.json ./
 COPY --from=api-build /app/api/node_modules ./node_modules
 COPY --from=api-build /app/api/prisma ./prisma
 
