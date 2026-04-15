@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import './VerificationModal.css';
 import { useSearchParams, useNavigate } from 'react-router-dom';
 import SPA_REACT_APP_API_URL from '../../config';
-import axios from '../../axiosConfig'
+import http from '../../http'
 
 interface ModalProps {
   isOpen: boolean;
@@ -20,7 +20,7 @@ const Verification: React.FC<ModalProps> = ({ isOpen, onClose }) => {
     const runVerification = async (token: string) => {
       let URL = `${SPA_REACT_APP_API_URL}/auth/verify?token=${token}`
       try {
-        const response = await axios.get(URL);
+        const response = await http.get(URL);
         if (!response?.data?.data) {
           setMessage(GENERIC_ERROR);
           return

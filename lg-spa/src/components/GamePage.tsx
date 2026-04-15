@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import { Game } from '../types';
 import SPA_REACT_APP_API_URL from '../config';
 import './GamePage.css';
-import axios from '../axiosConfig'
+import http from '../http'
 import GameContainer from './GameContainer';
 import FavoriteButton from './FavoriteButton';
 import RatingButton from './RatingButton';
@@ -17,7 +17,7 @@ const GamePage: React.FC = () => {
   const loadGame = async () => {
     let URL = `${SPA_REACT_APP_API_URL}/games/${author}/${gameString}`
     try {
-      const response = await axios.get(URL);
+      const response = await http.get(URL);
       setGameData(response.data)
       setTimeout(() => {
         console.log('DING?!')

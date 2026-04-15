@@ -15,6 +15,13 @@ async function bootstrap() {
 
   const app = await NestFactory.create(AppModule);
 
+  const apiPrefix = 'api';
+  app.setGlobalPrefix(apiPrefix);
+
+  // Debugging help: log configured origin, prefix and listen port
+  console.log(`[api] CORS origin: ${origin}`);
+  console.log(`[api] Global prefix set to: ${apiPrefix}`);
+
   app.use(cookieParser());
 
   app.enableCors({

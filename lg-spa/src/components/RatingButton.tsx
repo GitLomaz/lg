@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import './RatingButton.css';
 import { Star } from 'lucide-react';
 import SPA_REACT_APP_API_URL from '../config';
-import axios from '../axiosConfig'
+import http from '../http'
 import { useUserState } from '../contexts/useUserState';
 import LoginModal from './modals/LoginModal';
 
@@ -22,7 +22,7 @@ const RatingButton: React.FC<RatingButtonProps> = ({ gameId, rating }) => {
     if (gameId && user) {
       let URL = `${SPA_REACT_APP_API_URL}/ratings/${gameId}`
       try {
-        const response = await axios.get(URL);
+        const response = await http.get(URL);
         setPlayerRating(response.data.data)
       } catch (error) {
         setPlayerRating(0)
@@ -40,7 +40,7 @@ const RatingButton: React.FC<RatingButtonProps> = ({ gameId, rating }) => {
       }
       let URL = `${SPA_REACT_APP_API_URL}/ratings`
       try {
-        const response = await axios.post(URL, {
+        const response = await http.post(URL, {
           value: rating,
           gameId: gameId
         });

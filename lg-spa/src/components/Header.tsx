@@ -6,7 +6,7 @@ import { useUserState } from '../contexts/useUserState';
 import { User } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 import SPA_REACT_APP_API_URL from '../config';
-import axios from '../axiosConfig';
+import http from '../http';
 
 const Header: React.FC = () => {
   const { user, setUser } = useUserState()
@@ -30,7 +30,7 @@ const Header: React.FC = () => {
   async function handleLogout() {
     let URL = `${SPA_REACT_APP_API_URL}/auth/logout`
     try {
-      await axios.post(URL);
+      await http.post(URL);
       setIsLogoutOpen(true)
       setUser(null)
     } catch (error: any) {

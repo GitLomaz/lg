@@ -4,7 +4,7 @@ import Slider from 'react-slick';
 import './GalleryRow.css';
 import GalleryTile from './GalleryTile';
 import SPA_REACT_APP_API_URL from "../config";
-import axios from '../axiosConfig'
+import http from '../http'
 import { useGameState } from '../contexts/useGameState';
 
 // Define props interface
@@ -37,7 +37,7 @@ const GalleryRow: React.FC<GalleryRowProps> = ({ genre }) => {
     }
     let games: GameRow[] = []
     try {
-      const response = await axios.get(URL);
+      const response = await http.get(URL);
       games = response.data.map(function(game: Game) {
         return {
           ...game,

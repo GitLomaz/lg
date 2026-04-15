@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import './FavoriteButton.css';
 import { Heart, SettingsIcon } from 'lucide-react';
 import SPA_REACT_APP_API_URL from '../config';
-import axios from '../axiosConfig'
+import http from '../http'
 import { useUserState } from '../contexts/useUserState';
 import LoginModal from './modals/LoginModal';
 
@@ -24,7 +24,7 @@ const FavoriteButton: React.FC<FavoriteButtonProps> = ({ gameId }) => {
       setHovering(false)
       let URL = `${SPA_REACT_APP_API_URL}/favorites`
       try {
-        const response = await axios.post(URL, {
+        const response = await http.post(URL, {
           favorite: newState,
           gameId: gameId
         });
@@ -45,7 +45,7 @@ const FavoriteButton: React.FC<FavoriteButtonProps> = ({ gameId }) => {
     if (gameId && user) {
       let URL = `${SPA_REACT_APP_API_URL}/favorites/${gameId}`
       try {
-        const response = await axios.get(URL);
+        const response = await http.get(URL);
         setfavorite(response.data.data)
       } catch (error) {
         setfavorite(false)

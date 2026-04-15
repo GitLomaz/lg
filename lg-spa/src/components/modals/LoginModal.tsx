@@ -4,9 +4,9 @@ import { useFeatureFlagEnabled } from 'posthog-js/react'
 import { useUserState } from '../../contexts/useUserState';
 import SPA_REACT_APP_API_URL from "../../config";
 import GoogleLoginButton from "../GoogleLoginButton"
+import http from '../../http'
 import * as Yup from 'yup';
 import './LoginModal.css';
-import axios from '../../axiosConfig'
 import posthog from 'posthog-js';
 
 interface ModalProps {
@@ -55,7 +55,7 @@ const LoginModal: React.FC<ModalProps> = ( { isOpen, onClose } ) => {
     setIsLoading(true)
     let URL = `${SPA_REACT_APP_API_URL}/auth/register`
     try {
-      const response = await axios.post(URL, values);
+      const response = await http.post(URL, values);
       if (!response?.data?.data) {
         setFieldError("email", GENERIC_ERROR);
         return
@@ -89,7 +89,7 @@ const LoginModal: React.FC<ModalProps> = ( { isOpen, onClose } ) => {
     setIsLoading(true)
     let URL = `${SPA_REACT_APP_API_URL}/auth/login`
     try {
-      const response = await axios.post(URL, payload);
+      const response = await http.post(URL, payload);
       if (!response?.data?.data) {
         setFieldError("loginUsername", GENERIC_ERROR);
         return
