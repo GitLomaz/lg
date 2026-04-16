@@ -30,10 +30,13 @@ INSERT INTO game (id, game_string, iframe, width, height, author_id, genre_id) V
 INSERT INTO game (id, game_string, iframe, width, height, author_id, genre_id) VALUES (3, 'plinko', 'https://gitlomaz.github.io/plinko/', 1108, 595, 1, 3);
 INSERT INTO game (id, game_string, iframe, width, height, author_id, genre_id) VALUES (4, 'snowball', 'https://gitlomaz.github.io/snowball/', 800, 600, 1, 2);
 INSERT INTO game (id, game_string, iframe, width, height, author_id, genre_id) VALUES (5, 'infinitybreak', 'https://gitlomaz.github.io/infinitybreak/', 1280, 720, 1, 2);
-INSERT INTO game (id, game_string, iframe, width, height, author_id, genre_id) VALUES (6, 'nightscapes', 'https://us-dev.nightscapes.io/farmer/', 1180, 720, 1, 2);
+INSERT INTO game (id, game_string, iframe, width, height, author_id, genre_id) VALUES (6, 'nightscapes', 'https://gitlomaz.github.io/nightscapesio/', 1180, 720, 1, 2);
 INSERT INTO game (id, game_string, iframe, width, height, author_id, genre_id) VALUES (7, 'spaced', 'https://gitlomaz.github.io/spaced/', 1108, 595, 1, 4);
 INSERT INTO game (id, game_string, iframe, width, height, author_id, genre_id) VALUES (8, 'slashArena', 'https://gitlomaz.github.io/slash/', 1280, 720, 1, 2);
 INSERT INTO game (id, game_string, iframe, width, height, author_id, genre_id) VALUES (9, 'stacked', 'https://gitlomaz.github.io/stacked/', 1128, 615, 1, 5);
+INSERT INTO game (id, game_string, iframe, width, height, author_id, genre_id) VALUES (10, 'darkNebula', 'https://gitlomaz.github.io/asteroids/', 1288, 728, 1, 1);
+INSERT INTO game (id, game_string, iframe, width, height, author_id, genre_id) VALUES (11, 'quantumBreaker', 'https://gitlomaz.github.io/jammin/', 1280, 720, 1, 1);
+INSERT INTO game (id, game_string, iframe, width, height, author_id, genre_id, disabled) VALUES (12, 'kalrul', 'https://gitlomaz.github.io/applesauce-frontend/', 1060, 750, 1, 2, true);
 
 -- Game to tag mappings
 INSERT INTO "_gameTotag" ("A", "B") VALUES (1, 2);
@@ -60,6 +63,15 @@ INSERT INTO "_gameTotag" ("A", "B") VALUES (8, 1);
 INSERT INTO "_gameTotag" ("A", "B") VALUES (8, 10);
 INSERT INTO "_gameTotag" ("A", "B") VALUES (9, 12);
 INSERT INTO "_gameTotag" ("A", "B") VALUES (9, 6);
+INSERT INTO "_gameTotag" ("A", "B") VALUES (10, 1);
+INSERT INTO "_gameTotag" ("A", "B") VALUES (10, 2);
+INSERT INTO "_gameTotag" ("A", "B") VALUES (10, 9);
+INSERT INTO "_gameTotag" ("A", "B") VALUES (10, 13);
+INSERT INTO "_gameTotag" ("A", "B") VALUES (11, 2);
+INSERT INTO "_gameTotag" ("A", "B") VALUES (11, 10);
+INSERT INTO "_gameTotag" ("A", "B") VALUES (11, 13);
+INSERT INTO "_gameTotag" ("A", "B") VALUES (12, 4);
+INSERT INTO "_gameTotag" ("A", "B") VALUES (12, 11);
 
 -- Game ratings
 INSERT INTO game_rating (game_id, user_id, value) VALUES (1, 1, 3);
@@ -79,6 +91,9 @@ INSERT INTO game_translation (game_id, language, name, description, instructions
 INSERT INTO game_translation (game_id, language, name, description, instructions) VALUES (7, 'en', 'Spaced II', 'A puzzle out of this world', 'WASD to move');
 INSERT INTO game_translation (game_id, language, name, description, instructions) VALUES (8, 'en', 'Slash Arena', 'An action packed melee battle', 'WASD to move, mouse to aim and attack');
 INSERT INTO game_translation (game_id, language, name, description, instructions) VALUES (9, 'en', 'Stacked Idle', 'Build those bricks!', 'Click things');
+INSERT INTO game_translation (game_id, language, name, description, instructions) VALUES (10, 'en', 'Dark Nebula', 'Asteroids... but with more!', 'WASD to move, space to shoot');
+INSERT INTO game_translation (game_id, language, name, description, instructions) VALUES (11, 'en', 'Quantum Breaker', 'Bust those bricks!', 'A/D to move, space to shoot');
+INSERT INTO game_translation (game_id, language, name, description, instructions) VALUES (12, 'en', 'Rise of the Kal-Rul', 'An absolutely awful RPG game', 'Click things, WASD to move');
 
 -- Achievements
 INSERT INTO achievement (id, game_id, difficulty, icon_path) VALUES (1, 1, 'easy', 'ico');
@@ -149,6 +164,24 @@ INSERT INTO game_asset (game_id, type, path) VALUES (9, 'ss', 'gameImages/9/1.pn
 INSERT INTO game_asset (game_id, type, path) VALUES (9, 'ss', 'gameImages/9/2.jpeg');
 INSERT INTO game_asset (game_id, type, path) VALUES (9, 'ss', 'gameImages/9/3.jpeg');
 INSERT INTO game_asset (game_id, type, path) VALUES (9, 'tile', 'gameImages/9/tile.png');
+
+INSERT INTO game_asset (game_id, type, path) VALUES (10, 'ss', 'gameImages/10/1.png');
+INSERT INTO game_asset (game_id, type, path) VALUES (10, 'ss', 'gameImages/10/2.png');
+INSERT INTO game_asset (game_id, type, path) VALUES (10, 'ss', 'gameImages/10/3.png');
+INSERT INTO game_asset (game_id, type, path) VALUES (10, 'ss', 'gameImages/10/4.png');
+INSERT INTO game_asset (game_id, type, path) VALUES (10, 'tile', 'gameImages/10/tile.png');
+
+INSERT INTO game_asset (game_id, type, path) VALUES (11, 'ss', 'gameImages/11/1.png');
+INSERT INTO game_asset (game_id, type, path) VALUES (11, 'ss', 'gameImages/11/2.png');
+INSERT INTO game_asset (game_id, type, path) VALUES (11, 'ss', 'gameImages/11/3.png');
+INSERT INTO game_asset (game_id, type, path) VALUES (11, 'ss', 'gameImages/11/4.png');
+INSERT INTO game_asset (game_id, type, path) VALUES (11, 'ss', 'gameImages/11/5.png');
+INSERT INTO game_asset (game_id, type, path) VALUES (11, 'tile', 'gameImages/11/tile.png');
+
+INSERT INTO game_asset (game_id, type, path) VALUES (12, 'ss', 'gameImages/12/1.png');
+INSERT INTO game_asset (game_id, type, path) VALUES (12, 'ss', 'gameImages/12/2.jpeg');
+INSERT INTO game_asset (game_id, type, path) VALUES (12, 'ss', 'gameImages/12/3.jpeg');
+INSERT INTO game_asset (game_id, type, path) VALUES (12, 'tile', 'gameImages/12/tile.png');
 
 -- Reset sequences to continue from the seeded data
 SELECT setval('user_id_seq', (SELECT MAX(id) FROM "user"));

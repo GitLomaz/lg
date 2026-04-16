@@ -134,7 +134,8 @@ export class GamesService {
         OR: [
           { translations: { some: { language: "en" } } }, // Games that have English translations
           { translations: { none: {} } } // Games that have no translations at all
-        ]
+        ],
+        disabled: false
       }
     })
     this.transposeAll(games)
@@ -173,7 +174,8 @@ export class GamesService {
           { translations: { some: { language: "en" } } }, // Games that have English translations
           { translations: { none: {} } } // Games that have no translations at all
         ],
-        genre: { name: genre }
+        genre: { name: genre },
+        disabled: false
       }
     })
     this.transposeAll(games)
