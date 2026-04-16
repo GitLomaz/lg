@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useState } from 'react';
+import React, { Fragment, useEffect, useState, useRef } from 'react';
 import { useParams } from "react-router-dom";
 import { Game } from '../types';
 import SPA_REACT_APP_API_URL from '../config';
@@ -13,14 +13,22 @@ import GameDetails from './GameDetails';
 const GamePage: React.FC = () => {
   const { author, gameString } = useParams();
   const [game, setGameData] = useState<Game | null>(null);
+  const isMountedRef = useRef(true);
+  const timeoutRef = useRef<number | null>(null);
 
   const loadGame = async () => {
     let URL = `${SPA_REACT_APP_API_URL}/games/${author}/${gameString}`
     try {
       const response = await http.get(URL);
       setGameData(response.data)
-      setTimeout(() => {
-        console.log('DING?!')
+      // clear any existing timeout
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+      }
+      timeoutRef.current = window.setTimeout(() => {
+        if (isMountedRef.current) {
+          http.post(`${SPA_REACT_APP_API_URL}/games/${response.data.id}/play`)
+        }
       }, 30000)
     } catch (error) {
       console.error('Failed to fetch games:', error);
@@ -28,7 +36,14 @@ const GamePage: React.FC = () => {
   }
 
   useEffect(() => {
+    isMountedRef.current = true;
     loadGame();
+    return () => {
+      isMountedRef.current = false;
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+      }
+    };
   }, []);
     
   return (

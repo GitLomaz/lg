@@ -106,79 +106,55 @@ export class GamesService {
     return games
   }
 
-  async findPopular() {
-    const games = await this.databaseService.game.findMany({   
-      select: {
-        game_string: true,
-        author: true,
-        tags: true,
-        genre: true,
-        ratings: true,
-        plays: true,
-        favorites: true,
-        achievements: true,
-        assets: {
-          select: {
-            type: true,
-            path: true
-          }
-        },
-        translations: {
-          select: {
-            name: true,
-            description: true
-          }
+  async findGames(options: { 
+    genre?: string; 
+    disabled?: boolean; 
+    sortByPlays?: boolean 
+  } = {}) {
+    const {
+      genre,
+      disabled = false,
+      sortByPlays,
+    } = options;  
+    const select = {
+      game_string: true,
+      author: true,
+      tags: true,
+      genre: true,
+      ratings: true,
+      plays: true,
+      favorites: true,
+      achievements: true,
+      assets: {
+        select: {
+          type: true,
+          path: true
         }
       },
-      where: {
-        OR: [
-          { translations: { some: { language: "en" } } }, // Games that have English translations
-          { translations: { none: {} } } // Games that have no translations at all
-        ],
-        disabled: false
+      translations: {
+        select: {
+          name: true,
+          description: true
+        }
       }
-    })
-    this.transposeAll(games)
-    games.sort(function(a, b) {
-      return a.plays > b.plays ? -1 : 1
-    })
-    return games
-  }
+    }
 
-  async findByGenre(genre: string) {
-    const games = await this.databaseService.game.findMany({   
-      select: {
-        game_string: true,
-        author: true,
-        tags: true,
-        genre: true,
-        ratings: true,
-        plays: true,
-        favorites: true,
-        achievements: true,
-        assets: {
-          select: {
-            type: true,
-            path: true
-          }
-        },
-        translations: {
-          select: {
-            name: true,
-            description: true
-          }
-        }
-      },
-      where: {
-        OR: [
-          { translations: { some: { language: "en" } } }, // Games that have English translations
-          { translations: { none: {} } } // Games that have no translations at all
-        ],
-        genre: { name: genre },
-        disabled: false
-      }
-    })
+    const where: any = {
+      OR: [
+        { translations: { some: { language: "en" } } },
+        { translations: { none: {} } }
+      ]
+    }
+    if (genre) where.genre = { name: genre }
+    where.disabled = disabled ?? false
+    const games = await this.databaseService.game.findMany({ select, where })
     this.transposeAll(games)
+
+    if (sortByPlays) {
+      games.sort(function(a, b) {
+        return a.plays > b.plays ? -1 : 1
+      })
+    }
     return games
   }
 
@@ -268,5 +244,42 @@ export class GamesService {
       }
     })
     return this.reduceRatings(game)
+  }
+
+  async getCurrentPlays(gameId: number) {
+    const playCount = await this.databaseService.game_play.findFirst({
+      where: {
+        game_id: gameId,
+        date: new Date()
+      },
+      select: {
+        id: true,
+        count: true
+      }
+    })
+    return playCount
+  }
+
+  async updatePlays(gamePlay: { id: number, gameId: number, count: number }) {
+    const playCount = await this.databaseService.game_play.update({
+      where: {
+        id: gamePlay.id
+      },
+      data: {
+        count: gamePlay.count + 1
+      }
+    })
+    return playCount
+  }
+
+  async createPlays(gameId: number) {
+    const playCount = await this.databaseService.game_play.create({
+      data: {
+        game_id: gameId,
+        count: 1,
+        date: new Date()
+      }
+    })
+    return playCount
   }
 }
