@@ -63,7 +63,7 @@ model game_play {
   id      Int       @id @default(autoincrement())
   game_id Int
   count   Int
-  date    DateTime? @default(now()) @db.Timestamp(0)
+  date    DateTime? @db.Date @default(now())
   game    game      @relation(fields: [game_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "game_play_ibfk_1")
 
   @@index([game_id], map: "game_play_game_id_idx")
