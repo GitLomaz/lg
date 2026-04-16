@@ -53,6 +53,7 @@ export class GamesService {
         plays: true,
         favorites: true,
         achievements: true,
+        created_at: true,
         assets: {
           select: {
             type: true,

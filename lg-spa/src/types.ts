@@ -17,6 +17,7 @@ export interface Game {
   translations: Translation[];
   tile: string;
   screenshots: string[];
+  created_at: string;
 }
 
 export interface GameRow extends Game {
