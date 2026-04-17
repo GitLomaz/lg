@@ -29,7 +29,7 @@ function App() {
     <UserContext.Provider value={{ user, setUser: updateUser }}>
       <VerificationModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
       <div className="app flex-column">
-          <div className="header" style={{ height: '60px' }}>
+        <div className="header">
           <Header />
         </div>
         <div className="content">

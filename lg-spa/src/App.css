@@ -50,7 +50,7 @@
   color: white; /* White text */
   padding: 10px;
   text-align: center;
-  height: 36px; /* Set an explicit height */
+  height: 60px; /* Set an explicit height */
   flex-shrink: 0; /* Prevents it from shrinking */
   border-bottom: 4px solid #31353d; /* Bottom border for depth */
 }
