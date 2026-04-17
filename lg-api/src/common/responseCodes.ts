@@ -28,7 +28,6 @@ export function generateServerResponse(code: string, data?: any): APIResponse {
   if (!RESPONSE_CODES[code]) {
     throw new HttpException('Invalid response code', HttpStatus.INTERNAL_SERVER_ERROR);
   }
-  console.log ('returning?!')
   return {
     code: RESPONSE_CODES[code].code,
     data: data !== undefined ? data : RESPONSE_CODES[code].message,

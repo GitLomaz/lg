@@ -39,27 +39,28 @@ const Header: React.FC = () => {
   }
 
   return (
-    <div className='app-header flex-row'>
-      <div id='auth' className='flex-item-1 fixed-width-300'>
+    <div className='relative h-full'>
+      <div id='auth' className='absolute left-2 top-1/2 -translate-y-1/2 flex items-center'>
         <div id='logo'></div>
       </div>
-      <div id='header-home' className='flex-item-1'>
+      <div id='header-home' className='absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2'>
         <Link to="/">
-          <h1>Lomaz Games</h1>
+          <h1 className='text-2xl'>Lomaz Games</h1>
         </Link>
       </div>
       <LoginModal isOpen={isOpen} onClose={() => setIsOpen(false)}></LoginModal>
       <LogoutModal isOpen={isLogoutOpen} onClose={() => setIsLogoutOpen(false)}></LogoutModal>
-      <div className='flex-item-1 profile-button fixed-width-300'>
+      <div className='absolute right-2 top-1/2 -translate-y-1/2 flex items-center space-x-2'>
       {!user ? (
         <>
-          <span id='auth-container' onClick={() => promptLogin()}>Log In<span id='user-icon'><User size={24} /></span></span>
+          <span id='auth-container' className='cursor-pointer' onClick={() => promptLogin()}>Log In</span>
+          <User size={24} />
         </>
       ) : (
         <>
-          <div id="profile-container" onClick={() => {toggleMenu()}}>
+          <div id="profile-container" className='flex items-center space-x-2 cursor-pointer' onClick={() => {toggleMenu()}}>
             <div>{user.username}</div>
-            <div id="profile-icon" style={{ backgroundImage: `url('/logo.png')` }}/>
+            <div className='w-8 h-8 rounded-full bg-center bg-cover mt-1' style={{ backgroundImage: `url('/logo.png')` }}/>
           </div >
           {menuOpen && (
             <>
