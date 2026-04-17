@@ -90,27 +90,19 @@ const LoginModal: React.FC<ModalProps> = ( { isOpen, onClose } ) => {
     let URL = `${SPA_REACT_APP_API_URL}/auth/login`
     try {
       const response = await http.post(URL, payload);
-      if (!response?.data?.data) {
-        setFieldError("loginUsername", GENERIC_ERROR);
-        return
-      }
-      switch (response.data.code) {
-        case 'LOGIN_FAILED':
-          setFieldError("loginUsername", response.data.data);
-          break;
-        case 'ACCOUNT_UNVERIFIED':
-          setModalMode('unverified')
-          break;
-        case 'LOGIN_SUCCESSFUL':
+      console.log(JSON.stringify(response))
+      if ((response?.data?.code === 'LOGIN_SUCCESSFUL'))  {
           posthog.identify()
-          completeLogin(response.data.data.username, response.data.data.image)
-          break;
-        default:
-          setFieldError("loginUsername", GENERIC_ERROR);
-          break;
+          completeLogin(response.data.data.username, response.data.data.image);
+      } else {
+        setFieldError("loginUsername", GENERIC_ERROR);
       }
     } catch (error: any) {
-      setFieldError("loginUsername", GENERIC_ERROR);
+      if (error.response?.data?.message) {
+        setFieldError("loginUsername", error.response.data.message);
+      } else {
+        setFieldError("loginUsername", GENERIC_ERROR);
+      }
     } finally {
       setIsLoading(false)
     }

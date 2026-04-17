@@ -1,6 +1,6 @@
 -- User and authentication
 INSERT INTO "user" (id, username, developer, email, is_verified) VALUES (1, 'Lomaz', true, 'ianlomas0@gmail.com', true);
-INSERT INTO passwords (id, user_id, password_hash) VALUES (gen_random_uuid(), 1, '$2b$10$dhE/nbKIT3YVmeJFriKrX.27ltjLLrZVkBIKo72zg1Aky4vwKNoeO');
+INSERT INTO passwords (id, user_id, password_hash) VALUES (gen_random_uuid(), 1, '$2b$10$/TBEy1oTQNiekrTZ2csbEe42eO9xYxK3jRuT1z18rgerbvljHpQPa');
 
 -- Tags
 INSERT INTO tag (id, name) VALUES (1, 'Short');

@@ -28,15 +28,22 @@ export class AuthService {
 
   async validateUser(username: string, password: string): Promise<APIResponse | user> {
     const user = await this.getUserByEmailOrUsername(username)
+    console.log('Validating user:', { username, userExists: !!user }); 
     if (!user) {
+      console.log('User not found for username/email:', username);
       return generateServerResponse('LOGIN_FAILED');
     }
     const passwordHash = user.passwords[0].password_hash
+    console.log(user)
+    const newPW = await bcrypt.hash(password, 10);
+    console.log(newPW)
     const isMatch = await bcrypt.compare(password, passwordHash);
     if (!isMatch) {
+      console.log('Password mismatch for username/email:', username);
       return generateServerResponse('LOGIN_FAILED');
     }
     if (!user.is_verified) {
+      console.log('User not verified for username/email:', username);
       return generateServerResponse('ACCOUNT_UNVERIFIED');
     }
     return user
