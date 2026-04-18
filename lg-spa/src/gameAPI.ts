@@ -83,11 +83,6 @@ export class GameAPI {
   private async handleVerify(payload: { apiKey: string; gameId: number }): Promise<any> {
     const { apiKey, gameId } = payload;
 
-  /**
-   * Handle verify request from iframe
-   */
-  private async handleVerify(payload: { apiKey: string; gameId: number }): Promise<any> {
-    const { apiKey, gameId } = payload;
 
     const response = await fetch(`${this.apiUrl}/iframe-api/verify`, {
       method: 'POST',

@@ -28,7 +28,12 @@ const GameContainer: React.FC<GameContainerProps> = ({ game }) => {
 
   return (
     <>
-      <iframe src={game?.iframe} width={game?.width} height={game?.height}></iframe>
+      <iframe 
+        src={game?.iframe} 
+        width={game?.width} 
+        height={game?.height}
+        title={game?.translations?.[0]?.name || 'Game'}
+      ></iframe>
       <LoginModal 
         isOpen={showLoginModal} 
         onClose={() => setShowLoginModal(false)} 
