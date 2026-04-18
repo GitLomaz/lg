@@ -146,14 +146,14 @@ const LoginModal: React.FC<ModalProps> = ( { isOpen, onClose } ) => {
                   <Form>
                     <div>
                       <label>Username or Email Address</label>
-                      <Field name="loginUsername" type="text" />
+                      <Field className='text-primary-900' name="loginUsername" type="text" />
                       <div id="loginUsernameError" className="error-message-container">
                         <ErrorMessage name="loginUsername" component="div" className="error-message" />
                       </div>
                     </div>
                     <div>
                       <label>Password</label>
-                      <Field name="loginPassword" type="password" />
+                      <Field className='text-primary-900' name="loginPassword" type="password" />
                       <div className="error-message-container">
                         <ErrorMessage name="loginPassword" component="div" className="error-message" />
                       </div>
