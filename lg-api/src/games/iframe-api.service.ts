@@ -5,14 +5,8 @@ import { DatabaseService } from 'src/database/database.service';
 export class IframeApiService {
   constructor(private readonly databaseService: DatabaseService) {}
 
-  /**
-   * Verify that an API key is valid for a specific game
-   * For now, we'll use a simple scheme: API key = `game-${gameId}-${secret}`
-   * In production, you'd want to store these in the database
-   */
   async verifyApiKey(apiKey: string, gameId: number): Promise<boolean> {
     try {
-      // Check if game exists
       const game = await this.databaseService.game.findUnique({
         where: { id: gameId }
       });
@@ -21,8 +15,6 @@ export class IframeApiService {
         return false;
       }
 
-      // For now, accept any API key format that includes the game ID
-      // TODO: Implement proper API key storage and validation
       return apiKey.includes(`game-${gameId}`);
     } catch (error) {
       return false;
