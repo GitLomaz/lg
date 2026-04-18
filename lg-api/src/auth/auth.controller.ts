@@ -54,6 +54,21 @@ export class AuthController {
   @Get('google')
   @UseGuards(AuthGuard('google'))
   async googleAuth() {}
+
+  @Get('me')
+  async getCurrentUser(@Req() req: Request) {
+    if (req.isAuthenticated && req.isAuthenticated() && req.user) {
+      return {
+        success: true,
+        data: this.userService.sanitizeUser(req.user)
+      };
+    }
+    return {
+      success: false,
+      message: 'Not authenticated'
+    };
+  }
+
   @Get('google/callback')
   @UseGuards(AuthGuard('google'))
   async googleAuthRedirect(@Req() req: Request, @Res() res: Response) {
