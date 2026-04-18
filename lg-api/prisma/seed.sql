@@ -36,7 +36,7 @@ INSERT INTO game (id, game_string, iframe, width, height, author_id, genre_id) V
 INSERT INTO game (id, game_string, iframe, width, height, author_id, genre_id) VALUES (9, 'stacked', 'https://gitlomaz.github.io/stacked/', 1128, 615, 1, 5);
 INSERT INTO game (id, game_string, iframe, width, height, author_id, genre_id) VALUES (10, 'darkNebula', 'https://gitlomaz.github.io/asteroids/', 1288, 728, 1, 1);
 INSERT INTO game (id, game_string, iframe, width, height, author_id, genre_id) VALUES (11, 'quantumBreaker', 'https://gitlomaz.github.io/jammin/', 1280, 720, 1, 1);
-INSERT INTO game (id, game_string, iframe, width, height, author_id, genre_id, disabled) VALUES (12, 'kalrul', 'https://gitlomaz.github.io/applesauce-frontend/', 1060, 750, 1, 2, true);
+INSERT INTO game (id, game_string, iframe, width, height, author_id, genre_id, unlisted) VALUES (12, 'kalrul', 'https://gitlomaz.github.io/applesauce-frontend/', 1060, 750, 1, 2, true);
 
 -- Game to tag mappings
 INSERT INTO "_gameTotag" ("A", "B") VALUES (1, 2);

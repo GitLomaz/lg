@@ -32,7 +32,9 @@ model game {
   height       Int
   author_id    Int?
   genre_id     Int
-  disabled     Boolean            @default(false)
+  unlisted     Boolean            @default(false) @map("disabled")
+  chat         Boolean            @default(false)
+  key          String             @default(uuid()) @db.Char(36)
   achievements achievement[]
   author       user?              @relation(fields: [author_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "game_ibfk_1")
   genre        genre              @relation(fields: [genre_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "game_ibfk_2")
