@@ -109,12 +109,12 @@ export class GamesService {
 
   async findGames(options: { 
     genre?: string; 
-    disabled?: boolean; 
+    unlisted?: boolean; 
     sortByPlays?: boolean 
   } = {}) {
     const {
       genre,
-      disabled = false,
+      unlisted = false,
       sortByPlays,
     } = options;  
     const select = {
@@ -147,7 +147,7 @@ export class GamesService {
       ]
     }
     if (genre) where.genre = { name: genre }
-    where.disabled = disabled ?? false
+    where.unlisted = unlisted ?? false
     const games = await this.databaseService.game.findMany({ select, where })
     this.transposeAll(games)
 

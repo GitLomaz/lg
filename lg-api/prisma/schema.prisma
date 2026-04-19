@@ -32,7 +32,7 @@ model game {
   height       Int
   author_id    Int?
   genre_id     Int
-  unlisted     Boolean            @default(false) @map("disabled")
+  unlisted     Boolean            @default(false)
   chat         Boolean            @default(false)
   key          String             @default(uuid()) @db.Char(36)
   achievements achievement[]
