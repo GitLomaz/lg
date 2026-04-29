@@ -8,7 +8,7 @@ const withCredentials = true;
 // Retry configuration for server startup scenarios
 const RETRY_STATUS_CODES = [502, 503, 504]; // Bad Gateway, Service Unavailable, Gateway Timeout
 const RETRY_DELAY_MS = 5000; // 5 seconds
-const MAX_RETRY_TIME_MS = 30000; // 30 seconds total
+const MAX_RETRY_TIME_MS = 60000; // 30 seconds total
 
 function buildUrl(url: string) {
     if (!url) return url;
