@@ -1,24 +1,22 @@
 import React, { useEffect, useState } from 'react';
-import { Game } from '../types';
 import { formatNumber, timestampToReadableDate } from '../utils/format';
 import API_URL from '../config';
-
-interface GameDetailsProps {
-  game: Game | null;
-}
+import { useGameState } from '../contexts/useGameState';
 
 type GameDetailsState = 'details' | 'achievements' | 'highscores';
 
-const GameDetails: React.FC<GameDetailsProps> = ({ game }) => {
+const GameDetails: React.FC = () => {
+  const { selectedGame: game } = useGameState();
   const [panelState, setPanelState] = useState<GameDetailsState>('details');
   const hasAchievements = game?.achievements && game.achievements.length > 0;
   const [achievements, setAchievements] = useState<any[] | null>(null);
   const [achievementsLoading, setAchievementsLoading] = useState(false);
   const [achievementsError, setAchievementsError] = useState<string | null>(null);
   
+  
   useEffect(() => {
     if (panelState !== 'achievements' || !hasAchievements || !game) return;
-    if (achievements !== null) return; // already loaded
+    if (achievements !== null) return;
 
     const fetchAchievements = async () => {
       setAchievementsLoading(true);

@@ -1,14 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import './GameContainer.css';
-import { Game } from '../types';
 import LoginModal from './modals/LoginModal';
+import { useGameState } from '../contexts/useGameState';
 
-interface GameContainerProps {
-  game: Game | null;
-}
-
-
-const GameContainer: React.FC<GameContainerProps> = ({ game }) => {
+const GameContainer: React.FC = () => {
+  const { selectedGame: game } = useGameState();
   const [showLoginModal, setShowLoginModal] = useState(false);
 
   useEffect(() => {

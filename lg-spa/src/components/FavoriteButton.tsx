@@ -1,24 +1,21 @@
 import { useEffect, useState } from 'react';
 import './FavoriteButton.css';
-import { Heart, SettingsIcon } from 'lucide-react';
+import { Heart } from 'lucide-react';
 import SPA_REACT_APP_API_URL from '../config';
 import http from '../http'
 import { useUserState } from '../contexts/useUserState';
+import { useGameState } from '../contexts/useGameState';
 import LoginModal from './modals/LoginModal';
 
-// Define props interface
-interface FavoriteButtonProps {
-  gameId: number | undefined;
-}
-
-const FavoriteButton: React.FC<FavoriteButtonProps> = ({ gameId }) => {
+const FavoriteButton: React.FC = () => {
   const [favorite, setfavorite] = useState<boolean>(false);
   const [hovering, setHovering] = useState<boolean>(false);
   const [isOpen, setIsOpen] = useState(false);
   const { user } = useUserState()
+  const { selectedGame, setSelectedGame } = useGameState()
 
   const toggleFavorite = async () => {
-    if (user) {
+    if (user && selectedGame) {
       const newState = !favorite
       setfavorite(newState)
       setHovering(false)
@@ -26,15 +23,16 @@ const FavoriteButton: React.FC<FavoriteButtonProps> = ({ gameId }) => {
       try {
         const response = await http.post(URL, {
           favorite: newState,
-          gameId: gameId
+          gameId: selectedGame?.id
         });
-        if (response?.data?.success) {
-          setfavorite(response.data.data)
+        setfavorite(response.data.data.favorite)
+        setSelectedGame({ ...selectedGame, favorites: response.data.data.count })
+      } catch (error: any) {
+        if (error?.response?.status === 403) {
+          setIsOpen(true)
         } else {
           setfavorite(!newState)
         }
-      } catch (error) {
-        setfavorite(!newState)
       }
     } else {
       setIsOpen(true)
@@ -42,20 +40,28 @@ const FavoriteButton: React.FC<FavoriteButtonProps> = ({ gameId }) => {
   }
 
   const loadState = async () => {
-    if (gameId && user) {
-      let URL = `${SPA_REACT_APP_API_URL}/favorites/${gameId}`
+    if (selectedGame?.id && user) {
+      let URL = `${SPA_REACT_APP_API_URL}/favorites/${selectedGame.id}`
       try {
         const response = await http.get(URL);
-        setfavorite(response.data.data)
-      } catch (error) {
-        setfavorite(false)
+        setfavorite(response.data.data.favorite)
+      } catch (error: any) {
+        if (error?.response?.status === 403) {
+          setIsOpen(true)
+        } else {
+          setfavorite(false)
+        }
       }
     }
   }
 
   useEffect(() => {
     loadState();
-  }, [gameId]);
+  }, [selectedGame?.id, user]);
+
+  if (!selectedGame) {
+    return null
+  }
 
   return (
     <div className="heart-border flex-row" 

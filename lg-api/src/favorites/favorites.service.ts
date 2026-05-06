@@ -26,7 +26,7 @@ export class FavoritesService {
         },
       },
     });
-    return true
+    return { count: await this.getFavoritesByGameId(gameId), favorite: false }
   }
 
   async addFavorite(gameId: number, userId: number) {
@@ -36,6 +36,15 @@ export class FavoritesService {
         user_id: userId,
       },
     });
-    return true
+    return { count: await this.getFavoritesByGameId(gameId), favorite: true }
+  }
+
+  async getFavoritesByGameId(gameId: number) {
+    const favorites = await this.databaseService.game_favorite.findMany({
+      where: {
+        game_id: gameId,
+      },
+    });
+    return favorites.length
   }
 }

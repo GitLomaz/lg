@@ -22,12 +22,10 @@ export class FavoritesController {
     const existingFavorite = await this.favoritesService.findFavoriteByGameAndUser(gameId, userId);
     let added = true;
     if (existingFavorite) {
-      await this.favoritesService.removeFavorite(gameId, userId);
-      added = false;
+      return generateServerResponse('SUCCESS', await this.favoritesService.removeFavorite(gameId, userId));
+      // added = false;
     } else {
-      await this.favoritesService.addFavorite(gameId, userId);
+      return generateServerResponse('SUCCESS', await this.favoritesService.addFavorite(gameId, userId));
     }
-    
-    return generateServerResponse('SUCCESS', added);
   }
 }

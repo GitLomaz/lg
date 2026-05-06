@@ -5,22 +5,19 @@ import SPA_REACT_APP_API_URL from '../config';
 import http from '../http'
 import { useUserState } from '../contexts/useUserState';
 import LoginModal from './modals/LoginModal';
+import { useGameState } from '../contexts/useGameState';
 
-interface RatingButtonProps {
-  gameId: number | undefined,
-  rating: number | undefined
-}
-
-const RatingButton: React.FC<RatingButtonProps> = ({ gameId, rating }) => {
+const RatingButton: React.FC = () => {
   const [gameRating, setGameRating] = useState<number>(0);
   const [playerRating, setPlayerRating] = useState<number>(0);
   const [playerHovering, setPlayerHovering] = useState<number>(0);
   const [isOpen, setIsOpen] = useState(false);
   const { user } = useUserState()
+  const { selectedGame: game } = useGameState();
 
   const loadState = async () => {
-    if (gameId && user) {
-      let URL = `${SPA_REACT_APP_API_URL}/ratings/${gameId}`
+    if (game?.id && user) {
+      let URL = `${SPA_REACT_APP_API_URL}/ratings/${game.id}`
       try {
         const response = await http.get(URL);
         setPlayerRating(response.data.data)
@@ -42,7 +39,7 @@ const RatingButton: React.FC<RatingButtonProps> = ({ gameId, rating }) => {
       try {
         const response = await http.post(URL, {
           value: rating,
-          gameId: gameId
+          gameId: game?.id
         });
         if (response?.data?.success) {
           setPlayerRating(response.data.data.rating)
@@ -68,8 +65,8 @@ const RatingButton: React.FC<RatingButtonProps> = ({ gameId, rating }) => {
 
   useEffect(() => {
     loadState();
-    setGameRating(rating || 0)
-  }, [gameId]);
+    setGameRating(game?.ratings?.average || 0)
+  }, [game?.id]);
 
   return (
     <div className="rating-border flex-row">
