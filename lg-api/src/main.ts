@@ -4,6 +4,8 @@ import { config } from 'dotenv';
 import * as cookieParser from 'cookie-parser';
 import * as session from 'express-session';
 import * as passport from 'passport';
+import { Pool } from 'pg';
+const pgSession = require('connect-pg-simple')(session);
 
 config();
 
@@ -30,15 +32,27 @@ async function bootstrap() {
     credentials: true,
   });
 
+  // Create PostgreSQL connection pool for sessions
+  const pgPool = new Pool({
+    connectionString: process.env.DATABASE_URL,
+  });
+
   app.use(
     session({
+      store: new pgSession({
+        pool: pgPool,
+        tableName: 'session',
+        createTableIfMissing: true,
+      }),
       name: 'LG_SESSION',
       secret: process.env.API_SESSION_SECRET,
       resave: false,
       saveUninitialized: false,
       cookie: {
         secure: process.env.API_LOCAL !== 'true',
-        maxAge: 1000 * 60 * 60,
+        httpOnly: true,
+        sameSite: process.env.API_LOCAL === 'true' ? 'lax' : 'none',
+        maxAge: 1000 * 60 * 60 * 24, // 24 hours
       },
     }),
   );

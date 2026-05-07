@@ -19,7 +19,7 @@ import { DatabaseService } from 'src/database/database.service';
       useFactory: (databaseService: DatabaseService) => {
         return new SessionSerializer(databaseService);
       },
-      inject: [DatabaseService], // Injecting the DatabaseService
+      inject: [DatabaseService],
     },
   ],
   exports: [AuthService],
