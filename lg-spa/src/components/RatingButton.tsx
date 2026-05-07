@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import './RatingButton.css';
 import { Star } from 'lucide-react';
 import SPA_REACT_APP_API_URL from '../config';
 import http from '../http'
@@ -69,13 +68,13 @@ const RatingButton: React.FC = () => {
   }, [game?.id]);
 
   return (
-    <div className="rating-border flex-row">
+    <div className="flex-row p-3 border-2 border-solid border-primary-875 rounded-sm w-64 items-center justify-center">
       {Array.from({ length: 5 }).map((_, index) => (
         <Star 
           fill={playerHovering >= index + 1 ? "gray" : (playerRating >= index + 1 ? "currentColor" : "")}
           key={'star-' + (index + 1)} 
           id={'star-' + (index + 1)} 
-          className='flex-item-1 star' 
+          className='flex-item-1 cursor-pointer' 
           size={24} 
           onClick={() => {setStarRating(index + 1)}} 
           onMouseOver={() => {highlightStarRating(index + 1)}}

@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import './FavoriteButton.css';
 import { Heart } from 'lucide-react';
 import SPA_REACT_APP_API_URL from '../config';
 import http from '../http'
@@ -64,7 +63,7 @@ const FavoriteButton: React.FC = () => {
   }
 
   return (
-    <div className="heart-border flex-row" 
+    <div className="flex-row p-3 cursor-pointer border-2 border-solid border-primary-875 rounded-sm w-32 items-center justify-center" 
       onClick={toggleFavorite}
       onMouseOver={() => {setHovering(true)}}
       onMouseLeave={() => {setHovering(false)}}
