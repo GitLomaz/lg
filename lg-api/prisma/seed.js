@@ -3,7 +3,9 @@ const fs = require('fs');
 const { Client } = require('pg');
 
 async function main() {
-  const sql = fs.readFileSync('./prisma/seed.sql', 'utf8');
+  // To restore from backup, change this to './prisma/backup-latest.sql'
+  const seedFile = './prisma/seed.sql';
+  const sql = fs.readFileSync(seedFile, 'utf8');
   const connectionString = process.env.DIRECT_URL || process.env.DATABASE_URL;
   if (!connectionString) {
     console.error('No DIRECT_URL or DATABASE_URL found in environment');

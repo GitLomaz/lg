@@ -34,6 +34,7 @@ model game {
   genre_id     Int
   unlisted     Boolean            @default(false)
   chat         Boolean            @default(false)
+  highscores   Boolean            @default(false)
   key          String             @default(uuid()) @db.Char(36)
   achievements achievement[]
   author       user?              @relation(fields: [author_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "game_ibfk_1")

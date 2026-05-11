@@ -2,11 +2,12 @@ import React, { useEffect, useState } from 'react';
 import { formatNumber, timestampToReadableDate } from '../utils/format';
 import API_URL from '../config';
 import { useGameState } from '../contexts/useGameState';
+import HighScoresTab from './HighScoresTab';
 
 type GameDetailsState = 'details' | 'achievements' | 'highscores';
 
 const GameDetails: React.FC = () => {
-  const { selectedGame: game } = useGameState();
+  const { activeGame: game } = useGameState();
   const [panelState, setPanelState] = useState<GameDetailsState>('details');
   const hasAchievements = game?.achievements && game.achievements.length > 0;
   const [achievements, setAchievements] = useState<any[] | null>(null);
@@ -45,7 +46,9 @@ const GameDetails: React.FC = () => {
         {game?.achievements && game?.achievements.length > 0 && (
           <div className={`cursor-pointer ${panelState === 'achievements' ? 'border-primary-800 border-b-4' : ''}`} onClick={() => setPanelState('achievements')}>Achievements</div>
         )}
-        <div className={`cursor-pointer ${panelState === 'highscores' ? 'border-primary-800 border-b-4' : ''}`} onClick={() => setPanelState('highscores')}>High Scores</div>
+        {game?.highscores && (
+          <div className={`cursor-pointer ${panelState === 'highscores' ? 'border-primary-800 border-b-4' : ''}`} onClick={() => setPanelState('highscores')}>High Scores</div>
+        )}
       </div>
       {panelState === 'details' && (
         <>
@@ -53,8 +56,13 @@ const GameDetails: React.FC = () => {
         <span className='bold'>Date Published: </span>{timestampToReadableDate(game?.created_at)}<br />
         <span className='bold'>Total Plays: </span>{formatNumber(game?.plays)}<br />
         <span className='bold'>Total Favorites: </span>{formatNumber(game?.favorites)}<br />
-        <span className='bold'>Average Rating: </span>{formatNumber(game?.ratings?.average, 2)}<br />
+        <span className='bold'>Average Rating: </span>{formatNumber(game?.ratings?.average, 2)}<br /><br />
+        <span className='bold'>Description: <br/></span>{game?.translations?.[0]?.description ?? 'N/A'}<br /><br />
+        <span className='bold'>Instructions: <br/></span>{game?.translations?.[0]?.instructions ?? 'N/A'}<br />
         </>
+      )}
+      {panelState === 'highscores' && (
+        <HighScoresTab />
       )}
       {panelState === 'achievements' && (
         <div>

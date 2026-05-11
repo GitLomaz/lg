@@ -84,6 +84,18 @@
   height: 300px;
 }
 
+iframe {      
+  outline: none;
+}
+
+iframe:focus {
+  outline: none;
+}
+
+iframe:focus-visible {
+  outline: none;
+}
+
 @keyframes shimmer {
   0% {
     background-position: 200% 0;

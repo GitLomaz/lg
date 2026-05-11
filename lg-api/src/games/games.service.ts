@@ -53,6 +53,7 @@ export class GamesService {
         plays: true,
         favorites: true,
         achievements: true,
+        highscores: true,
         created_at: true,
         assets: {
           select: {
@@ -63,7 +64,8 @@ export class GamesService {
         translations: {
           select: {
             name: true,
-            description: true
+            description: true,
+            instructions: true
           }
         }
       }
@@ -126,6 +128,7 @@ export class GamesService {
       plays: true,
       favorites: true,
       achievements: true,
+      highscores: true,
       assets: {
         select: {
           type: true,
@@ -135,7 +138,8 @@ export class GamesService {
       translations: {
         select: {
           name: true,
-          description: true
+          description: true,
+          instructions: true
         }
       }
     }

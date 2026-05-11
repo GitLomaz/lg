@@ -14,6 +14,7 @@ export interface Game {
   plays: number;
   favorites: number;
   achievements: Achievement[];
+  highscores: boolean;
   translations: Translation[];
   tile: string;
   screenshots: string[];
@@ -34,6 +35,7 @@ export interface Achievement {
 export interface Translation {
   name: string;
   description: string;
+  instructions: string;
 }
 
 export interface User {

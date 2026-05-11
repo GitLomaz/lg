@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import './GameContainer.css';
 import LoginModal from './modals/LoginModal';
 import { useGameState } from '../contexts/useGameState';
 
 const GameContainer: React.FC = () => {
-  const { selectedGame: game } = useGameState();
+  const { activeGame: game } = useGameState();
   const [showLoginModal, setShowLoginModal] = useState(false);
 
   useEffect(() => {
@@ -29,6 +28,7 @@ const GameContainer: React.FC = () => {
         width={game?.width} 
         height={game?.height}
         title={game?.translations?.[0]?.name || 'Game'}
+        className={"border-primary-875 border-4"}
       ></iframe>
       <LoginModal 
         isOpen={showLoginModal} 

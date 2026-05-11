@@ -3,17 +3,16 @@ import { useParams } from "react-router-dom";
 import { GameContext } from '../contexts/useGameState';
 import { Game } from '../types';
 import SPA_REACT_APP_API_URL from '../config';
-import './GamePage.css';
 import http from '../http'
 import GameContainer from './GameContainer';
 import FavoriteButton from './FavoriteButton';
 import RatingButton from './RatingButton';
 import GameDetails from './GameDetails';
-
+import BugButton from './BugButton';
 
 const GamePage: React.FC = () => {
   const { author, gameString } = useParams();
-  const [selectedGame, setSelectedGame] = useState<Game | null>(null);
+  const [activeGame, setActiveGame] = useState<Game | null>(null);
   const isMountedRef = useRef(true);
   const timeoutRef = useRef<number | null>(null);
 
@@ -21,7 +20,7 @@ const GamePage: React.FC = () => {
     let URL = `${SPA_REACT_APP_API_URL}/games/${author}/${gameString}`
     try {
       const response = await http.get(URL);
-      setSelectedGame(response.data)
+      setActiveGame(response.data)
 
       // clear any existing timeout
       if (timeoutRef.current) {
@@ -49,18 +48,19 @@ const GamePage: React.FC = () => {
   }, []);
     
   return (
-    <GameContext.Provider value={{selectedGame, setSelectedGame}} >
-      <div className='game-page'>
-        <div className='game-title'>{selectedGame?.translations[0].name}</div>
-        <div className='flex-row game-box'>
+    <GameContext.Provider value={{activeGame, setActiveGame}} >
+      <div className='p-8 text-center'>
+        <div className='bold text-5xl p-4'>{activeGame?.translations[0].name}</div>
+        <div className='flex-row justify-center'>
           <div className='flex-column'>
-            <div className='game-block flex-row'>
+            <div className='flex-row'>
               <GameContainer/>
               <GameDetails/>
             </div>
-            <div className='flex-row'>
+            <div className='flex-row justify-center gap-4 mt-4'>
               <FavoriteButton/>
               <RatingButton/>
+              <BugButton/>
             </div>
           </div>
         </div>

@@ -7,16 +7,15 @@ import LoginModal from './modals/LoginModal';
 import { useGameState } from '../contexts/useGameState';
 
 const RatingButton: React.FC = () => {
-  const [gameRating, setGameRating] = useState<number>(0);
   const [playerRating, setPlayerRating] = useState<number>(0);
   const [playerHovering, setPlayerHovering] = useState<number>(0);
-  const [isOpen, setIsOpen] = useState(false);
+  const [loginPrompt, setLoginPrompt] = useState(false);
   const { user } = useUserState()
-  const { selectedGame: game } = useGameState();
+  const { activeGame, setActiveGame } = useGameState();
 
   const loadState = async () => {
-    if (game?.id && user) {
-      let URL = `${SPA_REACT_APP_API_URL}/ratings/${game.id}`
+    if (activeGame?.id && user) {
+      let URL = `${SPA_REACT_APP_API_URL}/ratings/${activeGame.id}`
       try {
         const response = await http.get(URL);
         setPlayerRating(response.data.data)
@@ -38,19 +37,23 @@ const RatingButton: React.FC = () => {
       try {
         const response = await http.post(URL, {
           value: rating,
-          gameId: game?.id
+          gameId: activeGame?.id
         });
-        if (response?.data?.success) {
+        if (response?.data?.success && activeGame) {
           setPlayerRating(response.data.data.rating)
-          setGameRating(response.data.data.ave)
+          setActiveGame({ ...activeGame, ratings: { ...activeGame.ratings, average: response.data.data.ave } })
         } else {
           setPlayerRating(oldState)
         }
-      } catch (error) {
-        setPlayerRating(oldState)
+      } catch (error: any) {
+        if (error?.response?.status === 403) {
+          setLoginPrompt(true)
+        } else {
+          setPlayerRating(oldState)
+        }
       }
     } else {
-      setIsOpen(true)
+      setLoginPrompt(true)
     }
   }
 
@@ -64,8 +67,11 @@ const RatingButton: React.FC = () => {
 
   useEffect(() => {
     loadState();
-    setGameRating(game?.ratings?.average || 0)
-  }, [game?.id]);
+  }, [activeGame?.id]);
+
+  if (!activeGame) {
+    return null
+  }
 
   return (
     <div className="flex-row p-3 border-2 border-solid border-primary-875 rounded-sm w-64 items-center justify-center">
@@ -80,8 +86,8 @@ const RatingButton: React.FC = () => {
           onMouseOver={() => {highlightStarRating(index + 1)}}
           onMouseLeave={unHighlight}/>
       ))}
-      <LoginModal isOpen={isOpen} onClose={() => setIsOpen(false)}></LoginModal>
-      <div className='flex-item-1 rating-score'>Ave. {(Math.round(gameRating * 100) / 100).toFixed(2)}</div>
+      <LoginModal isOpen={loginPrompt} onClose={() => setLoginPrompt(false)}></LoginModal>
+      <div className='flex-item-1 rating-score'>Ave. {(Math.round(activeGame?.ratings?.average * 100) / 100).toFixed(2)}</div>
     </div>
   )
 };

@@ -9,7 +9,7 @@ import './Gallery.css';
 
 const Gallery: React.FC = () => {
   const [selectedTag, setSelectedTag] = useState<string | null>(null);
-  const [selectedGame, setSelectedGame] = useState<Game | null>(null)
+  const [activeGame, setActiveGame] = useState<Game | null>(null)
   const gameTags = ['Popular', 'Action', 'Puzzle', 'Idle', 'Clicker', 'Arcade'];
 
   const handleTagClick = (tag: string) => {
@@ -17,7 +17,7 @@ const Gallery: React.FC = () => {
   };
 
   return (
-    <GameContext.Provider value={{selectedGame, setSelectedGame}} >
+    <GameContext.Provider value={{activeGame, setActiveGame}} >
       <div className='flex-row'>
         <div className='leftMenu'>
           <LeftMenu tags={gameTags} onTagClick={handleTagClick} />

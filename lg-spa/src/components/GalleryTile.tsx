@@ -8,15 +8,15 @@ interface GalleryTileProps {
 }
 
 const GalleryTile: React.FC<GalleryTileProps> = ({ game }) => {
-  const { selectedGame, setSelectedGame } = useGameState()
+  const { activeGame, setActiveGame } = useGameState()
 
   function onTileClick(game: GameRow) {
-    setSelectedGame(game)
+    setActiveGame(game)
   }
 
   return (
     <div
-      className={`gallery-row-image-container ${selectedGame?.key === game.key ? 'selected-tile' : ''}`} 
+      className={`gallery-row-image-container ${activeGame?.key === game.key ? 'selected-tile' : ''}`} 
       onClick={() => onTileClick(game)}
     >
       <img src={game.tile} alt={game.game_string} className='gallery-row-image' />

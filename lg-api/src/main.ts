@@ -2,7 +2,7 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { config } from 'dotenv';
 import * as cookieParser from 'cookie-parser';
-import session from 'express-session';
+import session = require('express-session');
 import * as passport from 'passport';
 import { Pool } from 'pg';
 const pgSession = require('connect-pg-simple')(session);

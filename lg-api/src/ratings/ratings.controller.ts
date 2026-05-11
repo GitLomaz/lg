@@ -13,7 +13,7 @@ export class RatingsController {
 
   @UseGuards(AuthenticatedGuard)
   @Get(':id')
-  async getFavorite(@Param('id') id: string, @Request() req: any) {
+  async getRating(@Param('id') id: string, @Request() req: any) {
     const userId = req.user.id;
     const rating = await this.ratingsService.findRatingByGameAndUser(parseInt(id), userId);
     return generateServerResponse('SUCCESS', rating ? rating.value : false);
@@ -21,7 +21,7 @@ export class RatingsController {
 
   @UseGuards(AuthenticatedGuard)
   @Post()
-  async setFavorite(@Body('gameId') gameId: number, @Body('value') value: number, @Request() req: any) {
+  async setRating(@Body('gameId') gameId: number, @Body('value') value: number, @Request() req: any) {
     if (![1,2,3,4,5].includes(value)) {
       return generateServerResponse('INVALID_REQUEST');
     }

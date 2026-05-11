@@ -14,7 +14,7 @@ interface GalleryRowProps {
 
 const GalleryRow: React.FC<GalleryRowProps> = ({ genre }) => {
   const [currentGames, setCurrentGames] = useState<Game[]>([]); // State for carousel games
-  const { setSelectedGame } = useGameState()
+  const { setActiveGame } = useGameState()
 
   const settings = {
     dots: true,
@@ -46,7 +46,7 @@ const GalleryRow: React.FC<GalleryRowProps> = ({ genre }) => {
       })
       setCurrentGames(games);
       if (genre === 'Popular') {
-        setSelectedGame(games[0])
+        setActiveGame(games[0])
       }
     } catch (error) {
       console.error('Failed to fetch games:', error);

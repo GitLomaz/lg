@@ -9,12 +9,12 @@ import LoginModal from './modals/LoginModal';
 const FavoriteButton: React.FC = () => {
   const [favorite, setfavorite] = useState<boolean>(false);
   const [hovering, setHovering] = useState<boolean>(false);
-  const [isOpen, setIsOpen] = useState(false);
+  const [loginPrompt, setLoginPrompt] = useState(false);
   const { user } = useUserState()
-  const { selectedGame, setSelectedGame } = useGameState()
+  const { activeGame, setActiveGame } = useGameState()
 
   const toggleFavorite = async () => {
-    if (user && selectedGame) {
+    if (user && activeGame) {
       const newState = !favorite
       setfavorite(newState)
       setHovering(false)
@@ -22,43 +22,39 @@ const FavoriteButton: React.FC = () => {
       try {
         const response = await http.post(URL, {
           favorite: newState,
-          gameId: selectedGame?.id
+          gameId: activeGame?.id
         });
         setfavorite(response.data.data.favorite)
-        setSelectedGame({ ...selectedGame, favorites: response.data.data.count })
+        setActiveGame({ ...activeGame, favorites: response.data.data.count })
       } catch (error: any) {
         if (error?.response?.status === 403) {
-          setIsOpen(true)
+          setLoginPrompt(true)
         } else {
           setfavorite(!newState)
         }
       }
     } else {
-      setIsOpen(true)
+      setLoginPrompt(true)
     }
   }
 
   const loadState = async () => {
-    if (selectedGame?.id && user) {
-      let URL = `${SPA_REACT_APP_API_URL}/favorites/${selectedGame.id}`
+    if (activeGame?.id && user) {
+      let URL = `${SPA_REACT_APP_API_URL}/favorites/${activeGame.id}`
       try {
         const response = await http.get(URL);
         setfavorite(response.data.data.favorite)
       } catch (error: any) {
-        if (error?.response?.status === 403) {
-          setIsOpen(true)
-        } else {
-          setfavorite(false)
-        }
+        setfavorite(false)
       }
     }
   }
 
   useEffect(() => {
     loadState();
-  }, [selectedGame?.id, user]);
+  }, [activeGame?.id, user]);
 
-  if (!selectedGame) {
+  if (!activeGame) {
     return null
   }
 
@@ -68,7 +64,7 @@ const FavoriteButton: React.FC = () => {
       onMouseOver={() => {setHovering(true)}}
       onMouseLeave={() => {setHovering(false)}}
     >
-      <LoginModal isOpen={isOpen} onClose={() => setIsOpen(false)}></LoginModal>
+      <LoginModal isOpen={loginPrompt} onClose={() => setLoginPrompt(false)}></LoginModal>
       <Heart 
       className='flex-item-1' 
       fill={hovering ? "gray" : (favorite ? "currentColor" : "")}
