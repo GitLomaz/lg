@@ -41,8 +41,8 @@ async function bootstrap() {
     session({
       store: new pgSession({
         pool: pgPool,
-        tableName: 'session',
-        createTableIfMissing: true,
+        tableName: 'sessions',
+        createTableIfMissing: false,
       }),
       name: 'LG_SESSION',
       secret: process.env.API_SESSION_SECRET,
